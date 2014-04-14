@@ -1,0 +1,10 @@
+{
+    "entity": {
+        "person": {
+            "id": 5,
+            "first_name": "John",
+            "last_name": "Doe",
+            "campus": "Ohio University"
+        }
+    }
+}
