@@ -1,19 +1,21 @@
 package org.ccci.gto.globalreg.serializer.json;
 
 import com.google.common.base.Throwables;
-import org.ccci.gto.globalreg.serializer.Serializer;
-import org.json.JSONArray;
+import org.ccci.gto.globalreg.EntityClass;
+import org.ccci.gto.globalreg.serializer.AbstractSerializer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class JsonSerializer implements Serializer {
+import java.util.Collections;
+
+public class JsonSerializer extends AbstractSerializer {
     @Override
-    public <T> T toObject(final Class<T> clazz, final String raw) {
+    public <T> T toObject(final EntityClass<T> type, final String raw) {
+        final Class<T> clazz = type.getEntityClass();
         try {
             if (JSONObject.class.equals(clazz)) {
-                return clazz.cast(new JSONObject(raw));
-            } else if (JSONArray.class.equals(clazz)) {
-                return clazz.cast(new JSONArray(raw));
+                final JSONObject json = new JSONObject(raw);
+                return clazz.cast(json.optJSONObject("entity").optJSONObject(type.getEntityType()));
             } else {
                 throw new UnsupportedOperationException("Unsupported class for JsonSerializer: " + clazz.getName());
             }
@@ -23,9 +25,11 @@ public class JsonSerializer implements Serializer {
     }
 
     @Override
-    public <T> String fromObject(final Class<T> clazz, final T object) {
-        if (object instanceof JSONArray || object instanceof JSONObject) {
-            return object.toString();
+    public <T> String fromObject(final EntityClass<T> type, final T object) {
+        final Class<T> clazz = type.getEntityClass();
+        if (object instanceof JSONObject) {
+            return new JSONObject(Collections.singletonMap("entity", new JSONObject(Collections.singletonMap(type
+                    .getEntityType(), object)))).toString();
         } else {
             throw new UnsupportedOperationException("Unsupported class for JsonSerializer: " + clazz.getName());
         }
