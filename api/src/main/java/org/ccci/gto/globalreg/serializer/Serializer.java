@@ -1,9 +1,12 @@
 package org.ccci.gto.globalreg.serializer;
 
-import org.ccci.gto.globalreg.EntityClass;
+import org.ccci.gto.globalreg.EntityType;
+import org.ccci.gto.globalreg.ResponseList;
 
 public interface Serializer {
-    <T> T toObject(final EntityClass<T> clazz, final String raw);
+    <T> T parseEntity(final EntityType<T> type, final String raw);
 
-    <T> String fromObject(final EntityClass<T> clazz, final T object);
+    <T> ResponseList<T> parseEntitiesList(final EntityType<T> type, final String raw);
+
+    <T> String fromObject(final EntityType<T> type, final T object);
 }
