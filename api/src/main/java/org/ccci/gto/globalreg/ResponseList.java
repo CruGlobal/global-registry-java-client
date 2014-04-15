@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResponseList<T> extends ForwardingList<T> {
-    private MetaResults meta;
+    private Meta meta = new Meta();
     private final List<T> results = new ArrayList<>();
 
-    public void setMeta(final MetaResults meta) {
+    public void setMeta(final Meta meta) {
         this.meta = meta;
     }
 
-    public MetaResults getMeta() {
+    public Meta getMeta() {
         return this.meta;
     }
 
@@ -22,7 +22,7 @@ public class ResponseList<T> extends ForwardingList<T> {
         return this.results;
     }
 
-    public static final class MetaResults {
+    public static final class Meta {
         private int total;
         private int from;
         private int to;
@@ -59,6 +59,14 @@ public class ResponseList<T> extends ForwardingList<T> {
 
         public void setPage(final int page) {
             this.page = page;
+        }
+
+        public int getTotalPages() {
+            return this.totalPages;
+        }
+
+        public void setTotalPages(final int totalPages) {
+            this.totalPages = totalPages;
         }
     }
 }
