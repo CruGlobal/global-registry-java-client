@@ -6,7 +6,17 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     public static final String DEFAULT_CREATED_BY = null;
     public static final int DEFAULT_PAGE = 1;
 
+    protected String apiUrl;
+    protected String accessToken;
     protected Serializer serializer;
+
+    public void setApiUrl(final String apiUrl) {
+        this.apiUrl = apiUrl;
+    }
+
+    public void setAccessToken(final String accessToken) {
+        this.accessToken = accessToken;
+    }
 
     public void setSerializer(final Serializer serializer) {
         this.serializer = serializer;
@@ -25,17 +35,23 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     }
 
     @Override
-    public final <T> ResponseList<T> findEntities(final EntityClass<T> clazz, final Filter... filters) {
-        return this.findEntities(clazz, DEFAULT_CREATED_BY, DEFAULT_PAGE, filters);
+    public final <T> ResponseList<T> findEntities(final EntityType<T> type, final Filter... filters) {
+        return this.findEntities(type, DEFAULT_CREATED_BY, DEFAULT_PAGE, filters);
     }
 
     @Override
-    public final <T> ResponseList<T> findEntities(final EntityClass<T> clazz, final int page, final Filter... filters) {
-        return this.findEntities(clazz, DEFAULT_CREATED_BY, page, filters);
+    public final <T> ResponseList<T> findEntities(final EntityType<T> type, final int page, final Filter... filters) {
+        return this.findEntities(type, DEFAULT_CREATED_BY, page, filters);
     }
 
     @Override
-    public final <T> ResponseList<T> findEntities(final EntityClass<T> clazz, final String createdBy, final Filter... filters) {
-        return this.findEntities(clazz, createdBy, DEFAULT_PAGE, filters);
+    public final <T> ResponseList<T> findEntities(final EntityType<T> type, final String createdBy,
+                                                  final Filter... filters) {
+        return this.findEntities(type, createdBy, DEFAULT_PAGE, filters);
+    }
+
+    @Override
+    public final <T> T getEntity(EntityType<T> type, int id) {
+        return this.getEntity(type, id, DEFAULT_CREATED_BY);
     }
 }
