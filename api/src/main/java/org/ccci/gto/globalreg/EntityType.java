@@ -1,10 +1,10 @@
 package org.ccci.gto.globalreg;
 
-public class EntityClass<T> {
+public class EntityType<T> {
     private final Class<T> clazz;
     private final String type;
 
-    public EntityClass(final Class<T> clazz, final String type) {
+    public EntityType(final Class<T> clazz, final String type) {
         this.clazz = clazz;
         this.type = type;
     }
@@ -14,10 +14,6 @@ public class EntityClass<T> {
     }
 
     public String getEntityType() {
-        return this.type;
-    }
-
-    public String getType() {
         return this.type;
     }
 }
