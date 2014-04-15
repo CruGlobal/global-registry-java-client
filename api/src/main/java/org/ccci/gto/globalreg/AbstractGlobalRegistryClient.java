@@ -12,6 +12,18 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
         this.serializer = serializer;
     }
 
+    protected final String buildFilterParamName(final Filter filter) {
+        if (filter != null && filter.isValid()) {
+            final StringBuilder sb = new StringBuilder(PARAM_FILTER);
+            for (final String field : filter.getPath()) {
+                sb.append("[").append(field).append("]");
+            }
+            return sb.toString();
+        }
+
+        return null;
+    }
+
     @Override
     public final <T> ResponseList<T> findEntities(final EntityClass<T> clazz, final Filter... filters) {
         return this.findEntities(clazz, DEFAULT_CREATED_BY, DEFAULT_PAGE, filters);

@@ -29,19 +29,7 @@ public final class Filter {
         return this.path;
     }
 
-    public String getFilter() {
-        if (this.isValid()) {
-            final StringBuilder sb = new StringBuilder("filters");
-            for (final String field : this.path) {
-                sb.append("[").append(field).append("]");
-            }
-            return sb.toString();
-        }
-        return null;
-    }
-
     public final String getValue() {
         return this.value;
     }
-
 }
