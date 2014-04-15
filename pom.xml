@@ -14,6 +14,7 @@
 
   <modules>
     <module>api</module>
+    <module>jaxrs10</module>
     <module>serializer-json</module>
   </modules>
 
@@ -30,6 +31,11 @@
         <type>test-jar</type>
         <version>${project.version}</version>
         <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.ccci.gto</groupId>
+        <artifactId>global-registry-client-serializer-json</artifactId>
+        <version>${project.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
