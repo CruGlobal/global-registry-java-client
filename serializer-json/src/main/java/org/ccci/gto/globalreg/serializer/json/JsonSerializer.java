@@ -13,7 +13,7 @@ import java.util.Collections;
 public class JsonSerializer extends AbstractSerializer {
     @Override
     public <T> T parseEntity(final EntityType<T> type, final String raw) {
-        final Class<T> clazz = type.getEntityClass();
+        final Class<? extends T> clazz = type.getEntityClass();
         try {
             if (JSONObject.class.equals(clazz)) {
                 final JSONObject json = new JSONObject(raw);
@@ -30,7 +30,7 @@ public class JsonSerializer extends AbstractSerializer {
     public <T> ResponseList<T> parseEntitiesList(final EntityType<T> type, final String raw) {
         final ResponseList<T> list = new ResponseList<>();
 
-        final Class<T> clazz = type.getEntityClass();
+        final Class<? extends T> clazz = type.getEntityClass();
         if (JSONObject.class.equals(clazz)) {
             try {
                 final JSONObject json = new JSONObject(raw);
@@ -60,7 +60,7 @@ public class JsonSerializer extends AbstractSerializer {
 
     @Override
     public <T> String fromObject(final EntityType<T> type, final T object) {
-        final Class<T> clazz = type.getEntityClass();
+        final Class<? extends T> clazz = type.getEntityClass();
         if (object instanceof JSONObject) {
             return this.wrap(this.wrap((JSONObject) object, type.getEntityType()), "entity").toString();
         } else {
