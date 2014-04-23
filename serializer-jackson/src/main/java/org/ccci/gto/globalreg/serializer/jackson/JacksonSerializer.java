@@ -1,10 +1,8 @@
 package org.ccci.gto.globalreg.serializer.jackson;
 
-import com.fasterxml.jackson.databind.DeserializationConfig;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.base.Throwables;
 import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.ResponseList;
@@ -31,8 +29,8 @@ public class JacksonSerializer extends AbstractSerializer {
     @Override
     public <T> T parseEntity(final EntityType<T> type, final String raw) {
         try {
-            final JsonNode json = mapper.readTree(raw);
-            return mapper.treeToValue(json.path("entity").path(type.getEntityType()), type.getEntityClass());
+            final JsonNode json = this.mapper.readTree(raw);
+            return this.mapper.treeToValue(json.path("entity").path(type.getEntityType()), type.getEntityClass());
         } catch (final IOException e) {
             LOG.error("Unexpected IOException", e);
             throw Throwables.propagate(e);
@@ -42,14 +40,14 @@ public class JacksonSerializer extends AbstractSerializer {
     @Override
     public <T> ResponseList<T> parseEntitiesList(final EntityType<T> type, final String raw) {
         try {
-            final JsonNode root = mapper.readTree(raw);
+            final JsonNode root = this.mapper.readTree(raw);
             final ResponseList<T> list = new ResponseList<>();
 
             // parse all returned entities
             final JsonNode entities = root.path("entities");
             if(entities.isArray()) {
                 for(final JsonNode entity : entities) {
-                    list.add(mapper.treeToValue(entity.path(type.getEntityType()), type.getEntityClass()));
+                    list.add(this.mapper.treeToValue(entity.path(type.getEntityType()), type.getEntityClass()));
                 }
             }
 
@@ -72,7 +70,11 @@ public class JacksonSerializer extends AbstractSerializer {
 
     @Override
     public <T> String fromObject(final EntityType<T> type, final T object) {
-        //TODO
-        return null;
+        final JsonNode json = this.mapper.valueToTree(object);
+        return this.wrap(this.wrap(json, type.getEntityType()), "entity").toString();
+    }
+
+    private JsonNode wrap(final JsonNode json, final String name) {
+        return this.mapper.createObjectNode().put(name, json);
     }
 }
