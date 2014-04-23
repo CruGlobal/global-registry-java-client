@@ -35,23 +35,22 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     }
 
     @Override
-    public final <T> ResponseList<T> findEntities(final EntityType<T> type, final Filter... filters) {
+    public final <T> ResponseList<T> findEntities(final Type<T> type, final Filter... filters) {
         return this.findEntities(type, DEFAULT_CREATED_BY, DEFAULT_PAGE, filters);
     }
 
     @Override
-    public final <T> ResponseList<T> findEntities(final EntityType<T> type, final int page, final Filter... filters) {
+    public final <T> ResponseList<T> findEntities(final Type<T> type, final int page, final Filter... filters) {
         return this.findEntities(type, DEFAULT_CREATED_BY, page, filters);
     }
 
     @Override
-    public final <T> ResponseList<T> findEntities(final EntityType<T> type, final String createdBy,
-                                                  final Filter... filters) {
+    public final <T> ResponseList<T> findEntities(final Type<T> type, final String createdBy, final Filter... filters) {
         return this.findEntities(type, createdBy, DEFAULT_PAGE, filters);
     }
 
     @Override
-    public final <T> T getEntity(EntityType<T> type, int id) {
+    public final <T> T getEntity(Type<T> type, int id) {
         return this.getEntity(type, id, DEFAULT_CREATED_BY);
     }
 }

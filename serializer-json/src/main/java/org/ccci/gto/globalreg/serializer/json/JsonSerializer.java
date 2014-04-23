@@ -1,8 +1,8 @@
 package org.ccci.gto.globalreg.serializer.json;
 
 import com.google.common.base.Throwables;
-import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.ResponseList;
+import org.ccci.gto.globalreg.Type;
 import org.ccci.gto.globalreg.serializer.AbstractSerializer;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,7 +12,7 @@ import java.util.Collections;
 
 public class JsonSerializer extends AbstractSerializer {
     @Override
-    public <T> T parseEntity(final EntityType<T> type, final String raw) {
+    public <T> T parseEntity(final Type<T> type, final String raw) {
         final Class<? extends T> clazz = type.getEntityClass();
         try {
             if (JSONObject.class.equals(clazz)) {
@@ -27,7 +27,7 @@ public class JsonSerializer extends AbstractSerializer {
     }
 
     @Override
-    public <T> ResponseList<T> parseEntitiesList(final EntityType<T> type, final String raw) {
+    public <T> ResponseList<T> parseEntitiesList(final Type<T> type, final String raw) {
         final ResponseList<T> list = new ResponseList<>();
 
         final Class<? extends T> clazz = type.getEntityClass();
@@ -59,7 +59,7 @@ public class JsonSerializer extends AbstractSerializer {
     }
 
     @Override
-    public <T> String fromObject(final EntityType<T> type, final T object) {
+    public <T> String fromObject(final Type<T> type, final T object) {
         final Class<? extends T> clazz = type.getEntityClass();
         if (object instanceof JSONObject) {
             return this.wrap(this.wrap((JSONObject) object, type.getEntityType()), "entity").toString();

@@ -1,15 +1,15 @@
 package org.ccci.gto.globalreg.serializer.jackson;
 
+import static org.junit.Assert.assertEquals;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.ResponseList;
+import org.ccci.gto.globalreg.Type;
 import org.ccci.gto.globalreg.serializer.AbstractSerializerTest;
 import org.junit.Test;
 
 import java.util.Collection;
 import java.util.HashSet;
-
-import static org.junit.Assert.assertEquals;
 
 public class JacksonSerializerTest extends AbstractSerializerTest {
     public JacksonSerializerTest() {
@@ -26,7 +26,7 @@ public class JacksonSerializerTest extends AbstractSerializerTest {
     @Test
     public void testParseEntity() throws Exception {
         for (final Class<? extends Person> clazz : CLASSES) {
-            final Person person = this.testParseEntity(new EntityType<>(clazz, "person"));
+            final Person person = this.testParseEntity(new Type<>(clazz, "person"));
             assertEquals(5, (int) person.getId());
             assertEquals("John", person.getFirstName());
             assertEquals("Doe", person.getLastName());
@@ -37,7 +37,7 @@ public class JacksonSerializerTest extends AbstractSerializerTest {
     @Test
     public void testParseEntitiesList() throws Exception {
         for (final Class<? extends Person> clazz : CLASSES) {
-            final ResponseList<Person> entities = this.testParseEntitiesList(new EntityType<>(clazz, "person"));
+            final ResponseList<Person> entities = this.testParseEntitiesList(new Type<>(clazz, "person"));
 
             // all records should have a last_name of Vellacott
             for (final Person entity : entities) {

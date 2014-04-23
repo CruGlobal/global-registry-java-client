@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
-import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.ResponseList;
+import org.ccci.gto.globalreg.Type;
 import org.ccci.gto.globalreg.serializer.AbstractSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ public class JacksonSerializer extends AbstractSerializer {
     }
 
     @Override
-    public <T> T parseEntity(final EntityType<T> type, final String raw) {
+    public <T> T parseEntity(final Type<T> type, final String raw) {
         try {
             final JsonNode json = this.mapper.readTree(raw);
             return this.mapper.treeToValue(json.path("entity").path(type.getEntityType()), type.getEntityClass());
@@ -38,7 +38,7 @@ public class JacksonSerializer extends AbstractSerializer {
     }
 
     @Override
-    public <T> ResponseList<T> parseEntitiesList(final EntityType<T> type, final String raw) {
+    public <T> ResponseList<T> parseEntitiesList(final Type<T> type, final String raw) {
         try {
             final JsonNode root = this.mapper.readTree(raw);
             final ResponseList<T> list = new ResponseList<>();
@@ -69,7 +69,7 @@ public class JacksonSerializer extends AbstractSerializer {
     }
 
     @Override
-    public <T> String fromObject(final EntityType<T> type, final T object) {
+    public <T> String fromObject(final Type<T> type, final T object) {
         final JsonNode json = this.mapper.valueToTree(object);
         return this.wrap(this.wrap(json, type.getEntityType()), "entity").toString();
     }

@@ -4,9 +4,9 @@ import com.google.common.base.Throwables;
 import com.google.common.io.CharStreams;
 import com.google.common.net.HttpHeaders;
 import org.ccci.gto.globalreg.AbstractGlobalRegistryClient;
-import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.Filter;
 import org.ccci.gto.globalreg.ResponseList;
+import org.ccci.gto.globalreg.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +43,7 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
     }
 
     @Override
-    public <T> ResponseList<T> findEntities(final EntityType<T> type, final String createdBy, final int page,
+    public <T> ResponseList<T> findEntities(final Type<T> type, final String createdBy, final int page,
                                             final Filter... filters) {
         // build the request uri
         final UriBuilder uri = this.getApiUriBuilder().path(PATH_ENTITIES);
@@ -79,7 +79,7 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
     }
 
     @Override
-    public <T> T getEntity(final EntityType<T> type, final int id, final String createdBy) {
+    public <T> T getEntity(final Type<T> type, final int id, final String createdBy) {
         // build the request uri
         final UriBuilder uri = this.getApiUriBuilder().path(PATH_ENTITIES).path(Integer.toString(id));
         uri.queryParam(PARAM_ENTITY_TYPE, type.getEntityType());
@@ -110,7 +110,7 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
     }
 
     @Override
-    public <T> T addEntity(final EntityType<T> type, final T entity) {
+    public <T> T addEntity(final Type<T> type, final T entity) {
         // build the request uri
         final UriBuilder uri = this.getApiUriBuilder().path(PATH_ENTITIES);
 
@@ -144,7 +144,7 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
     }
 
     @Override
-    public <T> T updateEntity(final EntityType<T> type, final int id, final T entity) {
+    public <T> T updateEntity(final Type<T> type, final int id, final T entity) {
         // build the request uri
         final UriBuilder uri = this.getApiUriBuilder().path(PATH_ENTITIES).path(Integer.toString(id));
 
@@ -177,7 +177,7 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
     }
 
     @Override
-    public <T> void deleteEntity(final EntityType<T> type, final int id) {
+    public <T> void deleteEntity(final Type<T> type, final int id) {
         // build the request uri
         final UriBuilder uri = this.getApiUriBuilder().path(PATH_ENTITIES).path(Integer.toString(id));
 
