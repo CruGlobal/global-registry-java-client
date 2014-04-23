@@ -1,11 +1,11 @@
 package org.ccci.gto.globalreg.serializer;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.TestUtils;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public abstract class AbstractSerializerTest {
     protected final Serializer serializer;

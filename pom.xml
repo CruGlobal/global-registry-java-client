@@ -17,6 +17,8 @@
     <module>jaxrs10</module>
     <module>serializer-jackson</module>
     <module>serializer-json</module>
+    <module>testing-client</module>
+    <module>testing-serializer</module>
   </modules>
 
   <dependencyManagement>
@@ -28,8 +30,13 @@
       </dependency>
       <dependency>
         <groupId>org.ccci.gto</groupId>
-        <artifactId>global-registry-client-api</artifactId>
-        <type>test-jar</type>
+        <artifactId>global-registry-client-testing</artifactId>
+        <version>${project.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.ccci.gto</groupId>
+        <artifactId>global-registry-client-serializer-testing</artifactId>
         <version>${project.version}</version>
         <scope>test</scope>
       </dependency>

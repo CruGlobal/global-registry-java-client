@@ -16,16 +16,17 @@
       <groupId>org.ccci.gto</groupId>
       <artifactId>global-registry-client-api</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.ccci.gto</groupId>
-      <artifactId>global-registry-client-api</artifactId>
-      <type>test-jar</type>
-    </dependency>
 
     <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
       <version>20140107</version>
+    </dependency>
+
+    <!-- Testing dependencies -->
+    <dependency>
+      <groupId>org.ccci.gto</groupId>
+      <artifactId>global-registry-client-serializer-testing</artifactId>
     </dependency>
   </dependencies>
 </project>

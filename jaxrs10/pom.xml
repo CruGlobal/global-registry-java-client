@@ -30,12 +30,7 @@
     <!-- Test dependencies -->
     <dependency>
       <groupId>org.ccci.gto</groupId>
-      <artifactId>global-registry-client-api</artifactId>
-      <type>test-jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.ccci.gto</groupId>
-      <artifactId>global-registry-client-serializer-json</artifactId>
+      <artifactId>global-registry-client-testing</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
