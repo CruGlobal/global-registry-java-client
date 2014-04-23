@@ -18,4 +18,10 @@ public interface GlobalRegistryClient {
     <T> T getEntity(EntityType<T> type, int id);
 
     <T> T getEntity(EntityType<T> type, int id, String createdBy);
+
+    <T> T addEntity(EntityType<T> type, T entity);
+
+    <T> T updateEntity(EntityType<T> type, int id, T entity);
+
+    <T> void deleteEntity(EntityType<T> type, int id);
 }

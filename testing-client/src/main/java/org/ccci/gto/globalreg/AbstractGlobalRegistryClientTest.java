@@ -58,4 +58,29 @@ public abstract class AbstractGlobalRegistryClientTest {
             assertEquals("Vellacott", entity.getString("last_name"));
         }
     }
+
+    @Test
+    public void testCreateUpdateDeleteEntity() throws Exception {
+        final GlobalRegistryClient client = this.getClient();
+        assumeNotNull(client);
+
+        final JSONObject newEntity = client.addEntity(TYPE_PERSON, new JSONObject(Collections.singletonMap
+                ("first_name", "Test User")));
+
+        assertNotNull(newEntity);
+        assertEquals("Test User", newEntity.getString("first_name"));
+        assertEquals(null, newEntity.optString("last_name", null));
+
+        final JSONObject tmp = new JSONObject(newEntity.toString());
+        tmp.put("first_name", "Updated Name");
+        tmp.put("last_name", "Last");
+        final JSONObject updatedEntity = client.updateEntity(TYPE_PERSON, newEntity.getInt("id"), tmp);
+
+        assertNotNull(updatedEntity);
+        assertEquals("Updated Name", updatedEntity.getString("first_name"));
+        assertEquals("Last", updatedEntity.getString("last_name"));
+        assertEquals(newEntity.getInt("id"), updatedEntity.getInt("id"));
+
+        client.deleteEntity(TYPE_PERSON, newEntity.getInt("id"));
+    }
 }
