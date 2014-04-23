@@ -48,8 +48,8 @@ public abstract class AbstractGlobalRegistryClientTest {
         final GlobalRegistryClient client = this.getClient();
         assumeNotNull(client);
 
-        final ResponseList<JSONObject> entities = client.findEntities(TYPE_PERSON, "4",
-                new Filter().path("last_name").value("Vellacott"));
+        final ResponseList<JSONObject> entities = client.getEntities(TYPE_PERSON, "4", new Filter().path("last_name")
+                .value("Vellacott"));
 
         assertEquals(1, entities.getMeta().getPage());
         assertTrue(entities.getMeta().getTotal() > 0);

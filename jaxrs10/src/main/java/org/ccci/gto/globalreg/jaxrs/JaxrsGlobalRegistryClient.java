@@ -43,8 +43,8 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
     }
 
     @Override
-    public <T> ResponseList<T> findEntities(final Type<T> type, final String createdBy, final int page,
-                                            final Filter... filters) {
+    public <T> ResponseList<T> getEntities(final Type<T> type, final String createdBy, final int page,
+                                           final Filter... filters) {
         // build the request uri
         final UriBuilder uri = this.getApiUriBuilder().path(PATH_ENTITIES);
         uri.queryParam(PARAM_ENTITY_TYPE, type.getEntityType());
