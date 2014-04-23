@@ -1,15 +1,25 @@
 package org.ccci.gto.globalreg.jaxrs;
 
-import org.ccci.gto.globalreg.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeNotNull;
+
+import org.ccci.gto.globalreg.AbstractGlobalRegistryClient;
+import org.ccci.gto.globalreg.AbstractGlobalRegistryClientTest;
+import org.ccci.gto.globalreg.Filter;
+import org.ccci.gto.globalreg.GlobalRegistryClient;
+import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.serializer.json.JSONObjectType;
 import org.ccci.gto.globalreg.serializer.json.JsonSerializer;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import java.util.Collections;
 
 public class JaxrsGlobalRegistryClientTest extends AbstractGlobalRegistryClientTest {
+    final JSONObjectType personType = new JSONObjectType("person");
+
     @Override
     protected AbstractGlobalRegistryClient newClient() {
         final JaxrsGlobalRegistryClient client = new JaxrsGlobalRegistryClient();
@@ -20,8 +30,9 @@ public class JaxrsGlobalRegistryClientTest extends AbstractGlobalRegistryClientT
     @Test
     public void testGetEntity() throws Exception {
         final GlobalRegistryClient client = this.getClient();
+        assumeNotNull(client);
 
-        final JSONObject entity = client.getEntity(new JSONObjectType("person"), 7178366, "4");
+        final JSONObject entity = client.getEntity(personType, 7178366, "4");
 
         assertEquals(7178366, entity.getInt("id"));
         assertEquals("Vellacott", entity.getString("last_name"));
@@ -30,8 +41,9 @@ public class JaxrsGlobalRegistryClientTest extends AbstractGlobalRegistryClientT
     @Test
     public void testFindEntities() throws Exception {
         final GlobalRegistryClient client = this.getClient();
+        assumeNotNull(client);
 
-        final ResponseList<JSONObject> entities = client.findEntities(new JSONObjectType("person"), "4",
+        final ResponseList<JSONObject> entities = client.findEntities(personType, "4",
                 new Filter().path("last_name").value("Vellacott"));
 
         assertEquals(1, entities.getMeta().getPage());
