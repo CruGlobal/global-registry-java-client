@@ -1,20 +1,22 @@
 package org.ccci.gto.globalreg.serializer.json;
 
+import static org.junit.Assert.assertEquals;
+
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.serializer.AbstractSerializerTest;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-
 public class JsonSerializerTest extends AbstractSerializerTest {
+    private static final JSONObjectType TYPE_PERSON = new JSONObjectType("person");
+
     public JsonSerializerTest() {
         super(new JsonSerializer());
     }
 
     @Test
-    public void testParseEntity() throws Exception {
-        final JSONObject json = this.testParseEntity(new JSONObjectType("person"));
+    public void testDeserializeEntity() throws Exception {
+        final JSONObject json = this.testDeserializeEntity(TYPE_PERSON);
         assertEquals(5, json.getInt("id"));
         assertEquals("John", json.getString("first_name"));
         assertEquals("Doe", json.getString("last_name"));
@@ -22,8 +24,8 @@ public class JsonSerializerTest extends AbstractSerializerTest {
     }
 
     @Test
-    public void testParseEntitiesList() throws Exception {
-        final ResponseList<JSONObject> entities = this.testParseEntitiesList(new JSONObjectType("person"));
+    public void testDeserializeEntities() throws Exception {
+        final ResponseList<JSONObject> entities = this.testDeserializeEntities(TYPE_PERSON);
 
         // all records should have a last_name of Vellacott
         for(final JSONObject entity : entities) {

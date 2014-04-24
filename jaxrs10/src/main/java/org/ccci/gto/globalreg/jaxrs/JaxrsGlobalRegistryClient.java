@@ -63,7 +63,7 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
 
             if (conn.getResponseCode() == 200) {
                 try (final InputStreamReader in = new InputStreamReader(conn.getInputStream())) {
-                    return this.serializer.parseEntitiesList(type, CharStreams.toString(in));
+                    return this.serializer.deserializeEntities(type, CharStreams.toString(in));
                 }
             }
         } catch (final IOException e) {
@@ -94,7 +94,7 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
 
             if (conn.getResponseCode() == 200) {
                 try (final InputStreamReader in = new InputStreamReader(conn.getInputStream())) {
-                    return this.serializer.parseEntity(type, CharStreams.toString(in));
+                    return this.serializer.deserializeEntity(type, CharStreams.toString(in));
                 }
             }
         } catch (final IOException e) {
@@ -120,7 +120,7 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
             conn = this.prepareRequest((HttpURLConnection) uri.build().toURL().openConnection());
             conn.setRequestMethod("POST");
             conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
-            this.sendData(conn, this.serializer.fromObject(type, entity));
+            this.sendData(conn, this.serializer.serializeEntity(type, entity));
 
             // parse the stored entity on successful creation/update
             // 200: existing entity updated
@@ -128,7 +128,7 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
             final int code = conn.getResponseCode();
             if (code == 200 || code == 201) {
                 try (final InputStreamReader in = new InputStreamReader(conn.getInputStream())) {
-                    return this.serializer.parseEntity(type, CharStreams.toString(in));
+                    return this.serializer.deserializeEntity(type, CharStreams.toString(in));
                 }
             }
         } catch (final IOException e) {
@@ -154,14 +154,14 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
             conn = this.prepareRequest((HttpURLConnection) uri.build().toURL().openConnection());
             conn.setRequestMethod("PUT");
             conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
-            this.sendData(conn, this.serializer.fromObject(type, entity));
+            this.sendData(conn, this.serializer.serializeEntity(type, entity));
 
             // parse the stored entity on successful update
             // 200: successful update
             final int code = conn.getResponseCode();
             if (code == 200) {
                 try (final InputStreamReader in = new InputStreamReader(conn.getInputStream())) {
-                    return this.serializer.parseEntity(type, CharStreams.toString(in));
+                    return this.serializer.deserializeEntity(type, CharStreams.toString(in));
                 }
             }
         } catch (final IOException e) {

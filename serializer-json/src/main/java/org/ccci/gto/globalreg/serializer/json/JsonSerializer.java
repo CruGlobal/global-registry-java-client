@@ -12,7 +12,7 @@ import java.util.Collections;
 
 public class JsonSerializer extends AbstractSerializer {
     @Override
-    public <T> T parseEntity(final Type<T> type, final String raw) {
+    public <T> T deserializeEntity(final Type<T> type, final String raw) {
         final Class<? extends T> clazz = type.getEntityClass();
         try {
             if (JSONObject.class.equals(clazz)) {
@@ -27,7 +27,7 @@ public class JsonSerializer extends AbstractSerializer {
     }
 
     @Override
-    public <T> ResponseList<T> parseEntitiesList(final Type<T> type, final String raw) {
+    public <T> ResponseList<T> deserializeEntities(final Type<T> type, final String raw) {
         final ResponseList<T> list = new ResponseList<>();
 
         final Class<? extends T> clazz = type.getEntityClass();
@@ -59,10 +59,10 @@ public class JsonSerializer extends AbstractSerializer {
     }
 
     @Override
-    public <T> String fromObject(final Type<T> type, final T object) {
+    public <T> String serializeEntity(final Type<T> type, final T entity) {
         final Class<? extends T> clazz = type.getEntityClass();
-        if (object instanceof JSONObject) {
-            return this.wrap(this.wrap((JSONObject) object, type.getEntityType()), "entity").toString();
+        if (entity instanceof JSONObject) {
+            return this.wrap(this.wrap((JSONObject) entity, type.getEntityType()), "entity").toString();
         } else {
             throw new UnsupportedOperationException("Unsupported class for JsonSerializer: " + clazz.getName());
         }

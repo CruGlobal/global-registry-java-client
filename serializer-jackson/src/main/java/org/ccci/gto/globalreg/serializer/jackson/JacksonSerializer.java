@@ -27,7 +27,7 @@ public class JacksonSerializer extends AbstractSerializer {
     }
 
     @Override
-    public <T> T parseEntity(final Type<T> type, final String raw) {
+    public <T> T deserializeEntity(final Type<T> type, final String raw) {
         try {
             final JsonNode json = this.mapper.readTree(raw);
             return this.mapper.treeToValue(json.path("entity").path(type.getEntityType()), type.getEntityClass());
@@ -38,7 +38,7 @@ public class JacksonSerializer extends AbstractSerializer {
     }
 
     @Override
-    public <T> ResponseList<T> parseEntitiesList(final Type<T> type, final String raw) {
+    public <T> ResponseList<T> deserializeEntities(final Type<T> type, final String raw) {
         try {
             final JsonNode root = this.mapper.readTree(raw);
             final ResponseList<T> list = new ResponseList<>();
@@ -69,9 +69,8 @@ public class JacksonSerializer extends AbstractSerializer {
     }
 
     @Override
-    public <T> String fromObject(final Type<T> type, final T object) {
-        final JsonNode json = this.mapper.valueToTree(object);
-        return this.wrap(this.wrap(json, type.getEntityType()), "entity").toString();
+    public <T> String serializeEntity(final Type<T> type, final T entity) {
+        return this.wrap(this.wrap(this.mapper.valueToTree(entity), type.getEntityType()), "entity").toString();
     }
 
     private JsonNode wrap(final JsonNode json, final String name) {

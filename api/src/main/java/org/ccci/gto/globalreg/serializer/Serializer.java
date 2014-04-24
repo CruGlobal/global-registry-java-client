@@ -4,9 +4,9 @@ import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
 
 public interface Serializer {
-    <T> T parseEntity(final Type<T> type, final String raw);
+    <T> T deserializeEntity(final Type<T> type, final String raw);
 
-    <T> ResponseList<T> parseEntitiesList(final Type<T> type, final String raw);
+    <T> ResponseList<T> deserializeEntities(final Type<T> type, final String raw);
 
-    <T> String fromObject(final Type<T> type, final T object);
+    <T> String serializeEntity(final Type<T> type, final T entity);
 }
