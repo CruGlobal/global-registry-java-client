@@ -8,6 +8,8 @@ public interface GlobalRegistryClient {
     public static final String PARAM_PAGE = "page";
     public static final String PARAM_FILTER = "filters";
 
+    /* Entity Endpoints */
+
     <T> T getEntity(Type<T> type, int id);
 
     <T> T getEntity(Type<T> type, int id, String createdBy);
@@ -25,4 +27,10 @@ public interface GlobalRegistryClient {
     <T> T updateEntity(Type<T> type, int id, T entity);
 
     <T> void deleteEntity(Type<T> type, int id);
+
+    /* Entity Type Endpoints */
+
+    ResponseList<EntityType> getEntityTypes(Filter... filters);
+
+    ResponseList<EntityType> getEntityTypes(int page, Filter... filters);
 }

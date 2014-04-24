@@ -53,4 +53,9 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     public final <T> T getEntity(Type<T> type, int id) {
         return this.getEntity(type, id, DEFAULT_CREATED_BY);
     }
+
+    @Override
+    public final ResponseList<EntityType> getEntityTypes(final Filter... filters) {
+        return this.getEntityTypes(1, filters);
+    }
 }

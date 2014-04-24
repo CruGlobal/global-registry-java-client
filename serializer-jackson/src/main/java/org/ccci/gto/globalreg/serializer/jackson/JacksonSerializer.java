@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
+import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
 import org.ccci.gto.globalreg.serializer.AbstractSerializer;
@@ -52,15 +53,33 @@ public class JacksonSerializer extends AbstractSerializer {
             }
 
             // parse the meta-data
-            final JsonNode metaJson = root.path("meta");
-            final ResponseList.Meta meta = list.getMeta();
-            meta.setTotal(metaJson.path("total").asInt(0));
-            meta.setFrom(metaJson.path("from").asInt(0));
-            meta.setTo(metaJson.path("to").asInt(0));
-            meta.setPage(metaJson.path("page").asInt(0));
-            meta.setTotalPages(metaJson.path("total_pages").asInt(0));
+            populateResponseListMeta(list, root);
 
             // return the parsed list
+            return list;
+        } catch (final IOException e) {
+            LOG.error("Unexpected IOException", e);
+            throw Throwables.propagate(e);
+        }
+    }
+
+    @Override
+    public ResponseList<EntityType> deserializeEntityTypes(final String raw) {
+        try {
+            final JsonNode root = this.mapper.readTree(raw);
+            final ResponseList<EntityType> list = new ResponseList<>();
+
+            // parse all returned entity types
+            final JsonNode types = root.path("entity_types");
+            if (types.isArray()) {
+                for (final JsonNode type : types) {
+                    list.add(this.parseEntityType(type));
+                }
+            }
+
+            // parse the meta-data
+            populateResponseListMeta(list, root);
+
             return list;
         } catch (final IOException e) {
             LOG.error("Unexpected IOException", e);
@@ -75,5 +94,38 @@ public class JacksonSerializer extends AbstractSerializer {
 
     private JsonNode wrap(final JsonNode json, final String name) {
         return this.mapper.createObjectNode().put(name, json);
+    }
+
+    private EntityType parseEntityType(final JsonNode json) {
+        final EntityType type = new EntityType();
+        type.setId(json.path("id").asInt());
+        final JsonNode name = json.get("name");
+        type.setName(name != null ? name.asText() : null);
+        final JsonNode description = json.get("description");
+        type.setDescription(description != null ? description.asText() : null);
+        final JsonNode fieldType = json.get("field_type");
+        type.setFieldType(fieldType != null ? fieldType.asText() : null);
+
+        // parse nested fields
+        final JsonNode fields = json.path("fields");
+        if (fields.isArray()) {
+            for (final JsonNode field : fields) {
+                type.addField(this.parseEntityType(field));
+            }
+        }
+
+        // return the parsed entity_type
+        return type;
+    }
+
+    private void populateResponseListMeta(final ResponseList<?> list, final JsonNode json) {
+        // parse the meta-data
+        final JsonNode metaJson = json.path("meta");
+        final ResponseList.Meta meta = list.getMeta();
+        meta.setTotal(metaJson.path("total").asInt(0));
+        meta.setFrom(metaJson.path("from").asInt(0));
+        meta.setTo(metaJson.path("to").asInt(0));
+        meta.setPage(metaJson.path("page").asInt(0));
+        meta.setTotalPages(metaJson.path("total_pages").asInt(0));
     }
 }

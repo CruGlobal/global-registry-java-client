@@ -2,6 +2,7 @@ package org.ccci.gto.globalreg;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNotNull;
 
@@ -44,7 +45,7 @@ public abstract class AbstractGlobalRegistryClientTest {
     }
 
     @Test
-    public void testFindEntities() throws Exception {
+    public void testGetEntities() throws Exception {
         final GlobalRegistryClient client = this.getClient();
         assumeNotNull(client);
 
@@ -82,5 +83,25 @@ public abstract class AbstractGlobalRegistryClientTest {
         assertEquals(newEntity.getInt("id"), updatedEntity.getInt("id"));
 
         client.deleteEntity(TYPE_PERSON, newEntity.getInt("id"));
+    }
+
+    @Test
+    public void testGetEntityTypes() throws Exception {
+        final GlobalRegistryClient client = this.getClient();
+        assumeNotNull(client);
+
+        final ResponseList<EntityType> types = client.getEntityTypes(new Filter().path("name").value("person"));
+
+        assertNotNull(types);
+        assertEquals(1, types.size());
+
+        // check the person entity
+        final EntityType person = types.get(0);
+        assertEquals("person", person.getName());
+        assertNull(person.getFieldType());
+        final EntityType firstName = person.getField("first_name");
+        assertNotNull(firstName);
+        assertEquals("first_name", firstName.getName());
+        assertEquals(EntityType.FieldType.STRING, firstName.getFieldType());
     }
 }

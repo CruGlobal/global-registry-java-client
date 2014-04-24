@@ -4,6 +4,7 @@ import com.google.common.base.Throwables;
 import com.google.common.io.CharStreams;
 import com.google.common.net.HttpHeaders;
 import org.ccci.gto.globalreg.AbstractGlobalRegistryClient;
+import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.Filter;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
@@ -196,5 +197,36 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
                 conn.disconnect();
             }
         }
+    }
+
+    @Override
+    public ResponseList<EntityType> getEntityTypes(final int page, final Filter... filters) {
+        // build the request uri
+        final UriBuilder uri = this.getApiUriBuilder().path(PATH_ENTITY_TYPES);
+        uri.queryParam(PARAM_PAGE, page);
+        for (final Filter filter : filters) {
+            uri.queryParam(this.buildFilterParamName(filter), filter.getValue());
+        }
+
+        // build & execute the request
+        HttpURLConnection conn = null;
+        try {
+            conn = this.prepareRequest((HttpURLConnection) uri.build().toURL().openConnection());
+
+            if (conn.getResponseCode() == 200) {
+                try (final InputStreamReader in = new InputStreamReader(conn.getInputStream())) {
+                    return this.serializer.deserializeEntityTypes(CharStreams.toString(in));
+                }
+            }
+        } catch (final IOException e) {
+            LOG.debug("error retrieving entity types", e);
+            throw Throwables.propagate(e);
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
+        }
+
+        return null;
     }
 }
