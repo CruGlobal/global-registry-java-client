@@ -97,7 +97,12 @@ public class JacksonSerializer extends AbstractSerializer {
     }
 
     private EntityType parseEntityType(final JsonNode json) {
+        return this.parseEntityType(json, null);
+    }
+
+    private EntityType parseEntityType(final JsonNode json, final EntityType parent) {
         final EntityType type = new EntityType();
+        type.setParent(parent);
         type.setId(json.path("id").asInt());
         final JsonNode name = json.get("name");
         type.setName(name != null ? name.asText() : null);
@@ -110,7 +115,7 @@ public class JacksonSerializer extends AbstractSerializer {
         final JsonNode fields = json.path("fields");
         if (fields.isArray()) {
             for (final JsonNode field : fields) {
-                type.addField(this.parseEntityType(field));
+                type.addField(this.parseEntityType(field, type));
             }
         }
 

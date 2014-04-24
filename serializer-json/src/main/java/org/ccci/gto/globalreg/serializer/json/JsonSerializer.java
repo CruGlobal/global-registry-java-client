@@ -97,7 +97,12 @@ public class JsonSerializer extends AbstractSerializer {
     }
 
     private EntityType parseEntityType(final JSONObject json) {
+        return this.parseEntityType(json, null);
+    }
+
+    private EntityType parseEntityType(final JSONObject json, final EntityType parent) {
         final EntityType type = new EntityType();
+        type.setParent(parent);
         type.setId(json.getInt("id"));
         type.setName(json.optString("name", null));
         type.setDescription(json.optString("description", null));
@@ -107,7 +112,7 @@ public class JsonSerializer extends AbstractSerializer {
         final JSONArray fields = json.optJSONArray("fields");
         if (fields != null) {
             for (int i = 0; i < fields.length(); i++) {
-                type.addField(parseEntityType(fields.getJSONObject(i)));
+                type.addField(this.parseEntityType(fields.getJSONObject(i), type));
             }
         }
 

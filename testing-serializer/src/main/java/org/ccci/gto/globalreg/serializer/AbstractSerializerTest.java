@@ -58,7 +58,7 @@ public abstract class AbstractSerializerTest {
 
         // validate first entity_type (ministry_scope)
         final EntityType ministry = types.get(0);
-        assertEquals(392, ministry.getId());
+        assertEquals(392, (int) ministry.getId());
         assertEquals("ministry_scope", ministry.getName());
         assertEquals(EntityType.FieldType.ENUM_VALUES, ministry.getFieldType());
         assertEquals("Root level ministry scope entity type to store enum values", ministry.getDescription());
@@ -66,12 +66,14 @@ public abstract class AbstractSerializerTest {
 
         // validate second entity_type (person)
         final EntityType person = types.get(1);
-        assertEquals(299, person.getId());
+        assertEquals(299, (int) person.getId());
         assertEquals("person", person.getName());
         assertNull(person.getFieldType());
         assertEquals(42, person.getFields().size());
-        final EntityType auth = person.getFields().get(5);
-        assertEquals(345, auth.getId());
+        final EntityType auth = person.getField("authentication");
+        assertEquals(345, (int) auth.getId());
+        assertEquals(299, (int) auth.getParentId());
+        assertEquals(person, auth.getParent());
         assertEquals("authentication", auth.getName());
         assertNull(person.getFieldType());
         assertEquals(4, auth.getFields().size());
