@@ -24,46 +24,33 @@ public final class EntityType {
         }
 
         public static FieldType fromString(final String type) {
-            if (type != null) {
-                if("entity".equals(type)) {
-                    return ENTITY;
-                }
-                if ("boolean".equals(type)) {
-                    return BOOLEAN;
-                }
-                if("integer".equals(type)) {
-                    return INTEGER;
-                }
-                if("decimal".equals(type)) {
-                    return DECIMAL;
-                }
-                if("string".equals(type)) {
-                    return STRING;
-                }
-                if("date".equals(type)) {
-                    return DATE;
-                }
-                if("datetime".equals(type)) {
-                    return DATETIME;
-                }
-                if("enum".equals(type)) {
-                    return ENUM;
-                }
-                if("enum_values".equals(type)) {
-                    return ENUM_VALUES;
-                }
-                if("email".equals(type)) {
-                    return EMAIL;
-                }
-                if("text".equals(type)) {
-                    return TEXT;
-                }
-                if("uuid".equals(type)) {
-                    return UUID;
-                }
-                else {
-                    LOG.error("unrecognized field_type: {}", type);
-                }
+            //XXX: I would like to use a String switch for this, but need to support Java 1.6
+            if ("entity".equals(type)) {
+                return ENTITY;
+            } else if ("boolean".equals(type)) {
+                return BOOLEAN;
+            } else if ("integer".equals(type)) {
+                return INTEGER;
+            } else if ("decimal".equals(type)) {
+                return DECIMAL;
+            } else if ("string".equals(type)) {
+                return STRING;
+            } else if ("date".equals(type)) {
+                return DATE;
+            } else if ("datetime".equals(type)) {
+                return DATETIME;
+            } else if ("enum".equals(type)) {
+                return ENUM;
+            } else if ("enum_values".equals(type)) {
+                return ENUM_VALUES;
+            } else if ("email".equals(type)) {
+                return EMAIL;
+            } else if ("text".equals(type)) {
+                return TEXT;
+            } else if ("uuid".equals(type)) {
+                return UUID;
+            } else {
+                LOG.error("unrecognized field_type: {}", type);
             }
 
             return UNKNOWN;
