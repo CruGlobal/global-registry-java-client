@@ -116,7 +116,7 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
         final Request request = new Request();
         request.method = "POST";
         request.path = new String[]{PATH_ENTITIES};
-        request.headers.put(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON.toString());
+        request.contentType = APPLICATION_JSON.toString();
         request.content = this.serializer.serializeEntity(type, entity);
 
         // execute request
@@ -138,7 +138,7 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
         final Request request = new Request();
         request.method = "PUT";
         request.path = new String[]{PATH_ENTITIES, Integer.toString(id)};
-        request.headers.put(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON.toString());
+        request.contentType = APPLICATION_JSON.toString();
         request.content = this.serializer.serializeEntity(type, entity);
 
         // execute request
@@ -195,9 +195,12 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
         public String[] path = new String[0];
         public final Map<String, String> headers = new HashMap<>();
         public final Multimap<String, String> queryParams = HashMultimap.create();
+        public String contentType = null;
         public String content = null;
 
-        public Request() {}
+        public Request() {
+            this.headers.put(HttpHeaders.ACCEPT, APPLICATION_JSON.toString());
+        }
     }
 
     protected final static class Response {

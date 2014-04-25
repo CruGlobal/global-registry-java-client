@@ -22,7 +22,7 @@ public abstract class AbstractGlobalRegistryClientTest {
 
     protected AbstractGlobalRegistryClient getClient() {
         // dont create client if we don't have an access token
-        if(ACCESS_TOKEN == null || "".equals(ACCESS_TOKEN)) {
+        if (ACCESS_TOKEN == null || "".equals(ACCESS_TOKEN)) {
             return null;
         }
 
@@ -49,8 +49,8 @@ public abstract class AbstractGlobalRegistryClientTest {
         final GlobalRegistryClient client = this.getClient();
         assumeNotNull(client);
 
-        final ResponseList<JSONObject> entities = client.getEntities(TYPE_PERSON, "4", new Filter().path("last_name")
-                .value("Vellacott"));
+        final ResponseList<JSONObject> entities = client.getEntities(TYPE_PERSON, "4",
+                new Filter().path("last_name").value("Vellacott"));
 
         assertEquals(1, entities.getMeta().getPage());
         assertTrue(entities.getMeta().getTotal() > 0);

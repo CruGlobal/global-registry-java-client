@@ -7,7 +7,6 @@ import org.ccci.gto.globalreg.AbstractGlobalRegistryClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,7 +43,6 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
         try {
             conn = (HttpURLConnection) uri.toURL().openConnection();
             conn.setRequestMethod(request.method);
-            conn.setRequestProperty(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON);
             conn.setRequestProperty(HttpHeaders.AUTHORIZATION, "Bearer " + this.accessToken);
             for (final Map.Entry<String, String> header : request.headers.entrySet()) {
                 conn.setRequestProperty(header.getKey(), header.getValue());
@@ -52,6 +50,7 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
 
             // send content when necessary
             if (request.content != null) {
+                conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, request.contentType);
                 conn.setDoOutput(true);
                 try (OutputStream raw = conn.getOutputStream(); OutputStreamWriter out = new OutputStreamWriter(raw)) {
                     out.write(request.content);
