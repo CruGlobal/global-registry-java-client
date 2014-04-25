@@ -52,14 +52,14 @@ public class JaxrsGlobalRegistryClient extends BaseGlobalRegistryClient {
             if (request.content != null) {
                 conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, request.contentType);
                 conn.setDoOutput(true);
-                Closer closer = Closer.create();
                 try {
+                    final Closer closer = Closer.create();
                     try {
-                        OutputStream raw = closer.register(conn.getOutputStream());
-                        OutputStreamWriter out = closer.register(new OutputStreamWriter(raw));
+                        final OutputStream raw = closer.register(conn.getOutputStream());
+                        final OutputStreamWriter out = closer.register(new OutputStreamWriter(raw));
                         out.write(request.content);
-                    } catch (Throwable t) {
-                        throw closer.rethrow(t);
+                    } catch (final Throwable e) {
+                        throw closer.rethrow(e);
                     } finally {
                         closer.close();
                     }
@@ -71,14 +71,14 @@ public class JaxrsGlobalRegistryClient extends BaseGlobalRegistryClient {
 
             // read & return response
             final int code = conn.getResponseCode();
-            Closer closer = Closer.create();
             try {
+                final Closer closer = Closer.create();
                 try {
-                    InputStream raw = closer.register(conn.getInputStream());
-                    InputStreamReader in = closer.register(new InputStreamReader(raw));
-                    return new Response(conn.getResponseCode(), CharStreams.toString(in));
-                } catch (Throwable t) {
-                    throw closer.rethrow(t);
+                    final InputStream raw = closer.register(conn.getInputStream());
+                    final InputStreamReader in = closer.register(new InputStreamReader(raw));
+                    return new Response(code, CharStreams.toString(in));
+                } catch (final Throwable e) {
+                    throw closer.rethrow(e);
                 } finally {
                     closer.close();
                 }
