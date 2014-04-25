@@ -21,14 +21,10 @@ import java.util.Map;
 public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
     private static final Logger LOG = LoggerFactory.getLogger(JaxrsGlobalRegistryClient.class);
 
-    private UriBuilder getApiUriBuilder() {
-        return UriBuilder.fromUri(this.apiUrl);
-    }
-
     @Override
     protected Response processRequest(final Request request) {
         // build the request uri
-        final UriBuilder uriBuilder = this.getApiUriBuilder();
+        final UriBuilder uriBuilder = UriBuilder.fromUri(this.apiUrl);
         for (final String path : request.path) {
             uriBuilder.path(path);
         }
