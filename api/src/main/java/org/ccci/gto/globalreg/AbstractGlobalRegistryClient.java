@@ -2,11 +2,18 @@ package org.ccci.gto.globalreg;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.google.common.net.HttpHeaders;
+import com.google.common.net.MediaType;
 import org.ccci.gto.globalreg.serializer.Serializer;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClient {
     public static final String DEFAULT_CREATED_BY = null;
     public static final int DEFAULT_PAGE = 1;
+
+    private static final MediaType APPLICATION_JSON = MediaType.create("application", "json");
 
     protected String apiUrl;
     protected String accessToken;
@@ -104,6 +111,49 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     }
 
     @Override
+    public <T> T addEntity(final Type<T> type, final T entity) {
+        // build request
+        final Request request = new Request();
+        request.method = "POST";
+        request.path = new String[]{PATH_ENTITIES};
+        request.headers.put(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON.toString());
+        request.content = this.serializer.serializeEntity(type, entity);
+
+        // execute request
+        final Response response = this.processRequest(request);
+
+        // process response
+        // 200: existing entity updated
+        // 201: new entity created
+        if (response.code == 200 || response.code == 201) {
+            return this.serializer.deserializeEntity(type, response.content);
+        }
+
+        return null;
+    }
+
+    @Override
+    public <T> T updateEntity(final Type<T> type, final int id, final T entity) {
+        // build the request
+        final Request request = new Request();
+        request.method = "PUT";
+        request.path = new String[]{PATH_ENTITIES, Integer.toString(id)};
+        request.headers.put(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON.toString());
+        request.content = this.serializer.serializeEntity(type, entity);
+
+        // execute request
+        final Response response = this.processRequest(request);
+
+        // process response
+        // 200: successful update
+        if (response.code == 200) {
+            return this.serializer.deserializeEntity(type, response.content);
+        }
+
+        return null;
+    }
+
+    @Override
     public final ResponseList<EntityType> getEntityTypes(final Filter... filters) {
         return this.getEntityTypes(1, filters);
     }
@@ -111,6 +161,7 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     protected final static class Request {
         public String method = "GET";
         public String[] path = new String[0];
+        public final Map<String, String> headers = new HashMap<>();
         public final Multimap<String, String> queryParams = HashMultimap.create();
         public String content = null;
 

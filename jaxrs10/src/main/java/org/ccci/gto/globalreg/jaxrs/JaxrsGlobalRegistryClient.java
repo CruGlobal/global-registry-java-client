@@ -21,6 +21,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.Collection;
+import java.util.Map;
 
 public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
     private static final Logger LOG = LoggerFactory.getLogger(JaxrsGlobalRegistryClient.class);
@@ -44,73 +45,6 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
             throw Throwables.propagate(e);
         }
         return conn;
-    }
-
-    @Override
-    public <T> T addEntity(final Type<T> type, final T entity) {
-        // build the request uri
-        final UriBuilder uri = this.getApiUriBuilder().path(PATH_ENTITIES);
-
-        // build & execute the request
-        HttpURLConnection conn = null;
-        try {
-            conn = this.prepareRequest((HttpURLConnection) uri.build().toURL().openConnection());
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
-            this.sendData(conn, this.serializer.serializeEntity(type, entity));
-
-            // parse the stored entity on successful creation/update
-            // 200: existing entity updated
-            // 201: new entity created
-            final int code = conn.getResponseCode();
-            if (code == 200 || code == 201) {
-                try (final InputStreamReader in = new InputStreamReader(conn.getInputStream())) {
-                    return this.serializer.deserializeEntity(type, CharStreams.toString(in));
-                }
-            }
-        } catch (final IOException e) {
-            LOG.debug("error storing new entity", e);
-            throw Throwables.propagate(e);
-        } finally {
-            if (conn != null) {
-                conn.disconnect();
-            }
-        }
-
-        return null;
-    }
-
-    @Override
-    public <T> T updateEntity(final Type<T> type, final int id, final T entity) {
-        // build the request uri
-        final UriBuilder uri = this.getApiUriBuilder().path(PATH_ENTITIES).path(Integer.toString(id));
-
-        // build & execute the request
-        HttpURLConnection conn = null;
-        try {
-            conn = this.prepareRequest((HttpURLConnection) uri.build().toURL().openConnection());
-            conn.setRequestMethod("PUT");
-            conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
-            this.sendData(conn, this.serializer.serializeEntity(type, entity));
-
-            // parse the stored entity on successful update
-            // 200: successful update
-            final int code = conn.getResponseCode();
-            if (code == 200) {
-                try (final InputStreamReader in = new InputStreamReader(conn.getInputStream())) {
-                    return this.serializer.deserializeEntity(type, CharStreams.toString(in));
-                }
-            }
-        } catch (final IOException e) {
-            LOG.debug("error updating entity", e);
-            throw Throwables.propagate(e);
-        } finally {
-            if (conn != null) {
-                conn.disconnect();
-            }
-        }
-
-        return null;
     }
 
     @Override
@@ -186,6 +120,14 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
             conn.setRequestMethod(request.method);
             conn.setRequestProperty(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON);
             conn.setRequestProperty(HttpHeaders.AUTHORIZATION, "Bearer " + this.accessToken);
+            for (final Map.Entry<String, String> header : request.headers.entrySet()) {
+                conn.setRequestProperty(header.getKey(), header.getValue());
+            }
+
+            // send content when necessary
+            if (request.content != null) {
+                this.sendData(conn, request.content);
+            }
 
             // read & return response
             try (InputStream raw = conn.getInputStream(); InputStreamReader in = new InputStreamReader(raw)) {
