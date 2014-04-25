@@ -78,6 +78,32 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     }
 
     @Override
+    public <T> ResponseList<T> getEntities(final Type<T> type, final String createdBy, final int page,
+                                           final Filter... filters) {
+        // build request
+        final Request request = new Request();
+        request.path = new String[]{PATH_ENTITIES};
+        request.queryParams.put(PARAM_ENTITY_TYPE, type.getEntityType());
+        request.queryParams.put(PARAM_PAGE, Integer.toString(page));
+        if (createdBy != null) {
+            request.queryParams.put(PARAM_CREATED_BY, createdBy);
+        }
+        for (final Filter filter : filters) {
+            request.queryParams.put(this.buildFilterParamName(filter), filter.getValue());
+        }
+
+        // execute request
+        final Response response = this.processRequest(request);
+
+        // process response
+        if (response.code == 200) {
+            return this.serializer.deserializeEntities(type, response.content);
+        }
+
+        return null;
+    }
+
+    @Override
     public final ResponseList<EntityType> getEntityTypes(final Filter... filters) {
         return this.getEntityTypes(1, filters);
     }

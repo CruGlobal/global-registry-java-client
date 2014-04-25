@@ -47,42 +47,6 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
     }
 
     @Override
-    public <T> ResponseList<T> getEntities(final Type<T> type, final String createdBy, final int page,
-                                           final Filter... filters) {
-        // build the request uri
-        final UriBuilder uri = this.getApiUriBuilder().path(PATH_ENTITIES);
-        uri.queryParam(PARAM_ENTITY_TYPE, type.getEntityType());
-        uri.queryParam(PARAM_PAGE, page);
-        if (createdBy != null) {
-            uri.queryParam(PARAM_CREATED_BY, createdBy);
-        }
-        for (final Filter filter : filters) {
-            uri.queryParam(this.buildFilterParamName(filter), filter.getValue());
-        }
-
-        // build & execute the request
-        HttpURLConnection conn = null;
-        try {
-            conn = this.prepareRequest((HttpURLConnection) uri.build().toURL().openConnection());
-
-            if (conn.getResponseCode() == 200) {
-                try (final InputStreamReader in = new InputStreamReader(conn.getInputStream())) {
-                    return this.serializer.deserializeEntities(type, CharStreams.toString(in));
-                }
-            }
-        } catch (final IOException e) {
-            LOG.debug("error searching for entities", e);
-            throw Throwables.propagate(e);
-        } finally {
-            if (conn != null) {
-                conn.disconnect();
-            }
-        }
-
-        return null;
-    }
-
-    @Override
     public <T> T addEntity(final Type<T> type, final T entity) {
         // build the request uri
         final UriBuilder uri = this.getApiUriBuilder().path(PATH_ENTITIES);
