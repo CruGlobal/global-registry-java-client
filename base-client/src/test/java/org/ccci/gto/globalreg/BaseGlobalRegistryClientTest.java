@@ -13,20 +13,20 @@ import org.junit.Test;
 
 import java.util.Collections;
 
-public abstract class AbstractGlobalRegistryClientTest {
+public abstract class BaseGlobalRegistryClientTest {
     private static final String ACCESS_TOKEN = "";
 
     protected static final JSONObjectType TYPE_PERSON = new JSONObjectType("person");
 
-    protected abstract AbstractGlobalRegistryClient newClient();
+    protected abstract BaseGlobalRegistryClient newClient();
 
-    protected AbstractGlobalRegistryClient getClient() {
+    protected BaseGlobalRegistryClient getClient() {
         // dont create client if we don't have an access token
         if (ACCESS_TOKEN == null || "".equals(ACCESS_TOKEN)) {
             return null;
         }
 
-        final AbstractGlobalRegistryClient client = this.newClient();
+        final BaseGlobalRegistryClient client = this.newClient();
         client.setApiUrl("http://gr.stage.uscm.org");
         client.setAccessToken(ACCESS_TOKEN);
         client.setSerializer(new JsonSerializer());

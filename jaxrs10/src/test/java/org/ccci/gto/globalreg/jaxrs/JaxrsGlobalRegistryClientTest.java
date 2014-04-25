@@ -1,11 +1,11 @@
 package org.ccci.gto.globalreg.jaxrs;
 
-import org.ccci.gto.globalreg.AbstractGlobalRegistryClient;
-import org.ccci.gto.globalreg.AbstractGlobalRegistryClientTest;
+import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
+import org.ccci.gto.globalreg.BaseGlobalRegistryClientTest;
 
-public class JaxrsGlobalRegistryClientTest extends AbstractGlobalRegistryClientTest {
+public class JaxrsGlobalRegistryClientTest extends BaseGlobalRegistryClientTest {
     @Override
-    protected AbstractGlobalRegistryClient newClient() {
+    protected BaseGlobalRegistryClient newClient() {
         return new JaxrsGlobalRegistryClient();
     }
 }

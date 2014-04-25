@@ -3,7 +3,7 @@ package org.ccci.gto.globalreg.jaxrs;
 import com.google.common.base.Throwables;
 import com.google.common.io.CharStreams;
 import com.google.common.net.HttpHeaders;
-import org.ccci.gto.globalreg.AbstractGlobalRegistryClient;
+import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +18,7 @@ import java.net.URI;
 import java.util.Collection;
 import java.util.Map;
 
-public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
+public class JaxrsGlobalRegistryClient extends BaseGlobalRegistryClient {
     private static final Logger LOG = LoggerFactory.getLogger(JaxrsGlobalRegistryClient.class);
 
     @Override
