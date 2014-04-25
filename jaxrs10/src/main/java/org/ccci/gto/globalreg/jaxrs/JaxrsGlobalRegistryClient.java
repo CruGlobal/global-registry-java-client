@@ -14,10 +14,13 @@ import org.slf4j.LoggerFactory;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.util.Collection;
 
 public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
     private static final Logger LOG = LoggerFactory.getLogger(JaxrsGlobalRegistryClient.class);
@@ -69,37 +72,6 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
             }
         } catch (final IOException e) {
             LOG.debug("error searching for entities", e);
-            throw Throwables.propagate(e);
-        } finally {
-            if (conn != null) {
-                conn.disconnect();
-            }
-        }
-
-        return null;
-    }
-
-    @Override
-    public <T> T getEntity(final Type<T> type, final int id, final String createdBy) {
-        // build the request uri
-        final UriBuilder uri = this.getApiUriBuilder().path(PATH_ENTITIES).path(Integer.toString(id));
-        uri.queryParam(PARAM_ENTITY_TYPE, type.getEntityType());
-        if (createdBy != null) {
-            uri.queryParam(PARAM_CREATED_BY, createdBy);
-        }
-
-        // build & execute the request
-        HttpURLConnection conn = null;
-        try {
-            conn = this.prepareRequest((HttpURLConnection) uri.build().toURL().openConnection());
-
-            if (conn.getResponseCode() == 200) {
-                try (final InputStreamReader in = new InputStreamReader(conn.getInputStream())) {
-                    return this.serializer.deserializeEntity(type, CharStreams.toString(in));
-                }
-            }
-        } catch (final IOException e) {
-            LOG.debug("error retrieving entity", e);
             throw Throwables.propagate(e);
         } finally {
             if (conn != null) {
@@ -228,5 +200,40 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
         }
 
         return null;
+    }
+
+    @Override
+    protected Response processRequest(final Request request) {
+        // build the request uri
+        final UriBuilder uriBuilder = this.getApiUriBuilder();
+        for (final String path : request.path) {
+            uriBuilder.path(path);
+        }
+        for (final String key : request.queryParams.keySet()) {
+            final Collection<String> values = request.queryParams.get(key);
+            uriBuilder.queryParam(key, values.toArray(new String[values.size()]));
+        }
+        final URI uri = uriBuilder.build();
+
+        // build & execute the request
+        HttpURLConnection conn = null;
+        try {
+            conn = (HttpURLConnection) uri.toURL().openConnection();
+            conn.setRequestMethod(request.method);
+            conn.setRequestProperty(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON);
+            conn.setRequestProperty(HttpHeaders.AUTHORIZATION, "Bearer " + this.accessToken);
+
+            // read & return response
+            try (InputStream raw = conn.getInputStream(); InputStreamReader in = new InputStreamReader(raw)) {
+                return new Response(conn.getResponseCode(), CharStreams.toString(in));
+            }
+        } catch (final IOException e) {
+            LOG.debug("error processing request: {}", uri, e);
+            throw Throwables.propagate(e);
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
+        }
     }
 }
