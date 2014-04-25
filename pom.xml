@@ -15,6 +15,7 @@
   <modules>
     <module>api</module>
     <module>base-client</module>
+    <module>httpclient</module>
     <module>jaxrs10</module>
     <module>serializer-jackson</module>
     <module>serializer-json</module>
