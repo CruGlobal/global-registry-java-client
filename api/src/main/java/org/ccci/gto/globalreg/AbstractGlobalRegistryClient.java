@@ -154,6 +154,17 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     }
 
     @Override
+    public <T> void deleteEntity(Type<T> type, int id) {
+        // build the request
+        final Request request = new Request();
+        request.method = "DELETE";
+        request.path = new String[]{PATH_ENTITIES, Integer.toString(id)};
+
+        // execute request
+        final Response response = this.processRequest(request);
+    }
+
+    @Override
     public final ResponseList<EntityType> getEntityTypes(final Filter... filters) {
         return this.getEntityTypes(1, filters);
     }

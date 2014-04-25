@@ -7,7 +7,6 @@ import org.ccci.gto.globalreg.AbstractGlobalRegistryClient;
 import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.Filter;
 import org.ccci.gto.globalreg.ResponseList;
-import org.ccci.gto.globalreg.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,28 +44,6 @@ public class JaxrsGlobalRegistryClient extends AbstractGlobalRegistryClient {
             throw Throwables.propagate(e);
         }
         return conn;
-    }
-
-    @Override
-    public <T> void deleteEntity(final Type<T> type, final int id) {
-        // build the request uri
-        final UriBuilder uri = this.getApiUriBuilder().path(PATH_ENTITIES).path(Integer.toString(id));
-
-        // build & execute the request
-        HttpURLConnection conn = null;
-        try {
-            conn = this.prepareRequest((HttpURLConnection) uri.build().toURL().openConnection());
-            conn.setRequestMethod("DELETE");
-
-
-        } catch (final IOException e) {
-            LOG.debug("error deleting entity", e);
-            throw Throwables.propagate(e);
-        } finally {
-            if (conn != null) {
-                conn.disconnect();
-            }
-        }
     }
 
     @Override
