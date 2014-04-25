@@ -22,6 +22,18 @@ public final class Filter implements Serializable {
         return new Filter(path != null ? path : new String[0], this.value);
     }
 
+    public final Filter prependPath(final String... path) {
+        // short-circuit if there is nothing to do
+        if (path == null || path.length == 0) {
+            return this;
+        }
+
+        // merge 2 arrays
+        final String[] tmp = Arrays.copyOf(path, path.length + this.path.length);
+        System.arraycopy(this.path, 0, tmp, path.length, this.path.length);
+        return this.path(tmp);
+    }
+
     public final Filter value(final String value) {
         return new Filter(this.path, value != null ? value : "");
     }
