@@ -1,4 +1,4 @@
-package org.ccci.gto.globalreg.httpclient4;
+package org.ccci.gto.globalreg.httpclient;
 
 import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
 import org.ccci.gto.globalreg.BaseGlobalRegistryClientTest;

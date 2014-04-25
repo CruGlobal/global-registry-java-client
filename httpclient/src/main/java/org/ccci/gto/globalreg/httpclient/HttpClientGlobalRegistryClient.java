@@ -1,4 +1,4 @@
-package org.ccci.gto.globalreg.httpclient4;
+package org.ccci.gto.globalreg.httpclient;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
