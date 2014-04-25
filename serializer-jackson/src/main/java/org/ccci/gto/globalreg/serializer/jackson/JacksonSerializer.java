@@ -3,6 +3,7 @@ package org.ccci.gto.globalreg.serializer.jackson;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.base.Throwables;
 import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.ResponseList;
@@ -93,7 +94,9 @@ public class JacksonSerializer extends AbstractSerializer {
     }
 
     private JsonNode wrap(final JsonNode json, final String name) {
-        return this.mapper.createObjectNode().put(name, json);
+        final ObjectNode wrapper = this.mapper.createObjectNode();
+        wrapper.put(name, json);
+        return wrapper;
     }
 
     private EntityType parseEntityType(final JsonNode json) {

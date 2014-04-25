@@ -32,4 +32,12 @@ public class JsonSerializerTest extends AbstractSerializerTest {
             assertEquals("Vellacott", entity.getString("last_name"));
         }
     }
+
+    @Test
+    public void testSerializeEntity() throws Exception {
+        final JSONObject entity = new JSONObject();
+        entity.put("first_name", "Bobby");
+        entity.put("last_name", "Tables");
+        this.testSerializeEntity(TYPE_PERSON, entity);
+    }
 }

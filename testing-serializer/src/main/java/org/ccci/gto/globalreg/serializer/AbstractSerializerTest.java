@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import com.jayway.restassured.path.json.JsonPath;
 import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.TestUtils;
@@ -77,5 +78,13 @@ public abstract class AbstractSerializerTest {
         assertEquals("authentication", auth.getName());
         assertNull(person.getFieldType());
         assertEquals(4, auth.getFields().size());
+    }
+
+    protected <T> void testSerializeEntity(final Type<T> type, final T entity) throws Exception {
+        final String raw = this.serializer.serializeEntity(type, entity);
+        final JsonPath json = new JsonPath(raw);
+        json.setRoot("entity.person");
+        assertEquals("Bobby", json.getString("first_name"));
+        assertEquals("Tables", json.getString("last_name"));
     }
 }

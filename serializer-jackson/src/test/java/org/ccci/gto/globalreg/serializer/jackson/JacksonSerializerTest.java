@@ -46,6 +46,16 @@ public class JacksonSerializerTest extends AbstractSerializerTest {
         }
     }
 
+    @Test
+    public void testSerializeEntity() throws Exception {
+        for (final Class<? extends Person> clazz : CLASSES) {
+            final Person person = clazz.newInstance();
+            person.setFirstName("Bobby");
+            person.setLastName("Tables");
+            this.testSerializeEntity(new Type<>(clazz, "person"), person);
+        }
+    }
+
     private abstract static class Person {
         protected abstract Integer getId();
 
