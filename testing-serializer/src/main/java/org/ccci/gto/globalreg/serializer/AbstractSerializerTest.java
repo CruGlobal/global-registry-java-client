@@ -27,8 +27,8 @@ public abstract class AbstractSerializerTest {
     }
 
     protected <T> ResponseList<T> testDeserializeEntities(final Type<T> type) throws Exception {
-        final ResponseList<T> entities = this.serializer.deserializeEntities(type, TestUtils.loadResource
-                (AbstractSerializerTest.class, "entitieslist.json"));
+        final ResponseList<T> entities = this.serializer.deserializeEntities(type,
+                TestUtils.loadResource(AbstractSerializerTest.class, "entities.json"));
 
         // validate meta-data
         final ResponseList.Meta meta = entities.getMeta();
