@@ -65,6 +65,23 @@ public class JacksonSerializer extends AbstractSerializer {
     }
 
     @Override
+    public String serializeEntityType(final EntityType type) {
+        final ObjectNode json = this.mapper.createObjectNode();
+        json.put("name", type.getName());
+        json.put("description", type.getDescription());
+        final EntityType.FieldType fieldType = type.getFieldType();
+        if (fieldType != null) {
+            json.put("field_type", type.getFieldType().toString());
+        }
+        if (type.hasParent()) {
+            json.put("parent_id", type.getParentId());
+        }
+
+        // wrap and return the json
+        return this.wrap(json, "entity_type").toString();
+    }
+
+    @Override
     public ResponseList<EntityType> deserializeEntityTypes(final String raw) {
         try {
             final JsonNode root = this.mapper.readTree(raw);

@@ -44,6 +44,11 @@ public final class EntityType {
 
             throw new IllegalArgumentException("Unrecognized field_type: " + raw);
         }
+
+        @Override
+        public String toString() {
+            return this.raw;
+        }
     }
 
     private Integer id;
@@ -61,6 +66,10 @@ public final class EntityType {
 
     public void setId(final Integer id) {
         this.id = id;
+    }
+
+    public boolean hasParent() {
+        return this.parent != null || this.parentId != null;
     }
 
     public EntityType getParent() {

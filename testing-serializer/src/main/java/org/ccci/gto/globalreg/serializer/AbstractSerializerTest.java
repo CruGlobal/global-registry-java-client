@@ -9,6 +9,7 @@ import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.TestUtils;
 import org.ccci.gto.globalreg.Type;
+import org.ccci.gto.globalreg.util.ArrayUtil;
 import org.junit.Test;
 
 public abstract class AbstractSerializerTest {
@@ -83,8 +84,42 @@ public abstract class AbstractSerializerTest {
     protected <T> void testSerializeEntity(final Type<T> type, final T entity) throws Exception {
         final String raw = this.serializer.serializeEntity(type, entity);
         final JsonPath json = new JsonPath(raw);
-        json.setRoot("entity.person");
+        json.setRoot("entity." + type.getEntityType());
         assertEquals("Bobby", json.getString("first_name"));
         assertEquals("Tables", json.getString("last_name"));
+    }
+
+    @Test
+    public void testSerializeEntityType() throws Exception {
+        for (final EntityType.FieldType fieldType : ArrayUtil.merge(EntityType.FieldType.values(),
+                (EntityType.FieldType) null)) {
+            for (final Integer parentId : new Integer[]{null, 1}) {
+                for (final String name : new String[]{"test_name"}) {
+                    // create test entity type
+                    final EntityType type = new EntityType();
+                    type.setParentId(parentId);
+                    type.setFieldType(fieldType);
+                    type.setName(name);
+                    type.setDescription("test_description");
+
+                    // test entity type serialization
+                    final String raw = this.serializer.serializeEntityType(type);
+                    final JsonPath json = new JsonPath(raw);
+                    json.setRoot("entity_type");
+                    assertEquals(name, json.getString("name"));
+                    assertEquals("test_description", json.getString("description"));
+                    if (parentId != null) {
+                        assertEquals((int) parentId, json.getInt("parent_id"));
+                    } else {
+                        assertNull(json.get("parent_id"));
+                    }
+                    if (fieldType != null) {
+                        assertEquals(fieldType.toString(), json.getString("field_type"));
+                    } else {
+                        assertNull(json.get("field_type"));
+                    }
+                }
+            }
+        }
     }
 }
