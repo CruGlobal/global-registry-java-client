@@ -33,4 +33,6 @@ public interface GlobalRegistryClient {
     ResponseList<EntityType> getEntityTypes(Filter... filters);
 
     ResponseList<EntityType> getEntityTypes(int page, Filter... filters);
+
+    EntityType addEntityType(EntityType type);
 }

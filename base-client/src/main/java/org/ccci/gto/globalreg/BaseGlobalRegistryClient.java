@@ -162,6 +162,29 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         return null;
     }
 
+    // XXX: this is currently untested
+    @Override
+    public final EntityType addEntityType(final EntityType type) {
+        // build request
+        final Request request = new Request();
+        request.method = "POST";
+        request.path = new String[]{PATH_ENTITY_TYPES};
+        request.contentType = APPLICATION_JSON.toString();
+        request.content = this.serializer.serializeEntityType(type);
+
+        // execute request
+        final Response response = this.processRequest(request);
+
+        // process response
+        // 200: existing entity type updated
+        // 201: new entity type created
+        if (response.code == 200 || response.code == 201) {
+            return this.serializer.deserializeEntityType(response.content);
+        }
+
+        return null;
+    }
+
     protected final static class Request {
         public String method = "GET";
         public String[] path = new String[0];
