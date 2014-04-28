@@ -1,0 +1,7 @@
+{
+    "entity_type": {
+        "name": "favourite_colour",
+        "field_type": "string",
+        "parent_id": "1"
+    }
+}

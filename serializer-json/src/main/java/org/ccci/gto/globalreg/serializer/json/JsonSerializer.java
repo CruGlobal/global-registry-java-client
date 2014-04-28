@@ -76,6 +76,17 @@ public class JsonSerializer extends AbstractSerializer {
     }
 
     @Override
+    public EntityType deserializeEntityType(final String raw) {
+        try {
+            final JSONObject json = new JSONObject(raw);
+            return this.parseEntityType(json.getJSONObject("entity_type"));
+        } catch (final JSONException e) {
+            LOG.debug("JSON processing error", e);
+            throw Throwables.propagate(e);
+        }
+    }
+
+    @Override
     public ResponseList<EntityType> deserializeEntityTypes(final String raw) {
         final ResponseList<EntityType> list = new ResponseList<>();
 
@@ -119,8 +130,20 @@ public class JsonSerializer extends AbstractSerializer {
 
     private EntityType parseEntityType(final JSONObject json, final EntityType parent) {
         final EntityType type = new EntityType();
-        type.setParent(parent);
-        type.setId(json.getInt("id"));
+
+        // set the parent
+        final Integer parentId = json.has("parent_id") ? json.getInt("parent_id") : null;
+        if (parent != null && parentId != null && !parentId.equals(parent.getId())) {
+            throw new IllegalArgumentException("Specified parent object does not match the referenced parent object");
+        } else if (parentId != null && parent == null) {
+            type.setParentId(parentId);
+        } else {
+            type.setParent(parent);
+        }
+
+        if (json.has("id")) {
+            type.setId(json.optInt("id"));
+        }
         type.setName(json.optString("name", null));
         type.setDescription(json.optString("description", null));
         type.setFieldType(json.optString("field_type", null));

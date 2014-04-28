@@ -3,6 +3,7 @@ package org.ccci.gto.globalreg.serializer;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import com.jayway.restassured.path.json.JsonPath;
 import org.ccci.gto.globalreg.EntityType;
@@ -41,6 +42,20 @@ public abstract class AbstractSerializerTest {
 
         // return the parsed entities list
         return entities;
+    }
+
+    @Test
+    public void testDeserializeEntityType() throws Exception {
+        final EntityType type = this.serializer.deserializeEntityType(TestUtils.loadResource(AbstractSerializerTest
+                .class, "entitytype.json"));
+
+        // validate returned EntityType
+        assertNotNull(type);
+        assertNull(type.getId());
+        assertEquals(EntityType.FieldType.STRING, type.getFieldType());
+        assertEquals("favourite_colour", type.getName());
+        assertTrue(type.hasParent());
+        assertEquals(1, (int) type.getParentId());
     }
 
     @Test

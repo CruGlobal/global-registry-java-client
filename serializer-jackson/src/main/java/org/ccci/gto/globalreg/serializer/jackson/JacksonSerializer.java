@@ -82,6 +82,17 @@ public class JacksonSerializer extends AbstractSerializer {
     }
 
     @Override
+    public EntityType deserializeEntityType(final String raw) {
+        try {
+            final JsonNode root = this.mapper.readTree(raw);
+            return this.parseEntityType(root.path("entity_type"));
+        } catch (final IOException e) {
+            LOG.error("Unexpected IOException", e);
+            throw Throwables.propagate(e);
+        }
+    }
+
+    @Override
     public ResponseList<EntityType> deserializeEntityTypes(final String raw) {
         try {
             final JsonNode root = this.mapper.readTree(raw);
@@ -122,8 +133,19 @@ public class JacksonSerializer extends AbstractSerializer {
 
     private EntityType parseEntityType(final JsonNode json, final EntityType parent) {
         final EntityType type = new EntityType();
-        type.setParent(parent);
-        type.setId(json.path("id").asInt());
+
+        // set the parent
+        final JsonNode parentId = json.get("parent_id");
+        if (parent != null && parentId != null && parentId.asInt() != parent.getId()) {
+            throw new IllegalArgumentException("Specified parent object does not match the referenced parent object");
+        } else if (parentId != null && parent == null) {
+            type.setParentId(parentId.asInt());
+        } else {
+            type.setParent(parent);
+        }
+
+        final JsonNode id = json.get("id");
+        type.setId(id != null ? id.asInt() : null);
         final JsonNode name = json.get("name");
         type.setName(name != null ? name.asText() : null);
         final JsonNode description = json.get("description");

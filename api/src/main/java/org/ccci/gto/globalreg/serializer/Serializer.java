@@ -13,5 +13,7 @@ public interface Serializer {
 
     String serializeEntityType(final EntityType type);
 
+    EntityType deserializeEntityType(final String raw);
+
     ResponseList<EntityType> deserializeEntityTypes(final String raw);
 }
