@@ -1,5 +1,7 @@
 package org.ccci.gto.globalreg;
 
+import org.ccci.gto.globalreg.util.ArrayUtil;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -28,10 +30,8 @@ public final class Filter implements Serializable {
             return this;
         }
 
-        // merge 2 arrays
-        final String[] tmp = Arrays.copyOf(path, path.length + this.path.length);
-        System.arraycopy(this.path, 0, tmp, path.length, this.path.length);
-        return this.path(tmp);
+        // return a filter with the merged path
+        return this.path(ArrayUtil.merge(path, this.path));
     }
 
     public final Filter value(final String value) {
