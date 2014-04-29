@@ -1,17 +1,22 @@
-package org.ccci.gto.globalreg.serializer;
+package org.ccci.gto.globalreg.serializer.base;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.google.common.io.CharStreams;
 import com.jayway.restassured.path.json.JsonPath;
 import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.ResponseList;
-import org.ccci.gto.globalreg.TestUtils;
 import org.ccci.gto.globalreg.Type;
+import org.ccci.gto.globalreg.serializer.Serializer;
 import org.ccci.gto.globalreg.util.ArrayUtil;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public abstract class AbstractSerializerTest {
     protected final Serializer serializer;
@@ -20,16 +25,21 @@ public abstract class AbstractSerializerTest {
         this.serializer = serializer;
     }
 
+    private String loadResource(final String name) throws IOException {
+        try (final InputStreamReader in = new InputStreamReader(AbstractSerializerTest.class.getResourceAsStream
+                (name), StandardCharsets.UTF_8)) {
+            return CharStreams.toString(in);
+        }
+    }
+
     protected <T> T testDeserializeEntity(final Type<T> type) throws Exception {
-        final T entity = this.serializer.deserializeEntity(type, TestUtils.loadResource(AbstractSerializerTest.class,
-                "entity.json"));
+        final T entity = this.serializer.deserializeEntity(type, loadResource("entity.json"));
         assertNotNull(entity);
         return entity;
     }
 
     protected <T> ResponseList<T> testDeserializeEntities(final Type<T> type) throws Exception {
-        final ResponseList<T> entities = this.serializer.deserializeEntities(type,
-                TestUtils.loadResource(AbstractSerializerTest.class, "entities.json"));
+        final ResponseList<T> entities = this.serializer.deserializeEntities(type, loadResource("entities.json"));
 
         // validate meta-data
         final ResponseList.Meta meta = entities.getMeta();
@@ -46,8 +56,7 @@ public abstract class AbstractSerializerTest {
 
     @Test
     public void testDeserializeEntityType() throws Exception {
-        final EntityType type = this.serializer.deserializeEntityType(TestUtils.loadResource(AbstractSerializerTest
-                .class, "entitytype.json"));
+        final EntityType type = this.serializer.deserializeEntityType(loadResource("entitytype.json"));
 
         // validate returned EntityType
         assertNotNull(type);
@@ -60,8 +69,7 @@ public abstract class AbstractSerializerTest {
 
     @Test
     public void testDeserializeEntityTypes() throws Exception {
-        final ResponseList<EntityType> types = this.serializer.deserializeEntityTypes(TestUtils.loadResource
-                (AbstractSerializerTest.class, "entitytypes.json"));
+        final ResponseList<EntityType> types = this.serializer.deserializeEntityTypes(loadResource("entitytypes.json"));
 
         // validate list size & meta
         assertNotNull(types);

@@ -4,7 +4,7 @@ import com.google.common.base.Throwables;
 import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
-import org.ccci.gto.globalreg.serializer.JsonIntermediateSerializer;
+import org.ccci.gto.globalreg.serializer.base.JsonIntermediateSerializer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,9 +1,15 @@
-package org.ccci.gto.globalreg;
+package org.ccci.gto.globalreg.base;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.net.HttpHeaders;
 import com.google.common.net.MediaType;
+import org.ccci.gto.globalreg.AbstractGlobalRegistryClient;
+import org.ccci.gto.globalreg.EntityType;
+import org.ccci.gto.globalreg.Filter;
+import org.ccci.gto.globalreg.ResponseList;
+import org.ccci.gto.globalreg.Type;
+import org.ccci.gto.globalreg.UnauthorizedException;
 import org.ccci.gto.globalreg.serializer.Serializer;
 
 import java.util.HashMap;

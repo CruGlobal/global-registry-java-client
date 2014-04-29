@@ -3,7 +3,7 @@ package org.ccci.gto.globalreg.serializer.json;
 import static org.junit.Assert.assertEquals;
 
 import org.ccci.gto.globalreg.ResponseList;
-import org.ccci.gto.globalreg.serializer.AbstractSerializerTest;
+import org.ccci.gto.globalreg.serializer.base.AbstractSerializerTest;
 import org.json.JSONObject;
 import org.junit.Test;
 

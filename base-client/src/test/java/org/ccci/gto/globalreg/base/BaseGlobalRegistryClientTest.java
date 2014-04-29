@@ -1,4 +1,4 @@
-package org.ccci.gto.globalreg;
+package org.ccci.gto.globalreg.base;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -7,6 +7,11 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
 
+import org.ccci.gto.globalreg.EntityType;
+import org.ccci.gto.globalreg.Filter;
+import org.ccci.gto.globalreg.GlobalRegistryClient;
+import org.ccci.gto.globalreg.ResponseList;
+import org.ccci.gto.globalreg.UnauthorizedException;
 import org.ccci.gto.globalreg.serializer.json.JSONObjectType;
 import org.ccci.gto.globalreg.serializer.json.JsonSerializer;
 import org.json.JSONObject;
