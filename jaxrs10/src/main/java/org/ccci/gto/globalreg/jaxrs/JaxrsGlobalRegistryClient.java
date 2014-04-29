@@ -4,6 +4,7 @@ import com.google.common.base.Throwables;
 import com.google.common.io.CharStreams;
 import com.google.common.net.HttpHeaders;
 import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
+import org.ccci.gto.globalreg.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +23,7 @@ public class JaxrsGlobalRegistryClient extends BaseGlobalRegistryClient {
     private static final Logger LOG = LoggerFactory.getLogger(JaxrsGlobalRegistryClient.class);
 
     @Override
-    protected Response processRequest(final Request request) {
+    protected Response processRequest(final Request request) throws UnauthorizedException {
         // build the request uri
         final UriBuilder uriBuilder = UriBuilder.fromUri(this.apiUrl);
         for (final String path : request.path) {
@@ -54,6 +55,11 @@ public class JaxrsGlobalRegistryClient extends BaseGlobalRegistryClient {
                     LOG.debug("error writing data to connection", e);
                     throw Throwables.propagate(e);
                 }
+            }
+
+            // throw an UnauthorizedException when the request is unauthorized
+            if (conn.getResponseCode() == 401) {
+                throw new UnauthorizedException();
             }
 
             // read & return response

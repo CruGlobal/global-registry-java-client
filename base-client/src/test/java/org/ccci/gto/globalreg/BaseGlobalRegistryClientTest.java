@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
 
 import org.ccci.gto.globalreg.serializer.json.JSONObjectType;
@@ -103,5 +104,18 @@ public abstract class BaseGlobalRegistryClientTest {
         assertNotNull(firstName);
         assertEquals("first_name", firstName.getName());
         assertEquals(EntityType.FieldType.STRING, firstName.getFieldType());
+    }
+
+    @Test
+    public void testInvalidAccessToken() throws Exception {
+        final BaseGlobalRegistryClient client = this.getClient();
+        assumeNotNull(client);
+        client.setAccessToken(client.accessToken + "_invalid");
+
+        try {
+            client.getEntities(TYPE_PERSON);
+            fail("Expected UnauthorizedException not thrown");
+        } catch (final UnauthorizedException expected) {
+        }
     }
 }

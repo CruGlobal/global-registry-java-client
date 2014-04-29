@@ -20,9 +20,11 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
+import org.ccci.gto.globalreg.UnauthorizedException;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Map;
 
 public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
@@ -38,7 +40,7 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
     };
 
     @Override
-    protected Response processRequest(final Request request) {
+    protected Response processRequest(final Request request) throws UnauthorizedException {
         try {
             // build the request uri
             final URIBuilder builder = new URIBuilder(this.apiUrl);
@@ -83,9 +85,17 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
 
             // execute request & return response
             try (CloseableHttpClient client = HttpClients.createDefault()) {
-                return client.execute(req, RESPONSE_HANDLER);
+                final Response response = client.execute(req, RESPONSE_HANDLER);
+
+                // check to see if there was an unauthorized response
+                if (response.code == 401) {
+                    throw new UnauthorizedException();
+                }
+
+                // return the response
+                return response;
             }
-        } catch (final Throwable e) {
+        } catch (final IOException | URISyntaxException e) {
             throw Throwables.propagate(e);
         }
     }

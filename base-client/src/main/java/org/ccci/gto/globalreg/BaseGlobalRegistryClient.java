@@ -40,10 +40,10 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         return null;
     }
 
-    protected abstract Response processRequest(Request request);
+    protected abstract Response processRequest(Request request) throws UnauthorizedException;
 
     @Override
-    public <T> T getEntity(final Type<T> type, final int id, final String createdBy) {
+    public <T> T getEntity(final Type<T> type, final int id, final String createdBy) throws UnauthorizedException {
         // build the request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITIES, Integer.toString(id)};
@@ -63,7 +63,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
     @Override
     public <T> ResponseList<T> getEntities(final Type<T> type, final String createdBy, final int page,
-                                           final Filter... filters) {
+                                           final Filter... filters) throws UnauthorizedException {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITIES};
@@ -88,7 +88,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public <T> T addEntity(final Type<T> type, final T entity) {
+    public <T> T addEntity(final Type<T> type, final T entity) throws UnauthorizedException {
         // build request
         final Request request = new Request();
         request.method = "POST";
@@ -110,7 +110,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public <T> T updateEntity(final Type<T> type, final int id, final T entity) {
+    public <T> T updateEntity(final Type<T> type, final int id, final T entity) throws UnauthorizedException {
         // build the request
         final Request request = new Request();
         request.method = "PUT";
@@ -131,7 +131,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public <T> void deleteEntity(Type<T> type, int id) {
+    public <T> void deleteEntity(Type<T> type, int id) throws UnauthorizedException {
         // build the request
         final Request request = new Request();
         request.method = "DELETE";
@@ -142,7 +142,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public ResponseList<EntityType> getEntityTypes(final int page, final Filter... filters) {
+    public ResponseList<EntityType> getEntityTypes(final int page, final Filter... filters) throws UnauthorizedException {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITY_TYPES};
@@ -164,7 +164,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
     // XXX: this is currently untested
     @Override
-    public final EntityType addEntityType(final EntityType type) {
+    public final EntityType addEntityType(final EntityType type) throws UnauthorizedException {
         // build request
         final Request request = new Request();
         request.method = "POST";

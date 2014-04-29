@@ -10,29 +10,30 @@ public interface GlobalRegistryClient {
 
     /* Entity Endpoints */
 
-    <T> T getEntity(Type<T> type, int id);
+    <T> T getEntity(Type<T> type, int id) throws UnauthorizedException;
 
-    <T> T getEntity(Type<T> type, int id, String createdBy);
+    <T> T getEntity(Type<T> type, int id, String createdBy) throws UnauthorizedException;
 
-    <T> ResponseList<T> getEntities(Type<T> type, Filter... filters);
+    <T> ResponseList<T> getEntities(Type<T> type, Filter... filters) throws UnauthorizedException;
 
-    <T> ResponseList<T> getEntities(Type<T> type, int page, Filter... filters);
+    <T> ResponseList<T> getEntities(Type<T> type, int page, Filter... filters) throws UnauthorizedException;
 
-    <T> ResponseList<T> getEntities(Type<T> type, String createdBy, Filter... filters);
+    <T> ResponseList<T> getEntities(Type<T> type, String createdBy, Filter... filters) throws UnauthorizedException;
 
-    <T> ResponseList<T> getEntities(Type<T> type, String createdBy, int page, Filter... filters);
+    <T> ResponseList<T> getEntities(Type<T> type, String createdBy, int page,
+                                    Filter... filters) throws UnauthorizedException;
 
-    <T> T addEntity(Type<T> type, T entity);
+    <T> T addEntity(Type<T> type, T entity) throws UnauthorizedException;
 
-    <T> T updateEntity(Type<T> type, int id, T entity);
+    <T> T updateEntity(Type<T> type, int id, T entity) throws UnauthorizedException;
 
-    <T> void deleteEntity(Type<T> type, int id);
+    <T> void deleteEntity(Type<T> type, int id) throws UnauthorizedException;
 
     /* Entity Type Endpoints */
 
-    ResponseList<EntityType> getEntityTypes(Filter... filters);
+    ResponseList<EntityType> getEntityTypes(Filter... filters) throws UnauthorizedException;
 
-    ResponseList<EntityType> getEntityTypes(int page, Filter... filters);
+    ResponseList<EntityType> getEntityTypes(int page, Filter... filters) throws UnauthorizedException;
 
-    EntityType addEntityType(EntityType type);
+    EntityType addEntityType(EntityType type) throws UnauthorizedException;
 }
