@@ -4,7 +4,7 @@ import com.google.common.base.Throwables;
 import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
-import org.ccci.gto.globalreg.serializer.AbstractSerializer;
+import org.ccci.gto.globalreg.serializer.JsonIntermediateSerializer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 
-public class JsonSerializer extends AbstractSerializer {
+public class JsonSerializer extends JsonIntermediateSerializer<JSONObject> {
     private static final Logger LOG = LoggerFactory.getLogger(JsonSerializer.class);
 
     @Override
@@ -120,7 +120,13 @@ public class JsonSerializer extends AbstractSerializer {
         }
     }
 
-    private JSONObject wrap(final JSONObject json, final String name) {
+    @Override
+    protected JSONObject path(JSONObject json, String name) {
+        return json.optJSONObject(name);
+    }
+
+    @Override
+    protected JSONObject wrap(final JSONObject json, final String name) {
         return new JSONObject(Collections.singletonMap(name, json));
     }
 

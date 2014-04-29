@@ -8,13 +8,13 @@ import com.google.common.base.Throwables;
 import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
-import org.ccci.gto.globalreg.serializer.AbstractSerializer;
+import org.ccci.gto.globalreg.serializer.JsonIntermediateSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-public class JacksonSerializer extends AbstractSerializer {
+public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode> {
     private static final Logger LOG = LoggerFactory.getLogger(JacksonSerializer.class);
 
     private final ObjectMapper mapper;
@@ -121,7 +121,13 @@ public class JacksonSerializer extends AbstractSerializer {
         return this.wrap(this.wrap(this.mapper.valueToTree(entity), type.getEntityType()), "entity").toString();
     }
 
-    private JsonNode wrap(final JsonNode json, final String name) {
+    @Override
+    protected JsonNode path(final JsonNode json, final String name) {
+        return json.path(name);
+    }
+
+    @Override
+    protected JsonNode wrap(final JsonNode json, final String name) {
         final ObjectNode wrapper = this.mapper.createObjectNode();
         wrapper.put(name, json);
         return wrapper;

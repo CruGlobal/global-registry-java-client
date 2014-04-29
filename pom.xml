@@ -15,12 +15,16 @@
   <modules>
     <module>api</module>
     <module>base-client</module>
+    <module>base-serializer</module>
     <module>httpclient</module>
     <module>jaxrs10</module>
     <module>serializer-jackson</module>
     <module>serializer-json</module>
-    <module>testing-serializer</module>
   </modules>
+
+  <properties>
+    <rest-assured.version>2.3.1</rest-assured.version>
+  </properties>
 
   <dependencyManagement>
     <dependencies>
@@ -43,14 +47,27 @@
       </dependency>
       <dependency>
         <groupId>org.ccci.gto</groupId>
-        <artifactId>global-registry-client-serializer-testing</artifactId>
+        <artifactId>global-registry-client-serializer-base</artifactId>
         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.ccci.gto</groupId>
+        <artifactId>global-registry-client-serializer-base</artifactId>
+        <version>${project.version}</version>
+        <type>test-jar</type>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.ccci.gto</groupId>
         <artifactId>global-registry-client-serializer-json</artifactId>
         <version>${project.version}</version>
+      </dependency>
+
+      <!-- REST-assured dependencies -->
+      <dependency>
+        <groupId>com.jayway.restassured</groupId>
+        <artifactId>json-path</artifactId>
+        <version>${rest-assured.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
