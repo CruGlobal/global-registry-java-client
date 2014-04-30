@@ -22,9 +22,9 @@ public final class EntityType {
             this.raw = raw;
         }
 
-        private static FieldType fromRaw(final String raw) {
-            if (raw != null) {
-                switch (raw) {
+        public static FieldType fromString(final String type) {
+            if (type != null) {
+                switch (type) {
                     case "entity":
                         return ENTITY;
                     case "boolean":
@@ -48,7 +48,7 @@ public final class EntityType {
                     case "text":
                         return TEXT;
                     default:
-                        LOG.error("unrecognized field_type: {}", raw);
+                        LOG.error("unrecognized field_type: {}", type);
                 }
             }
 
@@ -133,7 +133,7 @@ public final class EntityType {
     }
 
     public void setFieldType(final String type) {
-        this.fieldType = type != null ? FieldType.fromRaw(type) : FieldType.ENTITY;
+        this.fieldType = type != null ? FieldType.fromString(type) : FieldType.ENTITY;
     }
 
     public EntityType getField(final String name) {
