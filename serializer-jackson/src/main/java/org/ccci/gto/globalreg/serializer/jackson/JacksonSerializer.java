@@ -1,5 +1,6 @@
 package org.ccci.gto.globalreg.serializer.jackson;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,12 +10,13 @@ import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
 import org.ccci.gto.globalreg.serializer.base.JsonIntermediateSerializer;
+import org.ccci.gto.globalreg.serializer.base.UnparsableJsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode> {
+public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, JsonNode> {
     private static final Logger LOG = LoggerFactory.getLogger(JacksonSerializer.class);
 
     private final ObjectMapper mapper;
@@ -122,11 +124,18 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode> {
     }
 
     @Override
-    protected JsonNode path(final JsonNode json, final String name) {
-        return json.path(name);
+    protected IntJsonObj parseJsonObj(final String raw) throws UnparsableJsonException {
+        try {
+            return new IntJsonObj(this.mapper.readTree(raw));
+        } catch (final JsonProcessingException e) {
+            LOG.debug("JSON parsing error", e);
+            throw new UnparsableJsonException(e);
+        } catch (final IOException e) {
+            LOG.debug("Unexpected IOException", e);
+            throw Throwables.propagate(e);
+        }
     }
 
-    @Override
     protected JsonNode wrap(final JsonNode json, final String name) {
         final ObjectNode wrapper = this.mapper.createObjectNode();
         wrapper.put(name, json);
@@ -180,5 +189,94 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode> {
         meta.setTo(metaJson.path("to").asInt(0));
         meta.setPage(metaJson.path("page").asInt(0));
         meta.setTotalPages(metaJson.path("total_pages").asInt(0));
+    }
+
+    private static final class IntJsonObj extends JsonObj<JsonNode, JsonNode> {
+        protected IntJsonObj(final JsonNode obj) {
+            super(obj);
+        }
+
+        @Override
+        protected IntJsonObj getObject(final String key) {
+            return new IntJsonObj(obj.path(key));
+        }
+
+        @Override
+        protected JsonArr<JsonNode, JsonNode> getArray(final String key) {
+            return new IntJsonArr(obj.path(key));
+        }
+
+        @Override
+        protected Integer getInt(final String key, final Integer def) {
+            final JsonNode val = obj.get(key);
+
+            // simplify processing for a couple simple cases
+            if (val == null) {
+                return def;
+            } else if (def != null) {
+                return val.asInt(def);
+            }
+
+            // otherwise test 2 defaults to see if we have a valid int value
+            final int val1 = val.asInt(1);
+            final int val2 = val.asInt(2);
+            return val1 == val2 ? val1 : def;
+        }
+
+        @Override
+        protected Long getLong(final String key, final Long def) {
+            final JsonNode val = obj.get(key);
+
+            // simplify processing for a couple simple cases
+            if (val == null) {
+                return def;
+            } else if (def != null) {
+                return val.asLong(def);
+            }
+
+            // otherwise test 2 defaults to see if we have a valid long value
+            final long val1 = val.asLong(1);
+            final long val2 = val.asLong(2);
+            return val1 == val2 ? val1 : def;
+        }
+
+        @Override
+        protected Boolean getBoolean(final String key, final Boolean def) {
+            final JsonNode val = obj.get(key);
+
+            // simplify processing for a couple simple cases
+            if (val == null) {
+                return def;
+            } else if (def != null) {
+                return val.asBoolean(def);
+            }
+
+            // otherwise test 2 defaults to see if we have a valid boolean value
+            final boolean val1 = val.asBoolean(true);
+            final boolean val2 = val.asBoolean(false);
+            return val1 == val2 ? val1 : def;
+        }
+
+        @Override
+        protected String getString(final String key, final String def) {
+            final JsonNode val = obj.get(key);
+            return val != null ? val.asText() : def;
+        }
+    }
+
+    private static final class IntJsonArr extends JsonArr<JsonNode, JsonNode> {
+        protected IntJsonArr(final JsonNode arr) {
+            super(arr);
+        }
+
+        @Override
+        protected int size() {
+            return arr.size();
+        }
+
+        @Override
+        protected IntJsonObj getObject(final int index) {
+            return new IntJsonObj(arr.path(index));
+        }
     }
 }

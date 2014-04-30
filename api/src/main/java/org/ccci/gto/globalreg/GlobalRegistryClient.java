@@ -1,5 +1,7 @@
 package org.ccci.gto.globalreg;
 
+import org.ccci.gto.globalreg.serializer.SerializerException;
+
 public interface GlobalRegistryClient {
     public static final String PATH_ENTITIES = "entities";
     public static final String PATH_ENTITY_TYPES = "entity_types";
@@ -10,9 +12,28 @@ public interface GlobalRegistryClient {
 
     /* Entity Endpoints */
 
-    <T> T getEntity(Type<T> type, int id) throws UnauthorizedException;
+    /**
+     * Retrieve an entity from the Global Registry
+     *
+     * @param type the type of entity to retrieve
+     * @param id   the id of the entity being retrieved
+     * @return The entity that is stored in the Global Registry
+     * @throws UnauthorizedException Thrown when the request is unauthorized.
+     * @throws SerializerException   Thrown when there was an exception with entity deserialization.
+     */
+    <T> T getEntity(Type<T> type, int id) throws GlobalRegistryException;
 
-    <T> T getEntity(Type<T> type, int id, String createdBy) throws UnauthorizedException;
+    /**
+     * Retrieve an entity from the Global Registry
+     *
+     * @param type      the type of entity to retrieve
+     * @param id        the id of the entity being retrieved
+     * @param createdBy the system id the entity is being retrieved for
+     * @return The entity that is stored in the Global Registry
+     * @throws UnauthorizedException Thrown when the request is unauthorized.
+     * @throws SerializerException   Thrown when there was an exception with entity deserialization.
+     */
+    <T> T getEntity(Type<T> type, int id, String createdBy) throws SerializerException, UnauthorizedException;
 
     <T> ResponseList<T> getEntities(Type<T> type, Filter... filters) throws UnauthorizedException;
 
@@ -23,6 +44,14 @@ public interface GlobalRegistryClient {
     <T> ResponseList<T> getEntities(Type<T> type, String createdBy, int page,
                                     Filter... filters) throws UnauthorizedException;
 
+    /**
+     * Store an entity in the Global Registry
+     *
+     * @param type   The type of entity to add
+     * @param entity The actual entity to store in the Global Registry
+     * @return the entity stored in the Global Registry
+     * @throws UnauthorizedException Thrown when the request is unauthorized.
+     */
     <T> T addEntity(Type<T> type, T entity) throws UnauthorizedException;
 
     <T> T updateEntity(Type<T> type, int id, T entity) throws UnauthorizedException;

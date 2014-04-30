@@ -1,11 +1,13 @@
 package org.ccci.gto.globalreg;
 
+import org.ccci.gto.globalreg.serializer.SerializerException;
+
 public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClient {
     public static final String DEFAULT_CREATED_BY = null;
     public static final int DEFAULT_PAGE = 1;
 
     @Override
-    public final <T> T getEntity(final Type<T> type, final int id) throws UnauthorizedException {
+    public final <T> T getEntity(final Type<T> type, final int id) throws SerializerException, UnauthorizedException {
         return this.getEntity(type, id, DEFAULT_CREATED_BY);
     }
 

@@ -1,6 +1,7 @@
 package org.ccci.gto.globalreg.serializer.base;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -9,6 +10,7 @@ import com.google.common.io.CharStreams;
 import com.jayway.restassured.path.json.JsonPath;
 import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.ResponseList;
+import org.ccci.gto.globalreg.System;
 import org.ccci.gto.globalreg.Type;
 import org.ccci.gto.globalreg.serializer.Serializer;
 import org.ccci.gto.globalreg.util.ArrayUtil;
@@ -17,6 +19,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 public abstract class AbstractSerializerTest {
     protected final Serializer serializer;
@@ -143,6 +146,62 @@ public abstract class AbstractSerializerTest {
                     }
                 }
             }
+        }
+    }
+
+    @Test
+    public void testDeserializeSystem() throws Exception {
+        final System system = this.serializer.deserializeSystem(loadResource("system.json"));
+
+        // validate system object
+        assertNotNull(system);
+        assertEquals(7, (long) system.getId());
+        assertEquals("System 1", system.getName());
+        assertEquals(Boolean.TRUE, system.getRoot());
+        assertTrue(system.isRoot());
+        assertEquals(Boolean.FALSE, system.getTrusted());
+        assertFalse(system.isTrusted());
+        assertEquals("accessToken", system.getAccessToken());
+    }
+
+    @Test
+    public void testDeserializeSystems() throws Exception {
+        final List<System> systems = this.serializer.deserializeSystems(loadResource("systems.json"));
+
+        assertNotNull(systems);
+        assertEquals(3, systems.size());
+        {
+            final System system = systems.get(0);
+            assertNotNull(system);
+            assertEquals(1, (long) system.getId());
+            assertEquals("System 1", system.getName());
+            assertEquals(Boolean.FALSE, system.getRoot());
+            assertFalse(system.isRoot());
+            assertEquals(Boolean.FALSE, system.getTrusted());
+            assertFalse(system.isTrusted());
+            assertEquals("token_1", system.getAccessToken());
+        }
+        {
+            final System system = systems.get(1);
+            assertNotNull(system);
+            assertEquals(2, (long) system.getId());
+            assertEquals("System 2", system.getName());
+            assertEquals(Boolean.TRUE, system.getRoot());
+            assertTrue(system.isRoot());
+            assertEquals(Boolean.TRUE, system.getTrusted());
+            assertTrue(system.isTrusted());
+            assertEquals("token_2", system.getAccessToken());
+        }
+        {
+            final System system = systems.get(2);
+            assertNotNull(system);
+            assertEquals(10, (long) system.getId());
+            assertEquals("System 10", system.getName());
+            assertNull(system.getRoot());
+            assertFalse(system.isRoot());
+            assertNull(system.getTrusted());
+            assertFalse(system.isTrusted());
+            assertNull(system.getAccessToken());
         }
     }
 }

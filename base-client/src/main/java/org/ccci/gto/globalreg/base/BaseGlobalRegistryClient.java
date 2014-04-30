@@ -11,6 +11,7 @@ import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
 import org.ccci.gto.globalreg.UnauthorizedException;
 import org.ccci.gto.globalreg.serializer.Serializer;
+import org.ccci.gto.globalreg.serializer.SerializerException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +50,8 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     protected abstract Response processRequest(Request request) throws UnauthorizedException;
 
     @Override
-    public <T> T getEntity(final Type<T> type, final int id, final String createdBy) throws UnauthorizedException {
+    public <T> T getEntity(final Type<T> type, final int id, final String createdBy) throws UnauthorizedException,
+            SerializerException {
         // build the request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITIES, Integer.toString(id)};
