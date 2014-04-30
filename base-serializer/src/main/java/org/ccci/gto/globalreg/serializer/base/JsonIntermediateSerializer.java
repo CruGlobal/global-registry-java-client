@@ -101,6 +101,22 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         return this.parseMeasurementType(this.stringToJsonObj(raw).getObject("measurement_type"));
     }
 
+    @Override
+    public ResponseList<MeasurementType> deserializeMeasurementTypes(final String raw) throws SerializerException {
+        final ResponseList<MeasurementType> list = new ResponseList<>();
+
+        final JsonObj<O, A> json = this.stringToJsonObj(raw);
+        final JsonArr<O, A> types = json.getArray("measurement_types");
+        for (int i = 0; i < types.size(); i++) {
+            list.add(this.parseMeasurementType(types.getObject(i)));
+        }
+
+        // parse the meta-data
+        populateResponseListMeta(list, json);
+
+        return list;
+    }
+
     private EntityType parseEntityType(final JsonObj<O, A> json) {
         return this.parseEntityType(json, null);
     }

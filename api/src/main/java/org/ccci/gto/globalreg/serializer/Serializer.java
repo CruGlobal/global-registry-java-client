@@ -41,4 +41,6 @@ public interface Serializer {
     /* Measurement serialization methods */
 
     MeasurementType deserializeMeasurementType(final String raw) throws SerializerException;
+
+    ResponseList<MeasurementType> deserializeMeasurementTypes(final String raw) throws SerializerException;
 }

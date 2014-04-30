@@ -1,0 +1,61 @@
+{
+    "measurement_types": [
+        {
+            "id": 23,
+            "name": "Ministry-subsidy",
+            "description": "Percentage of income from subsidy",
+            "category": "MPD",
+            "frequency": "monthly",
+            "unit": "%",
+            "related_entity_type_id": 386,
+            "measurements": []
+        },
+        {
+            "id": 24,
+            "name": "Ministry-50to80",
+            "description": "Percentage of staff with between 50 and 80% raised",
+            "category": "MPD",
+            "frequency": "monthly",
+            "unit": "%",
+            "related_entity_type_id": 386,
+            "measurements": []
+        },
+        {
+            "id": 25,
+            "name": "Ministry-80to100",
+            "description": "Percentage of staff with between 80 and 100% raised",
+            "category": "MPD",
+            "frequency": "monthly",
+            "unit": "%",
+            "related_entity_type_id": 386,
+            "measurements": []
+        },
+        {
+            "id": 27,
+            "name": "Media Exposures",
+            "description": "",
+            "category": "LMI",
+            "frequency": "monthly",
+            "unit": "people",
+            "related_entity_type_id": 432,
+            "measurements": []
+        },
+        {
+            "id": 28,
+            "name": "Personal Evangelism",
+            "description": "",
+            "category": "LMI",
+            "frequency": "monthly",
+            "unit": "people",
+            "related_entity_type_id": 432,
+            "measurements": []
+        }
+    ],
+    "meta": {
+        "total": 43,
+        "from": 16,
+        "to": 20,
+        "page": 4,
+        "total_pages": 9
+    }
+}

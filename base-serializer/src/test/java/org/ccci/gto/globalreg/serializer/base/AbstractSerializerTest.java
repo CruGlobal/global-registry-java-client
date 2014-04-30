@@ -217,4 +217,44 @@ public abstract class AbstractSerializerTest {
         assertEquals("Percentage", type.getUnit());
         assertEquals(299, (long) type.getRelatedEntityType());
     }
+
+    @Test
+    public void testDeserializeMeasurementTypes() throws Exception {
+        final ResponseList<MeasurementType> types = this.serializer.deserializeMeasurementTypes(loadResource
+                ("measurementtypes.json"));
+
+        // validate list size & meta
+        assertNotNull(types);
+        final ResponseList.Meta meta = types.getMeta();
+        assertEquals(5, types.size());
+        assertEquals(43, meta.getTotal());
+        assertEquals(16, meta.getFrom());
+        assertEquals(20, meta.getTo());
+        assertEquals(4, meta.getPage());
+        assertEquals(9, meta.getTotalPages());
+
+        // validate first measurement type
+        {
+            final MeasurementType type = types.get(0);
+            assertEquals(23, (long) type.getId());
+            assertEquals("Ministry-subsidy", type.getName());
+            assertEquals("Percentage of income from subsidy", type.getDescription());
+            assertEquals(MeasurementType.Category.MPD, type.getCategory());
+            assertEquals(MeasurementType.Frequency.MONTHLY, type.getFrequency());
+            assertEquals("%", type.getUnit());
+            assertEquals(386, (long) type.getRelatedEntityType());
+        }
+
+        // validate fourth measurement type
+        {
+            final MeasurementType type = types.get(3);
+            assertEquals(27, (long) type.getId());
+            assertEquals("Media Exposures", type.getName());
+            assertEquals("", type.getDescription());
+            assertEquals(MeasurementType.Category.LMI, type.getCategory());
+            assertEquals(MeasurementType.Frequency.MONTHLY, type.getFrequency());
+            assertEquals("people", type.getUnit());
+            assertEquals(432, (long) type.getRelatedEntityType());
+        }
+    }
 }
