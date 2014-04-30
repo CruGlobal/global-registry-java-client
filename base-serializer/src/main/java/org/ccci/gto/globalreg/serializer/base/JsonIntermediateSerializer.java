@@ -115,7 +115,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         type.setId(json.getInt("id", null));
         type.setName(json.getString("name", null));
         type.setDescription(json.getString("description", null));
-        type.setFieldType(json.getString("field_type", null));
+        type.setFieldType(json.getString("field_type", "entity"));
 
         // parse nested fields
         final JsonArr<O, A> fields = json.getArray("fields");

@@ -95,14 +95,14 @@ public abstract class AbstractSerializerTest {
         final EntityType person = types.get(1);
         assertEquals(299, (int) person.getId());
         assertEquals("person", person.getName());
-        assertEquals(EntityType.FieldType.NONE, person.getFieldType());
+        assertEquals(EntityType.FieldType.ENTITY, person.getFieldType());
         assertEquals(42, person.getFields().size());
         final EntityType auth = person.getField("authentication");
         assertEquals(345, (int) auth.getId());
         assertEquals(299, (int) auth.getParentId());
         assertEquals(person, auth.getParent());
         assertEquals("authentication", auth.getName());
-        assertEquals(EntityType.FieldType.NONE, auth.getFieldType());
+        assertEquals(EntityType.FieldType.ENTITY, auth.getFieldType());
         assertEquals(4, auth.getFields().size());
     }
 

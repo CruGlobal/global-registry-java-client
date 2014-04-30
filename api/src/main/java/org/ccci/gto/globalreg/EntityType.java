@@ -13,9 +13,9 @@ public final class EntityType {
     private static final Logger LOG = LoggerFactory.getLogger(EntityType.class);
 
     public enum FieldType {
-        BOOLEAN("boolean"), INTEGER("integer"), DECIMAL("decimal"), STRING("string"), DATE("date"),
-        DATETIME("datetime"), ENUM("enum"), ENUM_VALUES("enum_values"), EMAIL("email"), TEXT("text"), NONE(""),
-        UNKNOWN("");
+        ENTITY("entity"), BOOLEAN("boolean"), INTEGER("integer"), DECIMAL("decimal"), STRING("string"), DATE("date"),
+        DATETIME("datetime"), ENUM("enum"), ENUM_VALUES("enum_values"), EMAIL("email"), TEXT("text"), UNKNOWN(""),
+        NONE("");
         private final String raw;
 
         private FieldType(final String raw) {
@@ -25,6 +25,8 @@ public final class EntityType {
         private static FieldType fromRaw(final String raw) {
             if (raw != null) {
                 switch (raw) {
+                    case "entity":
+                        return ENTITY;
                     case "boolean":
                         return BOOLEAN;
                     case "integer":
@@ -127,11 +129,11 @@ public final class EntityType {
     }
 
     public void setFieldType(final FieldType fieldType) {
-        this.fieldType = fieldType != null ? fieldType : FieldType.NONE;
+        this.fieldType = fieldType != null ? fieldType : FieldType.ENTITY;
     }
 
     public void setFieldType(final String type) {
-        this.fieldType = type != null ? FieldType.fromRaw(type) : FieldType.NONE;
+        this.fieldType = type != null ? FieldType.fromRaw(type) : FieldType.ENTITY;
     }
 
     public EntityType getField(final String name) {
