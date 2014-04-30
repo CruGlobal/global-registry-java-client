@@ -12,7 +12,7 @@ public final class Filter implements Serializable {
     private final String value;
 
     public Filter() {
-        this(new String[0], "");
+        this(null, null);
     }
 
     public Filter(final String[] path, final String value) {
@@ -21,7 +21,7 @@ public final class Filter implements Serializable {
     }
 
     public final Filter path(final String... path) {
-        return new Filter(path != null ? path : new String[0], this.value);
+        return new Filter(path, this.value);
     }
 
     public final Filter prependPath(final String... path) {
@@ -35,7 +35,7 @@ public final class Filter implements Serializable {
     }
 
     public final Filter value(final String value) {
-        return new Filter(this.path, value != null ? value : "");
+        return new Filter(this.path, value);
     }
 
     public final boolean isValid() {
