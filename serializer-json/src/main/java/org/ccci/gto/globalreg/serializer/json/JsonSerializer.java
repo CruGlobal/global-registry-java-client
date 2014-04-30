@@ -18,23 +18,6 @@ public class JsonSerializer extends JsonIntermediateSerializer<JSONObject, JSONA
     private static final Logger LOG = LoggerFactory.getLogger(JsonSerializer.class);
 
     @Override
-    public String serializeEntityType(final EntityType type) {
-        final JSONObject json = new JSONObject();
-        json.put("name", type.getName());
-        json.put("description", type.getDescription());
-        final EntityType.FieldType fieldType = type.getFieldType();
-        if (fieldType != null) {
-            json.put("field_type", type.getFieldType().toString());
-        }
-        if (type.hasParent()) {
-            json.put("parent_id", type.getParentId());
-        }
-
-        // wrap and return the json
-        return this.wrap(json, "entity_type").toString();
-    }
-
-    @Override
     public EntityType deserializeEntityType(final String raw) {
         try {
             final JSONObject json = new JSONObject(raw);
@@ -103,6 +86,11 @@ public class JsonSerializer extends JsonIntermediateSerializer<JSONObject, JSONA
         } else {
             throw new UnsupportedOperationException("Unsupported class for JsonSerializer: " + clazz.getName());
         }
+    }
+
+    @Override
+    protected IntJsonObj emptyJsonObj() {
+        return new IntJsonObj(new JSONObject());
     }
 
     protected JSONObject wrap(final JSONObject json, final String name) {
@@ -209,6 +197,24 @@ public class JsonSerializer extends JsonIntermediateSerializer<JSONObject, JSONA
         @Override
         protected String getString(final String key, final String def) {
             return obj != null ? obj.optString(key, def) : def;
+        }
+
+        @Override
+        protected IntJsonObj put(final String key, final Integer val) {
+            if (obj != null) {
+                obj.put(key, val);
+            }
+
+            return this;
+        }
+
+        @Override
+        protected IntJsonObj put(final String key, final String val) {
+            if (obj != null) {
+                obj.put(key, val);
+            }
+
+            return this;
         }
     }
 

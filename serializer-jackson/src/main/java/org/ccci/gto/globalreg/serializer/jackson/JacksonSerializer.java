@@ -32,23 +32,6 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
     }
 
     @Override
-    public String serializeEntityType(final EntityType type) {
-        final ObjectNode json = this.mapper.createObjectNode();
-        json.put("name", type.getName());
-        json.put("description", type.getDescription());
-        final EntityType.FieldType fieldType = type.getFieldType();
-        if (fieldType != null) {
-            json.put("field_type", type.getFieldType().toString());
-        }
-        if (type.hasParent()) {
-            json.put("parent_id", type.getParentId());
-        }
-
-        // wrap and return the json
-        return this.wrap(json, "entity_type").toString();
-    }
-
-    @Override
     public EntityType deserializeEntityType(final String raw) {
         try {
             final JsonNode root = this.mapper.readTree(raw);
@@ -114,6 +97,11 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
         } catch (final JsonProcessingException e) {
             throw new SerializerException(e);
         }
+    }
+
+    @Override
+    protected JsonObj<JsonNode, JsonNode> emptyJsonObj() {
+        return new IntJsonObj(this.mapper.createObjectNode());
     }
 
     protected JsonNode wrap(final JsonNode json, final String name) {
@@ -248,6 +236,28 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
         protected String getString(final String key, final String def) {
             final JsonNode val = obj.get(key);
             return val != null ? val.asText() : def;
+        }
+
+        @Override
+        protected IntJsonObj put(final String key, final Integer val) {
+            if (obj instanceof ObjectNode) {
+                ((ObjectNode) obj).put(key, val);
+            } else {
+                //TODO: throw an exception
+            }
+
+            return this;
+        }
+
+        @Override
+        protected IntJsonObj put(final String key, final String val) {
+            if (obj instanceof ObjectNode) {
+                ((ObjectNode) obj).put(key, val);
+            } else {
+                //TODO: throw an exception
+            }
+
+            return this;
         }
     }
 

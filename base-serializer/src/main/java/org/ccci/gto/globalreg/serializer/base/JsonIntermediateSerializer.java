@@ -1,6 +1,7 @@
 package org.ccci.gto.globalreg.serializer.base;
 
 import com.google.common.primitives.Ints;
+import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.System;
 import org.ccci.gto.globalreg.Type;
@@ -37,6 +38,23 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
 
         // return the entities list
         return list;
+    }
+
+    @Override
+    public String serializeEntityType(final EntityType type) {
+        final JsonObj<O, A> json = this.emptyJsonObj();
+        json.put("name", type.getName()).put("description", type.getDescription());
+
+        final EntityType.FieldType fieldType = type.getFieldType();
+        if (fieldType != null) {
+            json.put("field_type", type.getFieldType().toString());
+        }
+        if (type.hasParent()) {
+            json.put("parent_id", type.getParentId());
+        }
+
+        // wrap and return the json
+        return this.jsonObjToString(json.wrap("entity_type"));
     }
 
     @Override
@@ -86,6 +104,8 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
 
     protected abstract <T> T jsonObjToEntity(Type<T> type, JsonObj<O, A> json) throws SerializerException;
 
+    protected abstract JsonObj<O, A> emptyJsonObj();
+
     protected abstract static class JsonObj<O, A> {
         protected final O obj;
 
@@ -132,6 +152,10 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         }
 
         protected abstract String getString(String key, String def);
+
+        protected abstract JsonObj<O, A> put(String key, Integer val);
+
+        protected abstract JsonObj<O, A> put(String key, String val);
     }
 
     protected abstract static class JsonArr<O, A> {
