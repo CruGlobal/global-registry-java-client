@@ -2,7 +2,6 @@ package org.ccci.gto.globalreg.base;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
@@ -110,7 +109,7 @@ public abstract class BaseGlobalRegistryClientTest {
         // check the person entity
         final EntityType person = types.get(0);
         assertEquals("person", person.getName());
-        assertNull(person.getFieldType());
+        assertEquals(EntityType.FieldType.ENTITY, person.getFieldType());
         final EntityType firstName = person.getField("first_name");
         assertNotNull(firstName);
         assertEquals("first_name", firstName.getName());
