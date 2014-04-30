@@ -1,5 +1,8 @@
 package org.ccci.gto.globalreg;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -7,9 +10,12 @@ import java.util.List;
 import java.util.Objects;
 
 public final class EntityType {
+    private static final Logger LOG = LoggerFactory.getLogger(EntityType.class);
+
     public enum FieldType {
         BOOLEAN("boolean"), INTEGER("integer"), DECIMAL("decimal"), STRING("string"), DATE("date"),
-        DATETIME("datetime"), ENUM("enum"), ENUM_VALUES("enum_values"), EMAIL("email"), TEXT("text");
+        DATETIME("datetime"), ENUM("enum"), ENUM_VALUES("enum_values"), EMAIL("email"), TEXT("text"), NONE(""),
+        UNKNOWN("");
         private final String raw;
 
         private FieldType(final String raw) {
@@ -39,10 +45,12 @@ public final class EntityType {
                         return EMAIL;
                     case "text":
                         return TEXT;
+                    default:
+                        LOG.error("unrecognized field_type: {}", raw);
                 }
             }
 
-            throw new IllegalArgumentException("Unrecognized field_type: " + raw);
+            return UNKNOWN;
         }
 
         @Override
@@ -56,7 +64,7 @@ public final class EntityType {
     private Integer parentId;
     private String name;
     private String description;
-    private FieldType fieldType;
+    private FieldType fieldType = FieldType.NONE;
 
     private final List<EntityType> fields = new ArrayList<>();
 
@@ -119,11 +127,11 @@ public final class EntityType {
     }
 
     public void setFieldType(final FieldType fieldType) {
-        this.fieldType = fieldType;
+        this.fieldType = fieldType != null ? fieldType : FieldType.NONE;
     }
 
     public void setFieldType(final String type) {
-        this.fieldType = type != null ? FieldType.fromRaw(type) : null;
+        this.fieldType = type != null ? FieldType.fromRaw(type) : FieldType.NONE;
     }
 
     public EntityType getField(final String name) {

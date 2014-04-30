@@ -13,7 +13,6 @@ import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.System;
 import org.ccci.gto.globalreg.Type;
 import org.ccci.gto.globalreg.serializer.Serializer;
-import org.ccci.gto.globalreg.util.ArrayUtil;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -96,14 +95,14 @@ public abstract class AbstractSerializerTest {
         final EntityType person = types.get(1);
         assertEquals(299, (int) person.getId());
         assertEquals("person", person.getName());
-        assertNull(person.getFieldType());
+        assertEquals(EntityType.FieldType.NONE, person.getFieldType());
         assertEquals(42, person.getFields().size());
         final EntityType auth = person.getField("authentication");
         assertEquals(345, (int) auth.getId());
         assertEquals(299, (int) auth.getParentId());
         assertEquals(person, auth.getParent());
         assertEquals("authentication", auth.getName());
-        assertNull(person.getFieldType());
+        assertEquals(EntityType.FieldType.NONE, auth.getFieldType());
         assertEquals(4, auth.getFields().size());
     }
 
@@ -117,8 +116,7 @@ public abstract class AbstractSerializerTest {
 
     @Test
     public void testSerializeEntityType() throws Exception {
-        for (final EntityType.FieldType fieldType : ArrayUtil.merge(EntityType.FieldType.values(),
-                (EntityType.FieldType) null)) {
+        for (final EntityType.FieldType fieldType : EntityType.FieldType.values()) {
             for (final Integer parentId : new Integer[]{null, 1}) {
                 for (final String name : new String[]{"test_name"}) {
                     // create test entity type
@@ -139,7 +137,7 @@ public abstract class AbstractSerializerTest {
                     } else {
                         assertNull(json.get("parent_id"));
                     }
-                    if (fieldType != null) {
+                    if (fieldType != EntityType.FieldType.UNKNOWN && fieldType != EntityType.FieldType.NONE) {
                         assertEquals(fieldType.toString(), json.getString("field_type"));
                     } else {
                         assertNull(json.get("field_type"));

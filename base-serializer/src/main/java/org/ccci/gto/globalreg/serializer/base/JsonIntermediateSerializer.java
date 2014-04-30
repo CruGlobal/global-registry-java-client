@@ -46,7 +46,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         json.put("name", type.getName()).put("description", type.getDescription());
 
         final EntityType.FieldType fieldType = type.getFieldType();
-        if (fieldType != null) {
+        if (fieldType != EntityType.FieldType.UNKNOWN && fieldType != EntityType.FieldType.NONE) {
             json.put("field_type", type.getFieldType().toString());
         }
         if (type.hasParent()) {
