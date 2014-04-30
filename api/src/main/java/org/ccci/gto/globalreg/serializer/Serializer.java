@@ -14,7 +14,7 @@ public interface Serializer {
 
     <T> T deserializeEntity(final Type<T> type, final String raw) throws SerializerException;
 
-    <T> ResponseList<T> deserializeEntities(final Type<T> type, final String raw);
+    <T> ResponseList<T> deserializeEntities(final Type<T> type, final String raw) throws SerializerException;
 
     /* EntityType serialization methods */
 

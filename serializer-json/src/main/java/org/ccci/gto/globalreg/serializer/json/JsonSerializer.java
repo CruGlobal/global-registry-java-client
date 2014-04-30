@@ -18,33 +18,6 @@ public class JsonSerializer extends JsonIntermediateSerializer<JSONObject, JSONA
     private static final Logger LOG = LoggerFactory.getLogger(JsonSerializer.class);
 
     @Override
-    public <T> ResponseList<T> deserializeEntities(final Type<T> type, final String raw) {
-        final ResponseList<T> list = new ResponseList<>();
-
-        final Class<? extends T> clazz = type.getEntityClass();
-        if (JSONObject.class.equals(clazz)) {
-            try {
-                final JSONObject json = new JSONObject(raw);
-                final JSONArray entities = json.getJSONArray("entities");
-                for (int i = 0; i < entities.length(); i++) {
-                    list.add(clazz.cast(entities.getJSONObject(i).getJSONObject(type.getEntityType())));
-                }
-
-                // parse the meta-data
-                populateResponseListMeta(list, json);
-
-                // return the entities list
-                return list;
-            } catch (final JSONException e) {
-                LOG.debug("JSON processing error", e);
-                throw Throwables.propagate(e);
-            }
-        } else {
-            throw new UnsupportedOperationException("Unsupported class for JsonSerializer: " + clazz.getName());
-        }
-    }
-
-    @Override
     public String serializeEntityType(final EntityType type) {
         final JSONObject json = new JSONObject();
         json.put("name", type.getName());
@@ -97,22 +70,28 @@ public class JsonSerializer extends JsonIntermediateSerializer<JSONObject, JSONA
     }
 
     @Override
-    public <T> String serializeEntity(final Type<T> type, final T entity) {
-        final Class<? extends T> clazz = type.getEntityClass();
-        if (entity instanceof JSONObject) {
-            return this.wrap(this.wrap((JSONObject) entity, type.getEntityType()), "entity").toString();
-        } else {
-            throw new UnsupportedOperationException("Unsupported class for JsonSerializer: " + clazz.getName());
-        }
-    }
-
-    @Override
-    protected IntJsonObj parseJsonObj(final String raw) throws UnparsableJsonException {
+    protected IntJsonObj stringToJsonObj(final String raw) throws UnparsableJsonException {
         try {
             return new IntJsonObj(new JSONObject(raw));
         } catch (final JSONException e) {
             LOG.debug("JSON parsing error", e);
             throw new UnparsableJsonException(e);
+        }
+    }
+
+    @Override
+    protected String jsonObjToString(final JsonObj<JSONObject, JSONArray> json) {
+        final JSONObject obj = json.getRawObject();
+        return obj != null ? obj.toString() : "";
+    }
+
+    @Override
+    protected <T> IntJsonObj entityToJsonObj(final Type<T> type, final T entity) {
+        final Class<? extends T> clazz = type.getEntityClass();
+        if (JSONObject.class.equals(clazz)) {
+            return new IntJsonObj((JSONObject) entity);
+        } else {
+            throw new UnsupportedOperationException("Unsupported class for JsonSerializer: " + clazz.getName());
         }
     }
 
@@ -180,6 +159,11 @@ public class JsonSerializer extends JsonIntermediateSerializer<JSONObject, JSONA
     private static class IntJsonObj extends JsonObj<JSONObject, JSONArray> {
         private IntJsonObj(final JSONObject obj) {
             super(obj);
+        }
+
+        @Override
+        protected IntJsonObj wrap(final String key) {
+            return new IntJsonObj(new JSONObject(Collections.singletonMap(key, obj)));
         }
 
         @Override

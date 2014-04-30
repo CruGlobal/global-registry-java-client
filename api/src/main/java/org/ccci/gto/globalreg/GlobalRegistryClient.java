@@ -35,14 +35,14 @@ public interface GlobalRegistryClient {
      */
     <T> T getEntity(Type<T> type, int id, String createdBy) throws SerializerException, UnauthorizedException;
 
-    <T> ResponseList<T> getEntities(Type<T> type, Filter... filters) throws UnauthorizedException;
+    <T> ResponseList<T> getEntities(Type<T> type, Filter... filters) throws UnauthorizedException, SerializerException;
 
-    <T> ResponseList<T> getEntities(Type<T> type, int page, Filter... filters) throws UnauthorizedException;
+    <T> ResponseList<T> getEntities(Type<T> type, int page, Filter... filters) throws UnauthorizedException, SerializerException;
 
-    <T> ResponseList<T> getEntities(Type<T> type, String createdBy, Filter... filters) throws UnauthorizedException;
+    <T> ResponseList<T> getEntities(Type<T> type, String createdBy, Filter... filters) throws UnauthorizedException, SerializerException;
 
     <T> ResponseList<T> getEntities(Type<T> type, String createdBy, int page,
-                                    Filter... filters) throws UnauthorizedException;
+                                    Filter... filters) throws UnauthorizedException, SerializerException;
 
     /**
      * Store an entity in the Global Registry

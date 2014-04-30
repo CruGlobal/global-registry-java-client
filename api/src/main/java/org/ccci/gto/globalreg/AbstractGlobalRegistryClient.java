@@ -13,18 +13,19 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
 
     @Override
     public final <T> ResponseList<T> getEntities(final Type<T> type, final Filter... filters) throws
-            UnauthorizedException {
+            UnauthorizedException, SerializerException {
         return this.getEntities(type, DEFAULT_CREATED_BY, DEFAULT_PAGE, filters);
     }
 
     @Override
-    public final <T> ResponseList<T> getEntities(final Type<T> type, final int page,
-                                                 final Filter... filters) throws UnauthorizedException {
+    public final <T> ResponseList<T> getEntities(final Type<T> type, final int page, final Filter... filters) throws
+            UnauthorizedException, SerializerException {
         return this.getEntities(type, DEFAULT_CREATED_BY, page, filters);
     }
 
     @Override
-    public final <T> ResponseList<T> getEntities(final Type<T> type, final String createdBy, final Filter... filters) throws UnauthorizedException {
+    public final <T> ResponseList<T> getEntities(final Type<T> type, final String createdBy, final Filter... filters)
+            throws UnauthorizedException, SerializerException {
         return this.getEntities(type, createdBy, DEFAULT_PAGE, filters);
     }
 

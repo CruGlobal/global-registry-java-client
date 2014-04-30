@@ -32,31 +32,6 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
     }
 
     @Override
-    public <T> ResponseList<T> deserializeEntities(final Type<T> type, final String raw) {
-        try {
-            final JsonNode root = this.mapper.readTree(raw);
-            final ResponseList<T> list = new ResponseList<>();
-
-            // parse all returned entities
-            final JsonNode entities = root.path("entities");
-            if(entities.isArray()) {
-                for(final JsonNode entity : entities) {
-                    list.add(this.mapper.treeToValue(entity.path(type.getEntityType()), type.getEntityClass()));
-                }
-            }
-
-            // parse the meta-data
-            populateResponseListMeta(list, root);
-
-            // return the parsed list
-            return list;
-        } catch (final IOException e) {
-            LOG.error("Unexpected IOException", e);
-            throw Throwables.propagate(e);
-        }
-    }
-
-    @Override
     public String serializeEntityType(final EntityType type) {
         final ObjectNode json = this.mapper.createObjectNode();
         json.put("name", type.getName());
@@ -109,12 +84,7 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
     }
 
     @Override
-    public <T> String serializeEntity(final Type<T> type, final T entity) {
-        return this.wrap(this.wrap(this.mapper.valueToTree(entity), type.getEntityType()), "entity").toString();
-    }
-
-    @Override
-    protected IntJsonObj parseJsonObj(final String raw) throws UnparsableJsonException {
+    protected IntJsonObj stringToJsonObj(final String raw) throws UnparsableJsonException {
         try {
             return new IntJsonObj(this.mapper.readTree(raw));
         } catch (final JsonProcessingException e) {
@@ -124,6 +94,16 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
             LOG.debug("Unexpected IOException", e);
             throw Throwables.propagate(e);
         }
+    }
+
+    @Override
+    protected String jsonObjToString(final JsonObj<JsonNode, JsonNode> json) {
+        return json.getRawObject().toString();
+    }
+
+    @Override
+    protected <T> IntJsonObj entityToJsonObj(final Type<T> type, final T entity) {
+        return new IntJsonObj(this.mapper.valueToTree(entity));
     }
 
     @Override
@@ -191,9 +171,16 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
         meta.setTotalPages(metaJson.path("total_pages").asInt(0));
     }
 
-    private static final class IntJsonObj extends JsonObj<JsonNode, JsonNode> {
+    private final class IntJsonObj extends JsonObj<JsonNode, JsonNode> {
         protected IntJsonObj(final JsonNode obj) {
             super(obj);
+        }
+
+        @Override
+        protected IntJsonObj wrap(final String key) {
+            final ObjectNode wrapper = mapper.createObjectNode();
+            wrapper.put(key, obj);
+            return new IntJsonObj(wrapper);
         }
 
         @Override
@@ -264,7 +251,7 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
         }
     }
 
-    private static final class IntJsonArr extends JsonArr<JsonNode, JsonNode> {
+    private final class IntJsonArr extends JsonArr<JsonNode, JsonNode> {
         protected IntJsonArr(final JsonNode arr) {
             super(arr);
         }

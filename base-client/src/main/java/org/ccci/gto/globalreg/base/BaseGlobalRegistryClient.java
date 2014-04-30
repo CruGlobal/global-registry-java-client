@@ -71,7 +71,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
     @Override
     public <T> ResponseList<T> getEntities(final Type<T> type, final String createdBy, final int page,
-                                           final Filter... filters) throws UnauthorizedException {
+                                           final Filter... filters) throws UnauthorizedException, SerializerException {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITIES};
