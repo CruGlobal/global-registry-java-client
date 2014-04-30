@@ -2,6 +2,7 @@ package org.ccci.gto.globalreg.serializer.base;
 
 import com.google.common.primitives.Ints;
 import org.ccci.gto.globalreg.EntityType;
+import org.ccci.gto.globalreg.MeasurementType;
 import org.ccci.gto.globalreg.RegisteredSystem;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
@@ -95,6 +96,11 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         return systems;
     }
 
+    @Override
+    public MeasurementType deserializeMeasurementType(final String raw) throws UnparsableJsonException {
+        return this.parseMeasurementType(this.stringToJsonObj(raw).getObject("measurement_type"));
+    }
+
     private EntityType parseEntityType(final JsonObj<O, A> json) {
         return this.parseEntityType(json, null);
     }
@@ -147,6 +153,19 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         meta.setTo(metaJson.getInt("to", 0));
         meta.setPage(metaJson.getInt("page", 0));
         meta.setTotalPages(metaJson.getInt("total_pages", 0));
+    }
+
+    private MeasurementType parseMeasurementType(final JsonObj<O, A> json) {
+        // build & return MeasurementType
+        final MeasurementType type = new MeasurementType();
+        type.setId(json.getLong("id"));
+        type.setName(json.getString("name"));
+        type.setDescription(json.getString("description"));
+        type.setCategory(json.getString("category"));
+        type.setFrequency(json.getString("frequency"));
+        type.setUnit(json.getString("unit"));
+        type.setRelatedEntityType(json.getLong("related_entity_type_id"));
+        return type;
     }
 
     protected abstract JsonObj<O, A> stringToJsonObj(String raw) throws UnparsableJsonException;

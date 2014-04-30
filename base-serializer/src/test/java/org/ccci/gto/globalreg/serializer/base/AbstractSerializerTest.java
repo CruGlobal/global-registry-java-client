@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 import com.google.common.io.CharStreams;
 import com.jayway.restassured.path.json.JsonPath;
 import org.ccci.gto.globalreg.EntityType;
+import org.ccci.gto.globalreg.MeasurementType;
 import org.ccci.gto.globalreg.RegisteredSystem;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
@@ -201,5 +202,19 @@ public abstract class AbstractSerializerTest {
             assertFalse(system.isTrusted());
             assertNull(system.getAccessToken());
         }
+    }
+
+    @Test
+    public void testDeserializeMeasurementType() throws Exception {
+        final MeasurementType type = this.serializer.deserializeMeasurementType(loadResource("measurementtype.json"));
+
+        assertNotNull(type);
+        assertEquals(5, (long) type.getId());
+        assertEquals("Expenses", type.getName());
+        assertEquals("Expenses (turnover)", type.getDescription());
+        assertEquals(MeasurementType.Category.FINANCE, type.getCategory());
+        assertEquals(MeasurementType.Frequency.MONTHLY, type.getFrequency());
+        assertEquals("Percentage", type.getUnit());
+        assertEquals(299, (long) type.getRelatedEntityType());
     }
 }

@@ -38,6 +38,10 @@ public final class Filter implements Serializable {
         return new Filter(this.path, value);
     }
 
+    public final Filter value(final MeasurementType.Category category) {
+        return this.value(category != null ? category.toString() : null);
+    }
+
     public final boolean isValid() {
         return this.path.length > 0;
     }

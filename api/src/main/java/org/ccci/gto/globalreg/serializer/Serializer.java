@@ -1,6 +1,7 @@
 package org.ccci.gto.globalreg.serializer;
 
 import org.ccci.gto.globalreg.EntityType;
+import org.ccci.gto.globalreg.MeasurementType;
 import org.ccci.gto.globalreg.RegisteredSystem;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
@@ -36,4 +37,8 @@ public interface Serializer {
     RegisteredSystem deserializeSystem(final String raw) throws SerializerException;
 
     List<RegisteredSystem> deserializeSystems(final String raw) throws SerializerException;
+
+    /* Measurement serialization methods */
+
+    MeasurementType deserializeMeasurementType(final String raw) throws SerializerException;
 }

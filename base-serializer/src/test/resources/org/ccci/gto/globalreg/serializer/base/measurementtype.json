@@ -1,0 +1,12 @@
+{
+    "measurement_type": {
+        "id": 5,
+        "name": "Expenses",
+        "description": "Expenses (turnover)",
+        "category": "Finance",
+        "frequency": "monthly",
+        "unit": "Percentage",
+        "related_entity_type_id": 299,
+        "measurements": []
+    }
+}
