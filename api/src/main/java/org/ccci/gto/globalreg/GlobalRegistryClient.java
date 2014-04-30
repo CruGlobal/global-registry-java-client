@@ -7,6 +7,7 @@ import java.util.List;
 public interface GlobalRegistryClient {
     public static final String PATH_ENTITIES = "entities";
     public static final String PATH_ENTITY_TYPES = "entity_types";
+    public static final String PATH_MEASUREMENT_TYPES = "measurement_types";
     public static final String PATH_SYSTEMS = "systems";
     public static final String PARAM_CREATED_BY = "created_by";
     public static final String PARAM_ENTITY_TYPE = "entity_type";
@@ -74,4 +75,14 @@ public interface GlobalRegistryClient {
     RegisteredSystem getSystem(long id) throws SerializerException, UnauthorizedException;
 
     List<RegisteredSystem> getSystems() throws UnauthorizedException, SerializerException;
+
+    /* Measurement Endpoints */
+
+    ResponseList<MeasurementType> getMeasurementTypes(Filter... filters) throws UnauthorizedException,
+            SerializerException;
+
+    ResponseList<MeasurementType> getMeasurementTypes(int page, Filter... filters) throws UnauthorizedException,
+            SerializerException;
+
+    MeasurementType getMeasurementType(long id, Filter... filters) throws UnauthorizedException, SerializerException;
 }

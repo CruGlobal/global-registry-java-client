@@ -34,4 +34,10 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
             SerializerException {
         return this.getEntityTypes(1, filters);
     }
+
+    @Override
+    public ResponseList<MeasurementType> getMeasurementTypes(final Filter... filters) throws UnauthorizedException,
+            SerializerException {
+        return this.getMeasurementTypes(1, filters);
+    }
 }

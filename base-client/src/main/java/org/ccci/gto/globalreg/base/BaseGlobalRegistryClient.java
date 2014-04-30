@@ -7,6 +7,7 @@ import com.google.common.net.MediaType;
 import org.ccci.gto.globalreg.AbstractGlobalRegistryClient;
 import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.Filter;
+import org.ccci.gto.globalreg.MeasurementType;
 import org.ccci.gto.globalreg.RegisteredSystem;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
@@ -226,6 +227,48 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // process response
         if (response.code == 200) {
             return this.serializer.deserializeSystems(response.content);
+        }
+
+        return null;
+    }
+
+    @Override
+    public ResponseList<MeasurementType> getMeasurementTypes(final int page, final Filter... filters) throws
+            UnauthorizedException, SerializerException {
+        // build request
+        final Request request = new Request();
+        request.path = new String[]{PATH_MEASUREMENT_TYPES};
+        request.queryParams.put(PARAM_PAGE, Integer.toString(page));
+        for (final Filter filter : filters) {
+            request.queryParams.put(this.buildFilterParamName(filter), filter.getValue());
+        }
+
+        // execute request
+        final Response response = this.processRequest(request);
+
+        // process response
+        if (response.code == 200) {
+            return this.serializer.deserializeMeasurementTypes(response.content);
+        }
+
+        return null;
+    }
+
+    @Override
+    public MeasurementType getMeasurementType(final long id, final Filter... filters) throws UnauthorizedException, SerializerException {
+        // build request
+        final Request request = new Request();
+        request.path = new String[]{PATH_MEASUREMENT_TYPES, Long.toString(id)};
+        for (final Filter filter : filters) {
+            request.queryParams.put(this.buildFilterParamName(filter), filter.getValue());
+        }
+
+        // execute request
+        final Response response = this.processRequest(request);
+
+        // process response
+        if (response.code == 200) {
+            return this.serializer.deserializeMeasurementType(response.content);
         }
 
         return null;
