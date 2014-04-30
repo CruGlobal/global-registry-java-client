@@ -58,6 +58,27 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
     }
 
     @Override
+    public EntityType deserializeEntityType(final String raw) throws UnparsableJsonException {
+        return this.parseEntityType(this.stringToJsonObj(raw).getObject("entity_type"));
+    }
+
+    @Override
+    public ResponseList<EntityType> deserializeEntityTypes(final String raw) throws UnparsableJsonException {
+        final ResponseList<EntityType> list = new ResponseList<>();
+
+        final JsonObj<O, A> json = this.stringToJsonObj(raw);
+        final JsonArr<O, A> types = json.getArray("entity_types");
+        for (int i = 0; i < types.size(); i++) {
+            list.add(this.parseEntityType(types.getObject(i)));
+        }
+
+        // parse the meta-data
+        populateResponseListMeta(list, json);
+
+        return list;
+    }
+
+    @Override
     public System deserializeSystem(final String raw) throws UnparsableJsonException {
         return this.parseSystem(this.stringToJsonObj(raw).getObject("system"));
     }
@@ -72,6 +93,38 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
             systems.add(this.parseSystem(json.getObject(i)));
         }
         return systems;
+    }
+
+    private EntityType parseEntityType(final JsonObj<O, A> json) {
+        return this.parseEntityType(json, null);
+    }
+
+    private EntityType parseEntityType(final JsonObj<O, A> json, final EntityType parent) {
+        final EntityType type = new EntityType();
+
+        // set the parent
+        final Integer parentId = json.getInt("parent_id", null);
+        if (parent != null && parentId != null && !parentId.equals(parent.getId())) {
+            throw new IllegalArgumentException("Specified parent object does not match the referenced parent object");
+        } else if (parentId != null && parent == null) {
+            type.setParentId(parentId);
+        } else {
+            type.setParent(parent);
+        }
+
+        type.setId(json.getInt("id", null));
+        type.setName(json.getString("name", null));
+        type.setDescription(json.getString("description", null));
+        type.setFieldType(json.getString("field_type", null));
+
+        // parse nested fields
+        final JsonArr<O, A> fields = json.getArray("fields");
+        for (int i = 0; i < fields.size(); i++) {
+            type.addField(this.parseEntityType(fields.getObject(i), type));
+        }
+
+        // return the parsed entity_type
+        return type;
     }
 
     private System parseSystem(final JsonObj<O, A> json) {

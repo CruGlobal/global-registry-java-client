@@ -151,7 +151,8 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public ResponseList<EntityType> getEntityTypes(final int page, final Filter... filters) throws UnauthorizedException {
+    public ResponseList<EntityType> getEntityTypes(final int page, final Filter... filters) throws
+            UnauthorizedException, SerializerException {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITY_TYPES};
@@ -173,7 +174,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
     // XXX: this is currently untested
     @Override
-    public final EntityType addEntityType(final EntityType type) throws UnauthorizedException {
+    public final EntityType addEntityType(final EntityType type) throws UnauthorizedException, SerializerException {
         // build request
         final Request request = new Request();
         request.method = "POST";

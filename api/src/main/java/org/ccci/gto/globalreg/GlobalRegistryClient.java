@@ -60,9 +60,9 @@ public interface GlobalRegistryClient {
 
     /* Entity Type Endpoints */
 
-    ResponseList<EntityType> getEntityTypes(Filter... filters) throws UnauthorizedException;
+    ResponseList<EntityType> getEntityTypes(Filter... filters) throws UnauthorizedException, SerializerException;
 
-    ResponseList<EntityType> getEntityTypes(int page, Filter... filters) throws UnauthorizedException;
+    ResponseList<EntityType> getEntityTypes(int page, Filter... filters) throws UnauthorizedException, SerializerException;
 
-    EntityType addEntityType(EntityType type) throws UnauthorizedException;
+    EntityType addEntityType(EntityType type) throws UnauthorizedException, SerializerException;
 }

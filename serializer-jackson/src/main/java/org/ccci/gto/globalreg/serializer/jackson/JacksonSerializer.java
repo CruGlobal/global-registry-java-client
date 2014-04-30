@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.base.Throwables;
-import org.ccci.gto.globalreg.EntityType;
-import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
 import org.ccci.gto.globalreg.serializer.SerializerException;
 import org.ccci.gto.globalreg.serializer.base.JsonIntermediateSerializer;
@@ -32,38 +30,8 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
     }
 
     @Override
-    public EntityType deserializeEntityType(final String raw) {
-        try {
-            final JsonNode root = this.mapper.readTree(raw);
-            return this.parseEntityType(root.path("entity_type"));
-        } catch (final IOException e) {
-            LOG.error("Unexpected IOException", e);
-            throw Throwables.propagate(e);
-        }
-    }
-
-    @Override
-    public ResponseList<EntityType> deserializeEntityTypes(final String raw) {
-        try {
-            final JsonNode root = this.mapper.readTree(raw);
-            final ResponseList<EntityType> list = new ResponseList<>();
-
-            // parse all returned entity types
-            final JsonNode types = root.path("entity_types");
-            if (types.isArray()) {
-                for (final JsonNode type : types) {
-                    list.add(this.parseEntityType(type));
-                }
-            }
-
-            // parse the meta-data
-            populateResponseListMeta(list, root);
-
-            return list;
-        } catch (final IOException e) {
-            LOG.error("Unexpected IOException", e);
-            throw Throwables.propagate(e);
-        }
+    protected JsonObj<JsonNode, JsonNode> emptyJsonObj() {
+        return new IntJsonObj(this.mapper.createObjectNode());
     }
 
     @Override
@@ -97,66 +65,6 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
         } catch (final JsonProcessingException e) {
             throw new SerializerException(e);
         }
-    }
-
-    @Override
-    protected JsonObj<JsonNode, JsonNode> emptyJsonObj() {
-        return new IntJsonObj(this.mapper.createObjectNode());
-    }
-
-    protected JsonNode wrap(final JsonNode json, final String name) {
-        final ObjectNode wrapper = this.mapper.createObjectNode();
-        wrapper.put(name, json);
-        return wrapper;
-    }
-
-    private EntityType parseEntityType(final JsonNode json) {
-        return this.parseEntityType(json, null);
-    }
-
-    private EntityType parseEntityType(final JsonNode json, final EntityType parent) {
-        final EntityType type = new EntityType();
-
-        // set the parent
-        final JsonNode parentId = json.get("parent_id");
-        if (parent != null && parentId != null && parentId.asInt() != parent.getId()) {
-            throw new IllegalArgumentException("Specified parent object does not match the referenced parent object");
-        } else if (parentId != null && parent == null) {
-            type.setParentId(parentId.asInt());
-        } else {
-            type.setParent(parent);
-        }
-
-        final JsonNode id = json.get("id");
-        type.setId(id != null ? id.asInt() : null);
-        final JsonNode name = json.get("name");
-        type.setName(name != null ? name.asText() : null);
-        final JsonNode description = json.get("description");
-        type.setDescription(description != null ? description.asText() : null);
-        final JsonNode fieldType = json.get("field_type");
-        type.setFieldType(fieldType != null ? fieldType.asText() : null);
-
-        // parse nested fields
-        final JsonNode fields = json.path("fields");
-        if (fields.isArray()) {
-            for (final JsonNode field : fields) {
-                type.addField(this.parseEntityType(field, type));
-            }
-        }
-
-        // return the parsed entity_type
-        return type;
-    }
-
-    private void populateResponseListMeta(final ResponseList<?> list, final JsonNode json) {
-        // parse the meta-data
-        final JsonNode metaJson = json.path("meta");
-        final ResponseList.Meta meta = list.getMeta();
-        meta.setTotal(metaJson.path("total").asInt(0));
-        meta.setFrom(metaJson.path("from").asInt(0));
-        meta.setTo(metaJson.path("to").asInt(0));
-        meta.setPage(metaJson.path("page").asInt(0));
-        meta.setTotalPages(metaJson.path("total_pages").asInt(0));
     }
 
     private final class IntJsonObj extends JsonObj<JsonNode, JsonNode> {

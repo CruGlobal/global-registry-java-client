@@ -30,7 +30,8 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     }
 
     @Override
-    public final ResponseList<EntityType> getEntityTypes(final Filter... filters) throws UnauthorizedException {
+    public final ResponseList<EntityType> getEntityTypes(final Filter... filters) throws UnauthorizedException,
+            SerializerException {
         return this.getEntityTypes(1, filters);
     }
 }
