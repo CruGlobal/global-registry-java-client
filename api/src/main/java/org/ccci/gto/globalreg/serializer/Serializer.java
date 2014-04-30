@@ -1,8 +1,8 @@
 package org.ccci.gto.globalreg.serializer;
 
 import org.ccci.gto.globalreg.EntityType;
+import org.ccci.gto.globalreg.RegisteredSystem;
 import org.ccci.gto.globalreg.ResponseList;
-import org.ccci.gto.globalreg.System;
 import org.ccci.gto.globalreg.Type;
 
 import java.util.List;
@@ -33,7 +33,7 @@ public interface Serializer {
      * @return the deserialized System object
      * @throws SerializerException Thrown when there is an error deserializing the provided JSON
      */
-    System deserializeSystem(final String raw) throws SerializerException;
+    RegisteredSystem deserializeSystem(final String raw) throws SerializerException;
 
-    List<System> deserializeSystems(final String raw) throws SerializerException;
+    List<RegisteredSystem> deserializeSystems(final String raw) throws SerializerException;
 }

@@ -2,8 +2,8 @@ package org.ccci.gto.globalreg.serializer.base;
 
 import com.google.common.primitives.Ints;
 import org.ccci.gto.globalreg.EntityType;
+import org.ccci.gto.globalreg.RegisteredSystem;
 import org.ccci.gto.globalreg.ResponseList;
-import org.ccci.gto.globalreg.System;
 import org.ccci.gto.globalreg.Type;
 import org.ccci.gto.globalreg.serializer.AbstractSerializer;
 import org.ccci.gto.globalreg.serializer.SerializerException;
@@ -79,16 +79,16 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
     }
 
     @Override
-    public System deserializeSystem(final String raw) throws UnparsableJsonException {
+    public RegisteredSystem deserializeSystem(final String raw) throws UnparsableJsonException {
         return this.parseSystem(this.stringToJsonObj(raw).getObject("system"));
     }
 
     @Override
-    public List<System> deserializeSystems(final String raw) throws UnparsableJsonException {
+    public List<RegisteredSystem> deserializeSystems(final String raw) throws UnparsableJsonException {
         final JsonArr<O, A> json = this.stringToJsonObj(raw).getArray("systems");
 
         // process into an array & return
-        final List<System> systems = new ArrayList<>(json.size());
+        final List<RegisteredSystem> systems = new ArrayList<>(json.size());
         for (int i = 0; i < json.size(); i++) {
             systems.add(this.parseSystem(json.getObject(i)));
         }
@@ -127,9 +127,9 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         return type;
     }
 
-    private System parseSystem(final JsonObj<O, A> json) {
+    private RegisteredSystem parseSystem(final JsonObj<O, A> json) {
         // build & return System object
-        final System system = new System();
+        final RegisteredSystem system = new RegisteredSystem();
         system.setId(json.getLong("id"));
         system.setName(json.getString("name"));
         system.setRoot(json.getBoolean("root"));

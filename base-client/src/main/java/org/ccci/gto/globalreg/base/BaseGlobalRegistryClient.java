@@ -7,8 +7,8 @@ import com.google.common.net.MediaType;
 import org.ccci.gto.globalreg.AbstractGlobalRegistryClient;
 import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.Filter;
+import org.ccci.gto.globalreg.RegisteredSystem;
 import org.ccci.gto.globalreg.ResponseList;
-import org.ccci.gto.globalreg.System;
 import org.ccci.gto.globalreg.Type;
 import org.ccci.gto.globalreg.UnauthorizedException;
 import org.ccci.gto.globalreg.serializer.Serializer;
@@ -198,7 +198,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public System getSystem(final long id) throws SerializerException, UnauthorizedException {
+    public RegisteredSystem getSystem(final long id) throws SerializerException, UnauthorizedException {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_SYSTEMS, Long.toString(id)};
@@ -215,7 +215,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public List<System> getSystems() throws UnauthorizedException, SerializerException {
+    public List<RegisteredSystem> getSystems() throws UnauthorizedException, SerializerException {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_SYSTEMS};

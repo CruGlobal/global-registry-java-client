@@ -9,8 +9,8 @@ import static org.junit.Assert.assertTrue;
 import com.google.common.io.CharStreams;
 import com.jayway.restassured.path.json.JsonPath;
 import org.ccci.gto.globalreg.EntityType;
+import org.ccci.gto.globalreg.RegisteredSystem;
 import org.ccci.gto.globalreg.ResponseList;
-import org.ccci.gto.globalreg.System;
 import org.ccci.gto.globalreg.Type;
 import org.ccci.gto.globalreg.serializer.Serializer;
 import org.junit.Test;
@@ -149,7 +149,7 @@ public abstract class AbstractSerializerTest {
 
     @Test
     public void testDeserializeSystem() throws Exception {
-        final System system = this.serializer.deserializeSystem(loadResource("system.json"));
+        final RegisteredSystem system = this.serializer.deserializeSystem(loadResource("system.json"));
 
         // validate system object
         assertNotNull(system);
@@ -164,12 +164,12 @@ public abstract class AbstractSerializerTest {
 
     @Test
     public void testDeserializeSystems() throws Exception {
-        final List<System> systems = this.serializer.deserializeSystems(loadResource("systems.json"));
+        final List<RegisteredSystem> systems = this.serializer.deserializeSystems(loadResource("systems.json"));
 
         assertNotNull(systems);
         assertEquals(3, systems.size());
         {
-            final System system = systems.get(0);
+            final RegisteredSystem system = systems.get(0);
             assertNotNull(system);
             assertEquals(1, (long) system.getId());
             assertEquals("System 1", system.getName());
@@ -180,7 +180,7 @@ public abstract class AbstractSerializerTest {
             assertEquals("token_1", system.getAccessToken());
         }
         {
-            final System system = systems.get(1);
+            final RegisteredSystem system = systems.get(1);
             assertNotNull(system);
             assertEquals(2, (long) system.getId());
             assertEquals("System 2", system.getName());
@@ -191,7 +191,7 @@ public abstract class AbstractSerializerTest {
             assertEquals("token_2", system.getAccessToken());
         }
         {
-            final System system = systems.get(2);
+            final RegisteredSystem system = systems.get(2);
             assertNotNull(system);
             assertEquals(10, (long) system.getId());
             assertEquals("System 10", system.getName());

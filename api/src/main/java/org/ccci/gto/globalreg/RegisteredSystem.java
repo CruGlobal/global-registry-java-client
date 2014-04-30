@@ -2,7 +2,7 @@ package org.ccci.gto.globalreg;
 
 import java.util.Objects;
 
-public final class System {
+public final class RegisteredSystem {
     private Long id;
     private String name;
     private Boolean root;
@@ -62,7 +62,7 @@ public final class System {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        System that = (System) o;
+        RegisteredSystem that = (RegisteredSystem) o;
         return Objects.equals(this.id, that.id) && Objects.equals(this.name, that.name) && Objects.equals(this.root,
                 that.root) && Objects.equals(this.trusted, that.trusted) && Objects.equals(this.accessToken,
                 that.accessToken);

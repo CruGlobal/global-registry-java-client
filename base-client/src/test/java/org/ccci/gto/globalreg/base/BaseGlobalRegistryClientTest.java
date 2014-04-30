@@ -10,8 +10,8 @@ import static org.junit.Assume.assumeNotNull;
 import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.Filter;
 import org.ccci.gto.globalreg.GlobalRegistryClient;
+import org.ccci.gto.globalreg.RegisteredSystem;
 import org.ccci.gto.globalreg.ResponseList;
-import org.ccci.gto.globalreg.System;
 import org.ccci.gto.globalreg.UnauthorizedException;
 import org.ccci.gto.globalreg.serializer.json.JSONObjectType;
 import org.ccci.gto.globalreg.serializer.json.JsonSerializer;
@@ -122,19 +122,19 @@ public abstract class BaseGlobalRegistryClientTest {
         final GlobalRegistryClient client = this.getClient();
         assumeNotNull(client);
 
-        final List<System> systems = client.getSystems();
+        final List<RegisteredSystem> systems = client.getSystems();
 
         assertNotNull(systems);
         assertTrue(systems.size() >= 1);
 
         {
             // randomly select one of the returned systems
-            final System expected = systems.get(RAND.nextInt(systems.size()));
+            final RegisteredSystem expected = systems.get(RAND.nextInt(systems.size()));
             assertNotNull(expected);
             assertNotNull(expected.getId());
 
             // fetch the same system directly from the GR
-            final System system = client.getSystem(expected.getId());
+            final RegisteredSystem system = client.getSystem(expected.getId());
             assertNotNull(system);
             assertEquals(expected, system);
         }
