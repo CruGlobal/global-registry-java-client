@@ -96,7 +96,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public <T> T addEntity(final Type<T> type, final T entity) throws UnauthorizedException {
+    public <T> T addEntity(final Type<T> type, final T entity) throws UnauthorizedException, SerializerException {
         // build request
         final Request request = new Request();
         request.method = "POST";
@@ -118,7 +118,8 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public <T> T updateEntity(final Type<T> type, final int id, final T entity) throws UnauthorizedException {
+    public <T> T updateEntity(final Type<T> type, final int id, final T entity) throws UnauthorizedException,
+            SerializerException {
         // build the request
         final Request request = new Request();
         request.method = "PUT";

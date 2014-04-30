@@ -52,9 +52,9 @@ public interface GlobalRegistryClient {
      * @return the entity stored in the Global Registry
      * @throws UnauthorizedException Thrown when the request is unauthorized.
      */
-    <T> T addEntity(Type<T> type, T entity) throws UnauthorizedException;
+    <T> T addEntity(Type<T> type, T entity) throws UnauthorizedException, SerializerException;
 
-    <T> T updateEntity(Type<T> type, int id, T entity) throws UnauthorizedException;
+    <T> T updateEntity(Type<T> type, int id, T entity) throws UnauthorizedException, SerializerException;
 
     <T> void deleteEntity(Type<T> type, int id) throws UnauthorizedException;
 

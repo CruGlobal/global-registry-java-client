@@ -9,6 +9,7 @@ import com.google.common.base.Throwables;
 import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
+import org.ccci.gto.globalreg.serializer.SerializerException;
 import org.ccci.gto.globalreg.serializer.base.JsonIntermediateSerializer;
 import org.ccci.gto.globalreg.serializer.base.UnparsableJsonException;
 import org.slf4j.Logger;
@@ -28,17 +29,6 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
 
     public JacksonSerializer(final ObjectMapper mapper) {
         this.mapper = mapper;
-    }
-
-    @Override
-    public <T> T deserializeEntity(final Type<T> type, final String raw) {
-        try {
-            final JsonNode json = this.mapper.readTree(raw);
-            return this.mapper.treeToValue(json.path("entity").path(type.getEntityType()), type.getEntityClass());
-        } catch (final IOException e) {
-            LOG.error("Unexpected IOException", e);
-            throw Throwables.propagate(e);
-        }
     }
 
     @Override
@@ -133,6 +123,16 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
         } catch (final IOException e) {
             LOG.debug("Unexpected IOException", e);
             throw Throwables.propagate(e);
+        }
+    }
+
+    @Override
+    protected <T> T jsonObjToEntity(final Type<T> type, final JsonObj<JsonNode,
+            JsonNode> json) throws SerializerException {
+        try {
+            return this.mapper.treeToValue(json.getRawObject(), type.getEntityClass());
+        } catch (final JsonProcessingException e) {
+            throw new SerializerException(e);
         }
     }
 

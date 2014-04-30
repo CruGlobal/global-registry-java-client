@@ -2,12 +2,20 @@ package org.ccci.gto.globalreg.serializer.base;
 
 import com.google.common.primitives.Ints;
 import org.ccci.gto.globalreg.System;
+import org.ccci.gto.globalreg.Type;
 import org.ccci.gto.globalreg.serializer.AbstractSerializer;
+import org.ccci.gto.globalreg.serializer.SerializerException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerializer {
+    @Override
+    public <T> T deserializeEntity(final Type<T> type, final String raw) throws SerializerException {
+        final JsonObj<O, A> json = this.parseJsonObj(raw).getObject("entity").getObject(type.getEntityType());
+        return jsonObjToEntity(type, json);
+    }
+
     @Override
     public System deserializeSystem(final String raw) throws UnparsableJsonException {
         return this.parseSystem(this.parseJsonObj(raw).getObject("system"));
@@ -38,11 +46,17 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
 
     protected abstract JsonObj<O, A> parseJsonObj(String raw) throws UnparsableJsonException;
 
+    protected abstract <T> T jsonObjToEntity(Type<T> type, JsonObj<O, A> json) throws SerializerException;
+
     protected abstract static class JsonObj<O, A> {
         protected final O obj;
 
         protected JsonObj(final O obj) {
             this.obj = obj;
+        }
+
+        public O getRawObject() {
+            return obj;
         }
 
         protected abstract JsonObj<O, A> getObject(String key);
