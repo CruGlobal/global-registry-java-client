@@ -53,11 +53,11 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     protected abstract Response processRequest(Request request) throws UnauthorizedException;
 
     @Override
-    public <T> T getEntity(final Type<T> type, final int id, final String createdBy) throws UnauthorizedException,
+    public <T> T getEntity(final Type<T> type, final long id, final String createdBy) throws UnauthorizedException,
             SerializerException {
         // build the request
         final Request request = new Request();
-        request.path = new String[]{PATH_ENTITIES, Integer.toString(id)};
+        request.path = new String[]{PATH_ENTITIES, Long.toString(id)};
         request.queryParams.put(PARAM_ENTITY_TYPE, type.getEntityType());
         if (createdBy != null) {
             request.queryParams.put(PARAM_CREATED_BY, createdBy);
@@ -121,12 +121,11 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public <T> T updateEntity(final Type<T> type, final int id, final T entity) throws UnauthorizedException,
-            SerializerException {
+    public <T> T updateEntity(final Type<T> type, final long id, final T entity) throws UnauthorizedException, SerializerException {
         // build the request
         final Request request = new Request();
         request.method = "PUT";
-        request.path = new String[]{PATH_ENTITIES, Integer.toString(id)};
+        request.path = new String[]{PATH_ENTITIES, Long.toString(id)};
         request.contentType = APPLICATION_JSON.toString();
         request.content = this.serializer.serializeEntity(type, entity);
 
@@ -143,11 +142,11 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public <T> void deleteEntity(Type<T> type, int id) throws UnauthorizedException {
+    public <T> void deleteEntity(Type<T> type, long id) throws UnauthorizedException {
         // build the request
         final Request request = new Request();
         request.method = "DELETE";
-        request.path = new String[]{PATH_ENTITIES, Integer.toString(id)};
+        request.path = new String[]{PATH_ENTITIES, Long.toString(id)};
 
         // execute request
         final Response response = this.processRequest(request);

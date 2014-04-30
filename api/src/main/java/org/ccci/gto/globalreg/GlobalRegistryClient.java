@@ -25,7 +25,7 @@ public interface GlobalRegistryClient {
      * @throws UnauthorizedException Thrown when the request is unauthorized.
      * @throws SerializerException   Thrown when there was an exception with entity deserialization.
      */
-    <T> T getEntity(Type<T> type, int id) throws GlobalRegistryException;
+    <T> T getEntity(Type<T> type, long id) throws GlobalRegistryException;
 
     /**
      * Retrieve an entity from the Global Registry
@@ -37,7 +37,7 @@ public interface GlobalRegistryClient {
      * @throws UnauthorizedException Thrown when the request is unauthorized.
      * @throws SerializerException   Thrown when there was an exception with entity deserialization.
      */
-    <T> T getEntity(Type<T> type, int id, String createdBy) throws SerializerException, UnauthorizedException;
+    <T> T getEntity(Type<T> type, long id, String createdBy) throws SerializerException, UnauthorizedException;
 
     <T> ResponseList<T> getEntities(Type<T> type, Filter... filters) throws UnauthorizedException, SerializerException;
 
@@ -58,9 +58,9 @@ public interface GlobalRegistryClient {
      */
     <T> T addEntity(Type<T> type, T entity) throws UnauthorizedException, SerializerException;
 
-    <T> T updateEntity(Type<T> type, int id, T entity) throws UnauthorizedException, SerializerException;
+    <T> T updateEntity(Type<T> type, long id, T entity) throws UnauthorizedException, SerializerException;
 
-    <T> void deleteEntity(Type<T> type, int id) throws UnauthorizedException;
+    <T> void deleteEntity(Type<T> type, long id) throws UnauthorizedException;
 
     /* Entity Type Endpoints */
 
