@@ -2,9 +2,12 @@ package org.ccci.gto.globalreg;
 
 import org.ccci.gto.globalreg.serializer.SerializerException;
 
+import java.util.List;
+
 public interface GlobalRegistryClient {
     public static final String PATH_ENTITIES = "entities";
     public static final String PATH_ENTITY_TYPES = "entity_types";
+    public static final String PATH_SYSTEMS = "systems";
     public static final String PARAM_CREATED_BY = "created_by";
     public static final String PARAM_ENTITY_TYPE = "entity_type";
     public static final String PARAM_PAGE = "page";
@@ -65,4 +68,10 @@ public interface GlobalRegistryClient {
     ResponseList<EntityType> getEntityTypes(int page, Filter... filters) throws UnauthorizedException, SerializerException;
 
     EntityType addEntityType(EntityType type) throws UnauthorizedException, SerializerException;
+
+    /* System Endpoints */
+
+    System getSystem(long id) throws SerializerException, UnauthorizedException;
+
+    List<System> getSystems() throws UnauthorizedException, SerializerException;
 }

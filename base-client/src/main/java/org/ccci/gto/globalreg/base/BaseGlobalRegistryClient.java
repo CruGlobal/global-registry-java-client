@@ -8,12 +8,14 @@ import org.ccci.gto.globalreg.AbstractGlobalRegistryClient;
 import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.Filter;
 import org.ccci.gto.globalreg.ResponseList;
+import org.ccci.gto.globalreg.System;
 import org.ccci.gto.globalreg.Type;
 import org.ccci.gto.globalreg.UnauthorizedException;
 import org.ccci.gto.globalreg.serializer.Serializer;
 import org.ccci.gto.globalreg.serializer.SerializerException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryClient {
@@ -190,6 +192,40 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // 201: new entity type created
         if (response.code == 200 || response.code == 201) {
             return this.serializer.deserializeEntityType(response.content);
+        }
+
+        return null;
+    }
+
+    @Override
+    public System getSystem(final long id) throws SerializerException, UnauthorizedException {
+        // build request
+        final Request request = new Request();
+        request.path = new String[]{PATH_SYSTEMS, Long.toString(id)};
+
+        // execute request
+        final Response response = this.processRequest(request);
+
+        // process response
+        if (response.code == 200) {
+            return this.serializer.deserializeSystem(response.content);
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<System> getSystems() throws UnauthorizedException, SerializerException {
+        // build request
+        final Request request = new Request();
+        request.path = new String[]{PATH_SYSTEMS};
+
+        // execute request
+        final Response response = this.processRequest(request);
+
+        // process response
+        if (response.code == 200) {
+            return this.serializer.deserializeSystems(response.content);
         }
 
         return null;

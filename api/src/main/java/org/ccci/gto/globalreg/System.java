@@ -1,6 +1,8 @@
 package org.ccci.gto.globalreg;
 
-public class System {
+import java.util.Objects;
+
+public final class System {
     private Long id;
     private String name;
     private Boolean root;
@@ -53,5 +55,21 @@ public class System {
 
     public void setAccessToken(final String accessToken) {
         this.accessToken = accessToken;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        System that = (System) o;
+        return Objects.equals(this.id, that.id) && Objects.equals(this.name, that.name) && Objects.equals(this.root,
+                that.root) && Objects.equals(this.trusted, that.trusted) && Objects.equals(this.accessToken,
+                that.accessToken);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.id, this.name, this.root, this.trusted, this.accessToken);
     }
 }
