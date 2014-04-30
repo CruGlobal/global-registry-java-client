@@ -120,6 +120,15 @@ public class JsonSerializer extends JsonIntermediateSerializer<JSONObject, JSONA
         }
 
         @Override
+        protected IntJsonObj put(final String key, final Long val) {
+            if (obj != null) {
+                obj.put(key, val);
+            }
+
+            return this;
+        }
+
+        @Override
         protected IntJsonObj put(final String key, final String val) {
             if (obj != null) {
                 obj.put(key, val);

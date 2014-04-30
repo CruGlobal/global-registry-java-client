@@ -67,7 +67,7 @@ public abstract class AbstractSerializerTest {
         assertEquals(EntityType.FieldType.STRING, type.getFieldType());
         assertEquals("favourite_colour", type.getName());
         assertTrue(type.hasParent());
-        assertEquals(1, (int) type.getParentId());
+        assertEquals(1, (long) type.getParentId());
     }
 
     @Test
@@ -86,7 +86,7 @@ public abstract class AbstractSerializerTest {
 
         // validate first entity_type (ministry_scope)
         final EntityType ministry = types.get(0);
-        assertEquals(392, (int) ministry.getId());
+        assertEquals(392, (long) ministry.getId());
         assertEquals("ministry_scope", ministry.getName());
         assertEquals(EntityType.FieldType.ENUM_VALUES, ministry.getFieldType());
         assertEquals("Root level ministry scope entity type to store enum values", ministry.getDescription());
@@ -94,13 +94,13 @@ public abstract class AbstractSerializerTest {
 
         // validate second entity_type (person)
         final EntityType person = types.get(1);
-        assertEquals(299, (int) person.getId());
+        assertEquals(299, (long) person.getId());
         assertEquals("person", person.getName());
         assertEquals(EntityType.FieldType.ENTITY, person.getFieldType());
         assertEquals(42, person.getFields().size());
         final EntityType auth = person.getField("authentication");
-        assertEquals(345, (int) auth.getId());
-        assertEquals(299, (int) auth.getParentId());
+        assertEquals(345, (long) auth.getId());
+        assertEquals(299, (long) auth.getParentId());
         assertEquals(person, auth.getParent());
         assertEquals("authentication", auth.getName());
         assertEquals(EntityType.FieldType.ENTITY, auth.getFieldType());
@@ -118,7 +118,7 @@ public abstract class AbstractSerializerTest {
     @Test
     public void testSerializeEntityType() throws Exception {
         for (final EntityType.FieldType fieldType : EntityType.FieldType.values()) {
-            for (final Integer parentId : new Integer[]{null, 1}) {
+            for (final Long parentId : new Long[]{null, 1L}) {
                 for (final String name : new String[]{"test_name"}) {
                     // create test entity type
                     final EntityType type = new EntityType();
@@ -134,7 +134,7 @@ public abstract class AbstractSerializerTest {
                     assertEquals(name, json.getString("name"));
                     assertEquals("test_description", json.getString("description"));
                     if (parentId != null) {
-                        assertEquals((int) parentId, json.getInt("parent_id"));
+                        assertEquals((long) parentId, json.getLong("parent_id"));
                     } else {
                         assertNull(json.get("parent_id"));
                     }

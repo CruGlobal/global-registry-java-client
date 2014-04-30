@@ -158,6 +158,17 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
         }
 
         @Override
+        protected IntJsonObj put(final String key, final Long val) {
+            if (obj instanceof ObjectNode) {
+                ((ObjectNode) obj).put(key, val);
+            } else {
+                //TODO: throw an exception
+            }
+
+            return this;
+        }
+
+        @Override
         protected IntJsonObj put(final String key, final String val) {
             if (obj instanceof ObjectNode) {
                 ((ObjectNode) obj).put(key, val);

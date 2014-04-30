@@ -61,20 +61,20 @@ public final class EntityType {
         }
     }
 
-    private Integer id;
+    private Long id;
     private EntityType parent;
-    private Integer parentId;
+    private Long parentId;
     private String name;
     private String description;
     private FieldType fieldType = FieldType.NONE;
 
     private final List<EntityType> fields = new ArrayList<>();
 
-    public Integer getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(final Integer id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -91,9 +91,9 @@ public final class EntityType {
         this.parent = parent;
     }
 
-    public Integer getParentId() {
+    public Long getParentId() {
         if (this.parent != null) {
-            final Integer id = this.parent.getId();
+            final Long id = this.parent.getId();
             if (id == null) {
                 throw new IllegalStateException("Parent EntityType does not have a valid id");
             }
@@ -103,7 +103,7 @@ public final class EntityType {
         }
     }
 
-    public void setParentId(final Integer parent) {
+    public void setParentId(final Long parent) {
         this.parent = null;
         this.parentId = parent;
     }

@@ -125,7 +125,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         final EntityType type = new EntityType();
 
         // set the parent
-        final Integer parentId = json.getInt("parent_id", null);
+        final Long parentId = json.getLong("parent_id", null);
         if (parent != null && parentId != null && !parentId.equals(parent.getId())) {
             throw new IllegalArgumentException("Specified parent object does not match the referenced parent object");
         } else if (parentId != null && parent == null) {
@@ -134,7 +134,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
             type.setParent(parent);
         }
 
-        type.setId(json.getInt("id", null));
+        type.setId(json.getLong("id", null));
         type.setName(json.getString("name", null));
         type.setDescription(json.getString("description", null));
         type.setFieldType(json.getString("field_type", "entity"));
@@ -242,6 +242,8 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         protected abstract String getString(String key, String def);
 
         protected abstract JsonObj<O, A> put(String key, Integer val);
+
+        protected abstract JsonObj<O, A> put(String key, Long val);
 
         protected abstract JsonObj<O, A> put(String key, String val);
     }
