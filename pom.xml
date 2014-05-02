@@ -23,6 +23,7 @@
   </modules>
 
   <properties>
+    <joda-time.version>2.3</joda-time.version>
     <rest-assured.version>2.3.1</rest-assured.version>
   </properties>
 
@@ -61,6 +62,13 @@
         <groupId>org.ccci.gto</groupId>
         <artifactId>global-registry-client-serializer-json</artifactId>
         <version>${project.version}</version>
+      </dependency>
+
+      <!-- Joda-Time dependencies -->
+      <dependency>
+        <groupId>joda-time</groupId>
+        <artifactId>joda-time</artifactId>
+        <version>${joda-time.version}</version>
       </dependency>
 
       <!-- REST-assured dependencies -->

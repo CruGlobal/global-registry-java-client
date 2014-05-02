@@ -1,12 +1,55 @@
 {
     "measurement_type": {
-        "id": 5,
-        "name": "Expenses",
-        "description": "Expenses (turnover)",
-        "category": "Finance",
+        "id": 33,
+        "name": "Graduating on Mission",
+        "description": "Descript",
+        "category": "LMI",
         "frequency": "monthly",
-        "unit": "Percentage",
-        "related_entity_type_id": 299,
-        "measurements": []
+        "unit": "people",
+        "related_entity_type_id": 432,
+        "measurements": [
+            {
+                "id": 30870,
+                "period": "2006-10",
+                "value": "1.0",
+                "related_entity_id": 7453693
+            },
+            {
+                "id": 37686,
+                "period": "2007-02",
+                "value": "2.0",
+                "related_entity_id": 7453693
+            },
+            {
+                "id": 39358,
+                "period": "2007-03",
+                "value": "3.0",
+                "related_entity_id": 7453693
+            },
+            {
+                "id": 48901,
+                "period": "2007-11",
+                "value": "3.0",
+                "related_entity_id": 7453693
+            },
+            {
+                "id": 141468,
+                "period": "2012-04",
+                "value": "3.0",
+                "related_entity_id": 7453693
+            },
+            {
+                "id": 158794,
+                "period": "2013-01",
+                "value": "4.0",
+                "related_entity_id": 7453693
+            },
+            {
+                "id": 162256,
+                "period": "2013-04",
+                "value": "1.0",
+                "related_entity_id": 7453693
+            }
+        ]
     }
 }

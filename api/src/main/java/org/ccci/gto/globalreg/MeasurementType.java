@@ -1,7 +1,16 @@
 package org.ccci.gto.globalreg;
 
+import org.joda.time.DateTimeZone;
+import org.joda.time.Period;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class MeasurementType {
     private static final Logger LOG = LoggerFactory.getLogger(MeasurementType.class);
@@ -40,9 +49,12 @@ public class MeasurementType {
     }
 
     public enum Frequency {
-        MONTHLY("monthly"), UNKNOWN(null), NONE(null);
+        MONTHLY("monthly", DateTimeFormat.forPattern("yyyy-MM").withZone(DateTimeZone.UTC), Period.months(1)),
+        UNKNOWN(null, null, null), NONE(null, null, null);
 
         private final String raw;
+        private final DateTimeFormatter formatter;
+        private final Period period;
 
         public static Frequency fromString(final String frequency) {
             if (frequency != null) {
@@ -57,8 +69,18 @@ public class MeasurementType {
             return UNKNOWN;
         }
 
-        private Frequency(final String raw) {
+        private Frequency(final String raw, final DateTimeFormatter formatter, final Period period) {
             this.raw = raw;
+            this.formatter = formatter;
+            this.period = period;
+        }
+
+        public DateTimeFormatter getFormatter() {
+            return this.formatter;
+        }
+
+        public Period getPeriod() {
+            return this.period;
         }
 
         @Override
@@ -74,6 +96,8 @@ public class MeasurementType {
     private Frequency frequency = Frequency.NONE;
     private String unit;
     private Long relatedEntityType;
+
+    private final List<Measurement> measurements = new ArrayList<>();
 
     public Long getId() {
         return this.id;
@@ -137,5 +161,20 @@ public class MeasurementType {
 
     public void setRelatedEntityType(final Long entityType) {
         this.relatedEntityType = entityType;
+    }
+
+    public List<Measurement> getMeasurements() {
+        return Collections.unmodifiableList(this.measurements);
+    }
+
+    public void setMeasurements(final Collection<Measurement> measurements) {
+        this.measurements.clear();
+        if (measurements != null) {
+            this.measurements.addAll(measurements);
+        }
+    }
+
+    public void addMeasurement(final Measurement measurement) {
+        this.measurements.add(measurement);
     }
 }

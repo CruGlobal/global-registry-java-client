@@ -97,6 +97,15 @@ public class JsonSerializer extends JsonIntermediateSerializer<JSONObject, JSONA
         }
 
         @Override
+        protected Double getDouble(final String key, final Double def) {
+            try {
+                return obj != null ? obj.getDouble(key) : def;
+            } catch (final JSONException e) {
+                return def;
+            }
+        }
+
+        @Override
         protected Boolean getBoolean(final String key, final Boolean def) {
             try {
                 return obj != null ? obj.getBoolean(key) : def;

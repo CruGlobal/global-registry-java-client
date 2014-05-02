@@ -9,11 +9,14 @@ import static org.junit.Assert.assertTrue;
 import com.google.common.io.CharStreams;
 import com.jayway.restassured.path.json.JsonPath;
 import org.ccci.gto.globalreg.EntityType;
+import org.ccci.gto.globalreg.Measurement;
 import org.ccci.gto.globalreg.MeasurementType;
 import org.ccci.gto.globalreg.RegisteredSystem;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
 import org.ccci.gto.globalreg.serializer.Serializer;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -209,13 +212,56 @@ public abstract class AbstractSerializerTest {
         final MeasurementType type = this.serializer.deserializeMeasurementType(loadResource("measurementtype.json"));
 
         assertNotNull(type);
-        assertEquals(5, (long) type.getId());
-        assertEquals("Expenses", type.getName());
-        assertEquals("Expenses (turnover)", type.getDescription());
-        assertEquals(MeasurementType.Category.FINANCE, type.getCategory());
+        assertEquals(33, (long) type.getId());
+        assertEquals("Graduating on Mission", type.getName());
+        assertEquals("Descript", type.getDescription());
+        assertEquals(MeasurementType.Category.LMI, type.getCategory());
         assertEquals(MeasurementType.Frequency.MONTHLY, type.getFrequency());
-        assertEquals("Percentage", type.getUnit());
-        assertEquals(299, (long) type.getRelatedEntityType());
+        assertEquals("people", type.getUnit());
+        assertEquals(432, (long) type.getRelatedEntityType());
+
+        // test deserialized measurements
+        final List<Measurement> measurements = type.getMeasurements();
+        assertEquals(7, measurements.size());
+        {
+            final Measurement measurement = measurements.get(0);
+            assertEquals(type, measurement.getType());
+            assertEquals(type.getId(), measurement.getTypeId());
+            assertEquals(30870, (long) measurement.getId());
+            assertNotNull(measurement.getPeriod());
+            assertEquals(new DateTime().withZone(DateTimeZone.UTC).withDate(2006, 10, 1).withTimeAtStartOfDay(),
+                    measurement.getPeriod().getStart());
+            assertEquals(new DateTime().withZone(DateTimeZone.UTC).withDate(2006, 11, 1).withTimeAtStartOfDay(),
+                    measurement.getPeriod().getEnd());
+            assertEquals(1.0, measurement.getValue(), 0.001);
+            assertEquals(7453693, (long) measurement.getRelatedEntityId());
+        }
+        {
+            final Measurement measurement = measurements.get(3);
+            assertEquals(type, measurement.getType());
+            assertEquals(type.getId(), measurement.getTypeId());
+            assertEquals(48901, (long) measurement.getId());
+            assertNotNull(measurement.getPeriod());
+            assertEquals(new DateTime().withZone(DateTimeZone.UTC).withDate(2007, 11, 1).withTimeAtStartOfDay(),
+                    measurement.getPeriod().getStart());
+            assertEquals(new DateTime().withZone(DateTimeZone.UTC).withDate(2007, 12, 1).withTimeAtStartOfDay(),
+                    measurement.getPeriod().getEnd());
+            assertEquals(3.0, measurement.getValue(), 0.001);
+            assertEquals(7453693, (long) measurement.getRelatedEntityId());
+        }
+        {
+            final Measurement measurement = measurements.get(6);
+            assertEquals(type, measurement.getType());
+            assertEquals(type.getId(), measurement.getTypeId());
+            assertEquals(162256, (long) measurement.getId());
+            assertNotNull(measurement.getPeriod());
+            assertEquals(new DateTime().withZone(DateTimeZone.UTC).withDate(2013, 4, 1).withTimeAtStartOfDay(),
+                    measurement.getPeriod().getStart());
+            assertEquals(new DateTime().withZone(DateTimeZone.UTC).withDate(2013, 5, 1).withTimeAtStartOfDay(),
+                    measurement.getPeriod().getEnd());
+            assertEquals(1.0, measurement.getValue(), 0.001);
+            assertEquals(7453693, (long) measurement.getRelatedEntityId());
+        }
     }
 
     @Test

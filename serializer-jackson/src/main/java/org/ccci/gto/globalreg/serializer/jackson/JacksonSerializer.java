@@ -103,7 +103,7 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
             // otherwise test 2 defaults to see if we have a valid int value
             final int val1 = val.asInt(1);
             final int val2 = val.asInt(2);
-            return val1 == val2 ? val1 : def;
+            return val1 == val2 ? val1 : null;
         }
 
         @Override
@@ -120,7 +120,25 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
             // otherwise test 2 defaults to see if we have a valid long value
             final long val1 = val.asLong(1);
             final long val2 = val.asLong(2);
-            return val1 == val2 ? val1 : def;
+            return val1 == val2 ? val1 : null;
+        }
+
+        @Override
+        protected Double getDouble(final String key, final Double def) {
+            final JsonNode val = obj.get(key);
+
+            // simplify processing for a couple simple cases
+            if (val == null) {
+                return def;
+            } else if (def != null) {
+                return val.asDouble(def);
+            }
+
+            // otherwise test 2 defaults to see if we have a valid long value
+            final double val1 = val.asDouble(1);
+            final double val2 = val.asDouble(2);
+            final double diff = val1 - val2;
+            return (diff < 0.1 && diff > -0.1) ? val1 : null;
         }
 
         @Override
@@ -137,7 +155,7 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
             // otherwise test 2 defaults to see if we have a valid boolean value
             final boolean val1 = val.asBoolean(true);
             final boolean val2 = val.asBoolean(false);
-            return val1 == val2 ? val1 : def;
+            return val1 == val2 ? val1 : null;
         }
 
         @Override

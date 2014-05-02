@@ -2,12 +2,15 @@ package org.ccci.gto.globalreg.serializer.base;
 
 import com.google.common.primitives.Ints;
 import org.ccci.gto.globalreg.EntityType;
+import org.ccci.gto.globalreg.Measurement;
 import org.ccci.gto.globalreg.MeasurementType;
 import org.ccci.gto.globalreg.RegisteredSystem;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
 import org.ccci.gto.globalreg.serializer.AbstractSerializer;
 import org.ccci.gto.globalreg.serializer.SerializerException;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -181,7 +184,38 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         type.setFrequency(json.getString("frequency"));
         type.setUnit(json.getString("unit"));
         type.setRelatedEntityType(json.getLong("related_entity_type_id"));
+
+        final JsonArr<O, A> measurements = json.getArray("measurements");
+        for (int i = 0; i < measurements.size(); i++) {
+            type.addMeasurement(this.parseMeasurement(type, measurements.getObject(i)));
+        }
+
         return type;
+    }
+
+    private Measurement parseMeasurement(final MeasurementType type, final JsonObj<O, A> json) {
+        final Measurement measurement = new Measurement();
+        measurement.setType(type);
+        measurement.setId(json.getLong("id"));
+        if (type != null) {
+            final String rawPeriod = json.getString("period");
+            if (rawPeriod != null) {
+                final MeasurementType.Frequency frequency = type.getFrequency();
+                DateTime start = null;
+                switch (frequency) {
+                    case MONTHLY:
+                        start = frequency.getFormatter().parseDateTime(rawPeriod).withTimeAtStartOfDay();
+                        break;
+                }
+
+                if (start != null) {
+                    measurement.setPeriod(new Interval(start, frequency.getPeriod()));
+                }
+            }
+        }
+        measurement.setValue(json.getDouble("value"));
+        measurement.setRelatedEntityId(json.getLong("related_entity_id"));
+        return measurement;
     }
 
     protected abstract JsonObj<O, A> stringToJsonObj(String raw) throws UnparsableJsonException;
@@ -228,6 +262,12 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
             final Integer val = this.getInt(key, null);
             return val != null ? Long.valueOf(val.longValue()) : def;
         }
+
+        protected Double getDouble(final String key) {
+            return this.getDouble(key, null);
+        }
+
+        protected abstract Double getDouble(final String key, final Double def);
 
         protected Boolean getBoolean(final String key) {
             return this.getBoolean(key, null);
