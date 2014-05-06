@@ -1,6 +1,7 @@
 package org.ccci.gto.globalreg;
 
 import org.ccci.gto.globalreg.serializer.SerializerException;
+import org.joda.time.ReadableInstant;
 
 import java.util.List;
 
@@ -85,4 +86,15 @@ public interface GlobalRegistryClient {
             SerializerException;
 
     MeasurementType getMeasurementType(long id, Filter... filters) throws UnauthorizedException, SerializerException;
+
+    List<Measurement> getMeasurements(MeasurementType type, ReadableInstant from, ReadableInstant to,
+                                      Filter... filters) throws UnauthorizedException, SerializerException;
+
+    List<Measurement> getMeasurements(long type, ReadableInstant from, ReadableInstant to,
+                                      Filter... filters) throws UnauthorizedException, SerializerException;
+
+    List<Measurement> getMeasurements(MeasurementType type, Filter... filters) throws UnauthorizedException,
+            SerializerException;
+
+    List<Measurement> getMeasurements(long type, Filter... filters) throws UnauthorizedException, SerializerException;
 }
