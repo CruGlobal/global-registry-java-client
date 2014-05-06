@@ -1,7 +1,7 @@
 {
     "entity_type": {
+        "id": "97d1e40e-2557-11e3-8ea8-12725f8f377c",
         "name": "favourite_colour",
-        "field_type": "string",
-        "parent_id": "1"
+        "field_type": "string"
     }
 }
