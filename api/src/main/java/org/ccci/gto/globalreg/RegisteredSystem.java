@@ -3,17 +3,17 @@ package org.ccci.gto.globalreg;
 import java.util.Objects;
 
 public final class RegisteredSystem {
-    private Long id;
+    private String id;
     private String name;
     private Boolean root;
     private Boolean trusted;
     private String accessToken;
 
-    public Long getId() {
+    public String getId() {
         return this.id;
     }
 
-    public void setId(final Long id) {
+    public void setId(final String id) {
         this.id = id;
     }
 

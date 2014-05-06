@@ -155,7 +155,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
     private RegisteredSystem parseSystem(final JsonObj<O, A> json) {
         // build & return System object
         final RegisteredSystem system = new RegisteredSystem();
-        system.setId(json.getLong("id"));
+        system.setId(json.getString("id"));
         system.setName(json.getString("name"));
         system.setRoot(json.getBoolean("root"));
         system.setTrusted(json.getBoolean("is_trusted"));

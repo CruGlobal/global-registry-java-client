@@ -160,7 +160,7 @@ public abstract class AbstractSerializerTest {
 
         // validate system object
         assertNotNull(system);
-        assertEquals(7, (long) system.getId());
+        assertEquals("a6c9c498-5687-11e3-a202-12725f8f377c", system.getId());
         assertEquals("System 1", system.getName());
         assertEquals(Boolean.TRUE, system.getRoot());
         assertTrue(system.isRoot());
@@ -178,7 +178,7 @@ public abstract class AbstractSerializerTest {
         {
             final RegisteredSystem system = systems.get(0);
             assertNotNull(system);
-            assertEquals(1, (long) system.getId());
+            assertEquals("a6c9c498-d554-11e3-2456-12725f8f377c", system.getId());
             assertEquals("System 1", system.getName());
             assertEquals(Boolean.FALSE, system.getRoot());
             assertFalse(system.isRoot());
@@ -189,7 +189,7 @@ public abstract class AbstractSerializerTest {
         {
             final RegisteredSystem system = systems.get(1);
             assertNotNull(system);
-            assertEquals(2, (long) system.getId());
+            assertEquals("a6c9cb96-4568-11e3-98ab-12725f8f377c", system.getId());
             assertEquals("System 2", system.getName());
             assertEquals(Boolean.TRUE, system.getRoot());
             assertTrue(system.isRoot());
@@ -200,7 +200,7 @@ public abstract class AbstractSerializerTest {
         {
             final RegisteredSystem system = systems.get(2);
             assertNotNull(system);
-            assertEquals(10, (long) system.getId());
+            assertEquals("a6c9cb96-d554-9999-98ab-12725f8f377c", system.getId());
             assertEquals("System 10", system.getName());
             assertNull(system.getRoot());
             assertFalse(system.isRoot());
