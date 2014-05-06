@@ -73,7 +73,7 @@ public interface GlobalRegistryClient {
 
     /* System Endpoints */
 
-    RegisteredSystem getSystem(long id) throws SerializerException, UnauthorizedException;
+    RegisteredSystem getSystem(String id) throws SerializerException, UnauthorizedException;
 
     List<RegisteredSystem> getSystems() throws UnauthorizedException, SerializerException;
 

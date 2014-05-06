@@ -198,10 +198,10 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public RegisteredSystem getSystem(final long id) throws SerializerException, UnauthorizedException {
+    public RegisteredSystem getSystem(final String id) throws SerializerException, UnauthorizedException {
         // build request
         final Request request = new Request();
-        request.path = new String[]{PATH_SYSTEMS, Long.toString(id)};
+        request.path = new String[]{PATH_SYSTEMS, id};
 
         // execute request
         final Response response = this.processRequest(request);
