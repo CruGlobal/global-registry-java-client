@@ -27,7 +27,7 @@ public class JacksonSerializerTest extends AbstractSerializerTest {
     public void testDeserializeEntity() throws Exception {
         for (final Class<? extends Person> clazz : CLASSES) {
             final Person person = this.testDeserializeEntity(new Type<>(clazz, "person"));
-            assertEquals(5, (int) person.getId());
+            assertEquals("882ce1da-d556-11e3-bb64-12725f8f377c", person.getId());
             assertEquals("John", person.getFirstName());
             assertEquals("Doe", person.getLastName());
             assertEquals("Ohio University", person.getCampus());
@@ -57,9 +57,9 @@ public class JacksonSerializerTest extends AbstractSerializerTest {
     }
 
     private abstract static class Person {
-        protected abstract Integer getId();
+        protected abstract String getId();
 
-        protected abstract void setId(final Integer id);
+        protected abstract void setId(final String id);
 
         protected abstract String getFirstName();
 
@@ -75,18 +75,18 @@ public class JacksonSerializerTest extends AbstractSerializerTest {
     }
 
     public static class PersonField extends Person {
-        public Integer id;
+        public String id;
         @JsonProperty("first_name")
         public String firstName;
         @JsonProperty("last_name")
         public String lastName;
         public String campus;
 
-        protected Integer getId() {
+        protected String getId() {
             return this.id;
         }
 
-        protected void setId(final Integer id) {
+        protected void setId(final String id) {
             this.id = id;
         }
 
@@ -116,16 +116,16 @@ public class JacksonSerializerTest extends AbstractSerializerTest {
     }
 
     public static class PersonMethod extends Person {
-        private Integer id;
+        private String id;
         private String firstName;
         private String lastName;
         private String campus;
 
-        public Integer getId() {
+        public String getId() {
             return this.id;
         }
 
-        public void setId(final Integer id) {
+        public void setId(final String id) {
             this.id = id;
         }
 

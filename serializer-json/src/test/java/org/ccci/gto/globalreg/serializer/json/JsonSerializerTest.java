@@ -17,7 +17,7 @@ public class JsonSerializerTest extends AbstractSerializerTest {
     @Test
     public void testDeserializeEntity() throws Exception {
         final JSONObject json = this.testDeserializeEntity(TYPE_PERSON);
-        assertEquals(5, json.getInt("id"));
+        assertEquals("882ce1da-d556-11e3-bb64-12725f8f377c", json.getString("id"));
         assertEquals("John", json.getString("first_name"));
         assertEquals("Doe", json.getString("last_name"));
         assertEquals("Ohio University", json.getString("campus"));
