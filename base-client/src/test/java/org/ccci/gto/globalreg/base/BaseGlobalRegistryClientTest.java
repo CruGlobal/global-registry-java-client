@@ -49,10 +49,11 @@ public abstract class BaseGlobalRegistryClientTest {
         final GlobalRegistryClient client = this.getClient();
         assumeNotNull(client);
 
-        final JSONObject entity = client.getEntity(TYPE_PERSON, 7178366, "4");
+        final JSONObject entity = client.getEntity(TYPE_PERSON, "aee424dc-d55b-11e3-906d-12725f8f377c",
+                "a6ca1092-d554-11e3-9b1a-12725f8f377c");
 
-        assertEquals(7178366, entity.getInt("id"));
-        assertEquals("Vellacott", entity.getString("last_name"));
+        assertEquals("aee424dc-d55b-11e3-906d-12725f8f377c", entity.getString("id"));
+        assertEquals("Person", entity.getString("last_name"));
     }
 
     @Test
@@ -60,14 +61,14 @@ public abstract class BaseGlobalRegistryClientTest {
         final GlobalRegistryClient client = this.getClient();
         assumeNotNull(client);
 
-        final ResponseList<JSONObject> entities = client.getEntities(TYPE_PERSON, "4",
-                new Filter().path("last_name").value("Vellacott"));
+        final ResponseList<JSONObject> entities = client.getEntities(TYPE_PERSON,
+                "a6ca1092-d554-11e3-9b1a-12725f8f377c", new Filter().path("last_name").value("Person"));
 
         assertEquals(1, entities.getMeta().getPage());
         assertTrue(entities.getMeta().getTotal() > 0);
 
         for (final JSONObject entity : entities) {
-            assertEquals("Vellacott", entity.getString("last_name"));
+            assertEquals("Person", entity.getString("last_name"));
         }
     }
 
@@ -86,14 +87,14 @@ public abstract class BaseGlobalRegistryClientTest {
         final JSONObject tmp = new JSONObject(newEntity.toString());
         tmp.put("first_name", "Updated Name");
         tmp.put("last_name", "Last");
-        final JSONObject updatedEntity = client.updateEntity(TYPE_PERSON, newEntity.getInt("id"), tmp);
+        final JSONObject updatedEntity = client.updateEntity(TYPE_PERSON, newEntity.getString("id"), tmp);
 
         assertNotNull(updatedEntity);
         assertEquals("Updated Name", updatedEntity.getString("first_name"));
         assertEquals("Last", updatedEntity.getString("last_name"));
-        assertEquals(newEntity.getInt("id"), updatedEntity.getInt("id"));
+        assertEquals(newEntity.getString("id"), updatedEntity.getString("id"));
 
-        client.deleteEntity(TYPE_PERSON, newEntity.getInt("id"));
+        client.deleteEntity(TYPE_PERSON, newEntity.getString("id"));
     }
 
     @Test
