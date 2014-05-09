@@ -1,53 +1,53 @@
 {
     "measurement_types": [
         {
-            "id": 23,
+            "id": "59d002fa-d55a-11e3-8ffc-12725f8f377c",
             "name": "Ministry-subsidy",
             "description": "Percentage of income from subsidy",
             "category": "MPD",
             "frequency": "monthly",
             "unit": "%",
-            "related_entity_type_id": 386,
+            "related_entity_type_id": "a5499c9a-d556-11e3-af5a-12725f8f377c",
             "measurements": []
         },
         {
-            "id": 24,
+            "id": "59ece820-d55a-11e3-b305-12725f8f377c",
             "name": "Ministry-50to80",
             "description": "Percentage of staff with between 50 and 80% raised",
             "category": "MPD",
             "frequency": "monthly",
             "unit": "%",
-            "related_entity_type_id": 386,
+            "related_entity_type_id": "a5499c9a-d556-11e3-af5a-12725f8f377c",
             "measurements": []
         },
         {
-            "id": 25,
+            "id": "5a08f4de-d55a-11e3-97de-12725f8f377c",
             "name": "Ministry-80to100",
             "description": "Percentage of staff with between 80 and 100% raised",
             "category": "MPD",
             "frequency": "monthly",
             "unit": "%",
-            "related_entity_type_id": 386,
+            "related_entity_type_id": "a5499c9a-d556-11e3-af5a-12725f8f377c",
             "measurements": []
         },
         {
-            "id": 27,
+            "id": "5a2389ca-d55a-11e3-858c-12725f8f377c",
             "name": "Media Exposures",
             "description": "",
             "category": "LMI",
             "frequency": "monthly",
             "unit": "people",
-            "related_entity_type_id": 432,
+            "related_entity_type_id": "a5499c9a-1234-11e3-af5a-12725f8f377c",
             "measurements": []
         },
         {
-            "id": 28,
+            "id": "5a419532-d55a-11e3-8071-12725f8f377c",
             "name": "Personal Evangelism",
             "description": "",
             "category": "LMI",
             "frequency": "monthly",
             "unit": "people",
-            "related_entity_type_id": 432,
+            "related_entity_type_id": "a5499c9a-d556-11e3-af5a-12725f8f377c",
             "measurements": []
         }
     ],

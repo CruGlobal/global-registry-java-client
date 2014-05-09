@@ -4,11 +4,11 @@ import org.joda.time.Interval;
 
 public class Measurement {
     private MeasurementType type;
-    private Long typeId;
-    private Long id;
+    private String typeId;
+    private String id;
     private Interval period;
     private Double value;
-    private Long relatedEntityId;
+    private String relatedEntityId;
 
     public MeasurementType getType() {
         return this.type;
@@ -19,7 +19,7 @@ public class Measurement {
         this.type = type;
     }
 
-    public Long getTypeId() {
+    public String getTypeId() {
         if (this.typeId != null) {
             return this.typeId;
         } else if (this.type != null) {
@@ -29,16 +29,16 @@ public class Measurement {
         }
     }
 
-    public void setTypeId(final Long type) {
+    public void setTypeId(final String type) {
         this.type = null;
         this.typeId = type;
     }
 
-    public Long getId() {
+    public String getId() {
         return this.id;
     }
 
-    public void setId(final Long id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -58,11 +58,11 @@ public class Measurement {
         this.value = value;
     }
 
-    public Long getRelatedEntityId() {
+    public String getRelatedEntityId() {
         return this.relatedEntityId;
     }
 
-    public void setRelatedEntityId(final Long relatedEntityId) {
+    public void setRelatedEntityId(final String relatedEntityId) {
         this.relatedEntityId = relatedEntityId;
     }
 }

@@ -1,54 +1,54 @@
 {
     "measurement_type": {
-        "id": 33,
+        "id": "59ece820-d55a-11e3-1305-12725f8f377c",
         "name": "Graduating on Mission",
         "description": "Descript",
         "category": "LMI",
         "frequency": "monthly",
         "unit": "people",
-        "related_entity_type_id": 432,
+        "related_entity_type_id": "59ece820-bbbb-aaaa-b305-12725f8f377c",
         "measurements": [
             {
-                "id": 30870,
+                "id": "59ece820-d55a-11f3-b305-12725f8f377c",
                 "period": "2006-10",
                 "value": "1.0",
-                "related_entity_id": 7453693
+                "related_entity_id": "59ece820-bbbb-11e3-b305-12725f8f377c"
             },
             {
-                "id": 37686,
+                "id": "59e2e820-d55a-11e3-b305-12725f8f377c",
                 "period": "2007-02",
                 "value": "2.0",
-                "related_entity_id": 7453693
+                "related_entity_id": "59ece820-bbbb-11e3-b305-12725f8f377c"
             },
             {
-                "id": 39358,
+                "id": "59ece820-d55a-11e3-b305-52725f8f377c",
                 "period": "2007-03",
                 "value": "3.0",
-                "related_entity_id": 7453693
+                "related_entity_id": "59ece820-bbbb-11e3-b305-12725f8f377c"
             },
             {
-                "id": 48901,
+                "id": "59ece820-d55a-11e3-b105-12725f8f377c",
                 "period": "2007-11",
                 "value": "3.0",
-                "related_entity_id": 7453693
+                "related_entity_id": "59ece820-bbbb-11e3-b305-12725f8f377c"
             },
             {
-                "id": 141468,
+                "id": "59ece820-d55a-11e3-b305-12825f8f377c",
                 "period": "2012-04",
                 "value": "3.0",
-                "related_entity_id": 7453693
+                "related_entity_id": "59ece820-bbbb-11e3-b305-12725f8f377c"
             },
             {
-                "id": 158794,
+                "id": "59ece820-d55a-11e3-b305-1272518f377c",
                 "period": "2013-01",
                 "value": "4.0",
-                "related_entity_id": 7453693
+                "related_entity_id": "59ece820-bbbb-11e3-b305-12725f8f377c"
             },
             {
-                "id": 162256,
+                "id": "59ece820-123a-11e3-b305-12725f8f377c",
                 "period": "2013-04",
                 "value": "1.0",
-                "related_entity_id": 7453693
+                "related_entity_id": "59ece820-bbbb-11e3-b305-12725f8f377c"
             }
         ]
     }

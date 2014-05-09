@@ -215,13 +215,13 @@ public abstract class AbstractSerializerTest {
         final MeasurementType type = this.serializer.deserializeMeasurementType(loadResource("measurementtype.json"));
 
         assertNotNull(type);
-        assertEquals(33, (long) type.getId());
+        assertEquals("59ece820-d55a-11e3-1305-12725f8f377c", type.getId());
         assertEquals("Graduating on Mission", type.getName());
         assertEquals("Descript", type.getDescription());
         assertEquals(MeasurementType.Category.LMI, type.getCategory());
         assertEquals(MeasurementType.Frequency.MONTHLY, type.getFrequency());
         assertEquals("people", type.getUnit());
-        assertEquals(432, (long) type.getRelatedEntityType());
+        assertEquals("59ece820-bbbb-aaaa-b305-12725f8f377c", type.getRelatedEntityType());
 
         // test deserialized measurements
         final List<Measurement> measurements = type.getMeasurements();
@@ -230,40 +230,40 @@ public abstract class AbstractSerializerTest {
             final Measurement measurement = measurements.get(0);
             assertEquals(type, measurement.getType());
             assertEquals(type.getId(), measurement.getTypeId());
-            assertEquals(30870, (long) measurement.getId());
+            assertEquals("59ece820-d55a-11f3-b305-12725f8f377c", measurement.getId());
             assertNotNull(measurement.getPeriod());
             assertEquals(new DateTime().withZone(DateTimeZone.UTC).withDate(2006, 10, 1).withTimeAtStartOfDay(),
                     measurement.getPeriod().getStart());
             assertEquals(new DateTime().withZone(DateTimeZone.UTC).withDate(2006, 11, 1).withTimeAtStartOfDay(),
                     measurement.getPeriod().getEnd());
             assertEquals(1.0, measurement.getValue(), 0.001);
-            assertEquals(7453693, (long) measurement.getRelatedEntityId());
+            assertEquals("59ece820-bbbb-11e3-b305-12725f8f377c", measurement.getRelatedEntityId());
         }
         {
             final Measurement measurement = measurements.get(3);
             assertEquals(type, measurement.getType());
             assertEquals(type.getId(), measurement.getTypeId());
-            assertEquals(48901, (long) measurement.getId());
+            assertEquals("59ece820-d55a-11e3-b105-12725f8f377c", measurement.getId());
             assertNotNull(measurement.getPeriod());
             assertEquals(new DateTime().withZone(DateTimeZone.UTC).withDate(2007, 11, 1).withTimeAtStartOfDay(),
                     measurement.getPeriod().getStart());
             assertEquals(new DateTime().withZone(DateTimeZone.UTC).withDate(2007, 12, 1).withTimeAtStartOfDay(),
                     measurement.getPeriod().getEnd());
             assertEquals(3.0, measurement.getValue(), 0.001);
-            assertEquals(7453693, (long) measurement.getRelatedEntityId());
+            assertEquals("59ece820-bbbb-11e3-b305-12725f8f377c", measurement.getRelatedEntityId());
         }
         {
             final Measurement measurement = measurements.get(6);
             assertEquals(type, measurement.getType());
             assertEquals(type.getId(), measurement.getTypeId());
-            assertEquals(162256, (long) measurement.getId());
+            assertEquals("59ece820-123a-11e3-b305-12725f8f377c", measurement.getId());
             assertNotNull(measurement.getPeriod());
             assertEquals(new DateTime().withZone(DateTimeZone.UTC).withDate(2013, 4, 1).withTimeAtStartOfDay(),
                     measurement.getPeriod().getStart());
             assertEquals(new DateTime().withZone(DateTimeZone.UTC).withDate(2013, 5, 1).withTimeAtStartOfDay(),
                     measurement.getPeriod().getEnd());
             assertEquals(1.0, measurement.getValue(), 0.001);
-            assertEquals(7453693, (long) measurement.getRelatedEntityId());
+            assertEquals("59ece820-bbbb-11e3-b305-12725f8f377c", measurement.getRelatedEntityId());
         }
     }
 
@@ -285,25 +285,25 @@ public abstract class AbstractSerializerTest {
         // validate first measurement type
         {
             final MeasurementType type = types.get(0);
-            assertEquals(23, (long) type.getId());
+            assertEquals("59d002fa-d55a-11e3-8ffc-12725f8f377c", type.getId());
             assertEquals("Ministry-subsidy", type.getName());
             assertEquals("Percentage of income from subsidy", type.getDescription());
             assertEquals(MeasurementType.Category.MPD, type.getCategory());
             assertEquals(MeasurementType.Frequency.MONTHLY, type.getFrequency());
             assertEquals("%", type.getUnit());
-            assertEquals(386, (long) type.getRelatedEntityType());
+            assertEquals("a5499c9a-d556-11e3-af5a-12725f8f377c", type.getRelatedEntityType());
         }
 
         // validate fourth measurement type
         {
             final MeasurementType type = types.get(3);
-            assertEquals(27, (long) type.getId());
+            assertEquals("5a2389ca-d55a-11e3-858c-12725f8f377c", type.getId());
             assertEquals("Media Exposures", type.getName());
             assertEquals("", type.getDescription());
             assertEquals(MeasurementType.Category.LMI, type.getCategory());
             assertEquals(MeasurementType.Frequency.MONTHLY, type.getFrequency());
             assertEquals("people", type.getUnit());
-            assertEquals(432, (long) type.getRelatedEntityType());
+            assertEquals("a5499c9a-1234-11e3-af5a-12725f8f377c", type.getRelatedEntityType());
         }
     }
 }

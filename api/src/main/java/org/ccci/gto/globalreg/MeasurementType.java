@@ -89,21 +89,21 @@ public class MeasurementType {
         }
     }
 
-    private Long id;
+    private String id;
     private String name;
     private String description;
     private Category category = Category.NONE;
     private Frequency frequency = Frequency.NONE;
     private String unit;
-    private Long relatedEntityType;
+    private String relatedEntityType;
 
     private final List<Measurement> measurements = new ArrayList<>();
 
-    public Long getId() {
+    public String getId() {
         return this.id;
     }
 
-    public void setId(final Long id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -155,11 +155,11 @@ public class MeasurementType {
         this.unit = unit;
     }
 
-    public Long getRelatedEntityType() {
+    public String getRelatedEntityType() {
         return this.relatedEntityType;
     }
 
-    public void setRelatedEntityType(final Long entityType) {
+    public void setRelatedEntityType(final String entityType) {
         this.relatedEntityType = entityType;
     }
 

@@ -255,10 +255,11 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public MeasurementType getMeasurementType(final long id, final Filter... filters) throws UnauthorizedException, SerializerException {
+    public MeasurementType getMeasurementType(final String id, final Filter... filters) throws UnauthorizedException,
+            SerializerException {
         // build request
         final Request request = new Request();
-        request.path = new String[]{PATH_MEASUREMENT_TYPES, Long.toString(id)};
+        request.path = new String[]{PATH_MEASUREMENT_TYPES, id};
         for (final Filter filter : filters) {
             request.queryParams.put(this.buildFilterParamName(filter), filter.getValue());
         }

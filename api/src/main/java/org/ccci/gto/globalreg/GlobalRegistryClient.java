@@ -85,16 +85,16 @@ public interface GlobalRegistryClient {
     ResponseList<MeasurementType> getMeasurementTypes(int page, Filter... filters) throws UnauthorizedException,
             SerializerException;
 
-    MeasurementType getMeasurementType(long id, Filter... filters) throws UnauthorizedException, SerializerException;
+    MeasurementType getMeasurementType(String id, Filter... filters) throws UnauthorizedException, SerializerException;
 
     List<Measurement> getMeasurements(MeasurementType type, ReadableInstant from, ReadableInstant to,
                                       Filter... filters) throws UnauthorizedException, SerializerException;
 
-    List<Measurement> getMeasurements(long type, ReadableInstant from, ReadableInstant to,
+    List<Measurement> getMeasurements(String type, ReadableInstant from, ReadableInstant to,
                                       Filter... filters) throws UnauthorizedException, SerializerException;
 
     List<Measurement> getMeasurements(MeasurementType type, Filter... filters) throws UnauthorizedException,
             SerializerException;
 
-    List<Measurement> getMeasurements(long type, Filter... filters) throws UnauthorizedException, SerializerException;
+    List<Measurement> getMeasurements(String type, Filter... filters) throws UnauthorizedException, SerializerException;
 }

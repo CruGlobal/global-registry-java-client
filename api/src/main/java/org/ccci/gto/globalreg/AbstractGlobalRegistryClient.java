@@ -54,9 +54,8 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     }
 
     @Override
-    public List<Measurement> getMeasurements(final long type, final ReadableInstant from, final ReadableInstant to,
-                                             final Filter... filters) throws UnauthorizedException,
-            SerializerException {
+    public List<Measurement> getMeasurements(final String type, final ReadableInstant from, final ReadableInstant to,
+                                             final Filter... filters) throws UnauthorizedException, SerializerException {
         final ArrayList<Filter> tmp = new ArrayList<>(Arrays.asList(filters));
         if (from != null) {
             tmp.add(new Filter().path("period_from").value(MeasurementType.Frequency.MONTHLY.getFormatter().print
@@ -76,7 +75,7 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     }
 
     @Override
-    public final List<Measurement> getMeasurements(final long type, final Filter... filters) throws
+    public final List<Measurement> getMeasurements(final String type, final Filter... filters) throws
             UnauthorizedException, SerializerException {
         return this.getMeasurementType(type, filters).getMeasurements();
     }

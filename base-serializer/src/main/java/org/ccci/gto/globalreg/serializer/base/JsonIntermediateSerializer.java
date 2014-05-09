@@ -177,13 +177,13 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
     private MeasurementType parseMeasurementType(final JsonObj<O, A> json) {
         // build & return MeasurementType
         final MeasurementType type = new MeasurementType();
-        type.setId(json.getLong("id"));
+        type.setId(json.getString("id"));
         type.setName(json.getString("name"));
         type.setDescription(json.getString("description"));
         type.setCategory(json.getString("category"));
         type.setFrequency(json.getString("frequency"));
         type.setUnit(json.getString("unit"));
-        type.setRelatedEntityType(json.getLong("related_entity_type_id"));
+        type.setRelatedEntityType(json.getString("related_entity_type_id"));
 
         final JsonArr<O, A> measurements = json.getArray("measurements");
         for (int i = 0; i < measurements.size(); i++) {
@@ -196,7 +196,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
     private Measurement parseMeasurement(final MeasurementType type, final JsonObj<O, A> json) {
         final Measurement measurement = new Measurement();
         measurement.setType(type);
-        measurement.setId(json.getLong("id"));
+        measurement.setId(json.getString("id"));
         if (type != null) {
             final String rawPeriod = json.getString("period");
             if (rawPeriod != null) {
@@ -214,7 +214,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
             }
         }
         measurement.setValue(json.getDouble("value"));
-        measurement.setRelatedEntityId(json.getLong("related_entity_id"));
+        measurement.setRelatedEntityId(json.getString("related_entity_id"));
         return measurement;
     }
 
