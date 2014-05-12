@@ -4,14 +4,6 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.net.HttpHeaders;
 import com.google.common.net.MediaType;
-import org.ccci.gto.globalreg.AbstractGlobalRegistryClient;
-import org.ccci.gto.globalreg.EntityType;
-import org.ccci.gto.globalreg.Filter;
-import org.ccci.gto.globalreg.MeasurementType;
-import org.ccci.gto.globalreg.RegisteredSystem;
-import org.ccci.gto.globalreg.ResponseList;
-import org.ccci.gto.globalreg.Type;
-import org.ccci.gto.globalreg.UnauthorizedException;
 import org.ccci.gto.globalreg.serializer.Serializer;
 import org.ccci.gto.globalreg.serializer.SerializerException;
 
@@ -53,14 +45,14 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     protected abstract Response processRequest(Request request) throws UnauthorizedException;
 
     @Override
-    public <T> T getEntity(final Type<T> type, final String id, final String createdBy) throws UnauthorizedException,
-            SerializerException {
+    public <T> T getEntity(final Type<T> type, final String id, final Filter... filters) throws
+            UnauthorizedException, SerializerException {
         // build the request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITIES, id};
         request.queryParams.put(PARAM_ENTITY_TYPE, type.getEntityType());
-        if (createdBy != null) {
-            request.queryParams.put(PARAM_CREATED_BY, createdBy);
+        for (final Filter filter : filters) {
+            request.queryParams.put(this.buildFilterParamName(filter), filter.getValue());
         }
 
         // process request
@@ -73,16 +65,13 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public <T> ResponseList<T> getEntities(final Type<T> type, final String createdBy, final int page,
-                                           final Filter... filters) throws UnauthorizedException, SerializerException {
+    public <T> ResponseList<T> getEntities(final Type<T> type, final int page, final Filter... filters) throws
+            UnauthorizedException, SerializerException {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITIES};
         request.queryParams.put(PARAM_ENTITY_TYPE, type.getEntityType());
         request.queryParams.put(PARAM_PAGE, Integer.toString(page));
-        if (createdBy != null) {
-            request.queryParams.put(PARAM_CREATED_BY, createdBy);
-        }
         for (final Filter filter : filters) {
             request.queryParams.put(this.buildFilterParamName(filter), filter.getValue());
         }

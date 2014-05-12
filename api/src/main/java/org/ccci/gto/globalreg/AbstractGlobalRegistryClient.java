@@ -1,6 +1,7 @@
 package org.ccci.gto.globalreg;
 
 import org.ccci.gto.globalreg.serializer.SerializerException;
+import org.ccci.gto.globalreg.util.ArrayUtil;
 import org.joda.time.ReadableInstant;
 
 import java.util.ArrayList;
@@ -8,30 +9,32 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClient {
-    public static final String DEFAULT_CREATED_BY = null;
     public static final int DEFAULT_PAGE = 1;
 
     @Override
-    public final <T> T getEntity(final Type<T> type, final String id) throws SerializerException, UnauthorizedException {
-        return this.getEntity(type, id, DEFAULT_CREATED_BY);
+    public final <T> T getEntity(final Type<T> type, final String id, final String ownedBy) throws
+            SerializerException, UnauthorizedException {
+        return this.getEntity(type, id, Filter.OWNED_BY.value(ownedBy));
+    }
+
+    @Override
+    public final <T> ResponseList<T> getEntities(final Type<T> type, final String ownedBy,
+                                                 final Filter... filters) throws UnauthorizedException,
+            SerializerException {
+        return this.getEntities(type, ownedBy, DEFAULT_PAGE, filters);
+    }
+
+    @Override
+    public final <T> ResponseList<T> getEntities(final Type<T> type, final String ownedBy, final int page,
+                                                 final Filter... filters) throws UnauthorizedException,
+            SerializerException {
+        return this.getEntities(type, page, ArrayUtil.merge(filters, Filter.OWNED_BY.value(ownedBy)));
     }
 
     @Override
     public final <T> ResponseList<T> getEntities(final Type<T> type, final Filter... filters) throws
             UnauthorizedException, SerializerException {
-        return this.getEntities(type, DEFAULT_CREATED_BY, DEFAULT_PAGE, filters);
-    }
-
-    @Override
-    public final <T> ResponseList<T> getEntities(final Type<T> type, final int page, final Filter... filters) throws
-            UnauthorizedException, SerializerException {
-        return this.getEntities(type, DEFAULT_CREATED_BY, page, filters);
-    }
-
-    @Override
-    public final <T> ResponseList<T> getEntities(final Type<T> type, final String createdBy, final Filter... filters)
-            throws UnauthorizedException, SerializerException {
-        return this.getEntities(type, createdBy, DEFAULT_PAGE, filters);
+        return this.getEntities(type, DEFAULT_PAGE, filters);
     }
 
     @Override
@@ -58,11 +61,10 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
                                              final Filter... filters) throws UnauthorizedException, SerializerException {
         final ArrayList<Filter> tmp = new ArrayList<>(Arrays.asList(filters));
         if (from != null) {
-            tmp.add(new Filter().path("period_from").value(MeasurementType.Frequency.MONTHLY.getFormatter().print
-                    (from)));
+            tmp.add(Filter.PERIOD_FROM.value(MeasurementType.Frequency.MONTHLY.getFormatter().print(from)));
         }
         if (to != null) {
-            tmp.add(new Filter().path("period_to").value(MeasurementType.Frequency.MONTHLY.getFormatter().print(to)));
+            tmp.add(Filter.PERIOD_TO.value(MeasurementType.Frequency.MONTHLY.getFormatter().print(to)));
         }
 
         return this.getMeasurements(type, tmp.toArray(new Filter[tmp.size()]));

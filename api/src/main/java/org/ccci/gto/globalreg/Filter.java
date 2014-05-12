@@ -8,6 +8,11 @@ import java.util.Arrays;
 public final class Filter implements Serializable {
     private static final long serialVersionUID = 1900099970741635758L;
 
+    // several common filters
+    public static final Filter OWNED_BY = new Filter().path("owned_by");
+    public static final Filter PERIOD_FROM = new Filter().path("period_from");
+    public static final Filter PERIOD_TO = new Filter().path("period_to");
+
     private final String[] path;
     private final String value;
 

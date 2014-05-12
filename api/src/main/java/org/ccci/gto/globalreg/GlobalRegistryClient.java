@@ -10,44 +10,49 @@ public interface GlobalRegistryClient {
     public static final String PATH_ENTITY_TYPES = "entity_types";
     public static final String PATH_MEASUREMENT_TYPES = "measurement_types";
     public static final String PATH_SYSTEMS = "systems";
-    public static final String PARAM_CREATED_BY = "created_by";
     public static final String PARAM_ENTITY_TYPE = "entity_type";
     public static final String PARAM_PAGE = "page";
     public static final String PARAM_FILTER = "filters";
+
+    @Deprecated
+    public static final String PARAM_CREATED_BY = "created_by";
 
     /* Entity Endpoints */
 
     /**
      * Retrieve an entity from the Global Registry
      *
-     * @param type the type of entity to retrieve
-     * @param id   the id of the entity being retrieved
-     * @return The entity that is stored in the Global Registry
+     * @param type    the type of entity to retrieve
+     * @param id      the id of the entity being retrieved
+     * @param ownedBy the system id the entity is being retrieved for
+     * @return The entity that is stored in the Global Registry, or null if it doesn't exist
      * @throws UnauthorizedException Thrown when the request is unauthorized.
      * @throws SerializerException   Thrown when there was an exception with entity deserialization.
      */
-    <T> T getEntity(Type<T> type, String id) throws GlobalRegistryException;
+    <T> T getEntity(Type<T> type, String id, String ownedBy) throws SerializerException, UnauthorizedException;
 
     /**
      * Retrieve an entity from the Global Registry
      *
-     * @param type      the type of entity to retrieve
-     * @param id        the id of the entity being retrieved
-     * @param createdBy the system id the entity is being retrieved for
-     * @return The entity that is stored in the Global Registry
+     * @param type    the type of entity to retrieve
+     * @param id      the id of the entity being retrieved
+     * @param filters any filters for the data being returned
+     * @return The entity that is stored in the Global Registry, or null if it doesn't exist
      * @throws UnauthorizedException Thrown when the request is unauthorized.
      * @throws SerializerException   Thrown when there was an exception with entity deserialization.
      */
-    <T> T getEntity(Type<T> type, String id, String createdBy) throws SerializerException, UnauthorizedException;
+    <T> T getEntity(Type<T> type, String id, Filter... filters) throws SerializerException, UnauthorizedException;
+
+    <T> ResponseList<T> getEntities(Type<T> type, String ownedBy, Filter... filters) throws UnauthorizedException,
+            SerializerException;
+
+    <T> ResponseList<T> getEntities(Type<T> type, String ownedBy, int page,
+                                    Filter... filters) throws UnauthorizedException, SerializerException;
 
     <T> ResponseList<T> getEntities(Type<T> type, Filter... filters) throws UnauthorizedException, SerializerException;
 
-    <T> ResponseList<T> getEntities(Type<T> type, int page, Filter... filters) throws UnauthorizedException, SerializerException;
-
-    <T> ResponseList<T> getEntities(Type<T> type, String createdBy, Filter... filters) throws UnauthorizedException, SerializerException;
-
-    <T> ResponseList<T> getEntities(Type<T> type, String createdBy, int page,
-                                    Filter... filters) throws UnauthorizedException, SerializerException;
+    <T> ResponseList<T> getEntities(Type<T> type, int page, Filter... filters) throws UnauthorizedException,
+            SerializerException;
 
     /**
      * Store an entity in the Global Registry

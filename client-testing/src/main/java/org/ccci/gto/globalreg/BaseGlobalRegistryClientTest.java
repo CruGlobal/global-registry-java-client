@@ -6,13 +6,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
 
-import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
-import org.ccci.gto.globalreg.EntityType;
-import org.ccci.gto.globalreg.Filter;
-import org.ccci.gto.globalreg.GlobalRegistryClient;
-import org.ccci.gto.globalreg.RegisteredSystem;
-import org.ccci.gto.globalreg.ResponseList;
-import org.ccci.gto.globalreg.UnauthorizedException;
 import org.ccci.gto.globalreg.serializer.json.JSONObjectType;
 import org.ccci.gto.globalreg.serializer.json.JsonSerializer;
 import org.json.JSONObject;
@@ -50,11 +43,12 @@ public abstract class BaseGlobalRegistryClientTest {
         final GlobalRegistryClient client = this.getClient();
         assumeNotNull(client);
 
-        final JSONObject entity = client.getEntity(TYPE_PERSON, "aee424dc-d55b-11e3-906d-12725f8f377c",
-                "a6ca1092-d554-11e3-9b1a-12725f8f377c");
+        final JSONObject entity = client.getEntity(TYPE_PERSON, "97ffa238-d9e2-11e3-a056-12725f8f377c",
+                "a6c9d118-d554-11e3-a071-12725f8f377c");
 
-        assertEquals("aee424dc-d55b-11e3-906d-12725f8f377c", entity.getString("id"));
-        assertEquals("Person", entity.getString("last_name"));
+        assertNotNull(entity);
+        assertEquals("97ffa238-d9e2-11e3-a056-12725f8f377c", entity.getString("id"));
+        assertEquals("Vellacott", entity.getString("last_name"));
     }
 
     @Test
@@ -63,13 +57,13 @@ public abstract class BaseGlobalRegistryClientTest {
         assumeNotNull(client);
 
         final ResponseList<JSONObject> entities = client.getEntities(TYPE_PERSON,
-                "a6ca1092-d554-11e3-9b1a-12725f8f377c", new Filter().path("last_name").value("Person"));
+                "a6c9d118-d554-11e3-a071-12725f8f377c", new Filter().path("last_name").value("Vellacott"));
 
         assertEquals(1, entities.getMeta().getPage());
         assertTrue(entities.getMeta().getTotal() > 0);
 
         for (final JSONObject entity : entities) {
-            assertEquals("Person", entity.getString("last_name"));
+            assertEquals("Vellacott", entity.getString("last_name"));
         }
     }
 
