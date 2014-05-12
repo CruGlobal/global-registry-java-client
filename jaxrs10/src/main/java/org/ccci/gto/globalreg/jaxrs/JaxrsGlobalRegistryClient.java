@@ -4,7 +4,7 @@ import com.google.common.base.Throwables;
 import com.google.common.io.CharStreams;
 import com.google.common.net.HttpHeaders;
 import org.ccci.gto.globalreg.UnauthorizedException;
-import org.ccci.gto.globalreg.base.BaseGlobalRegistryClient;
+import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

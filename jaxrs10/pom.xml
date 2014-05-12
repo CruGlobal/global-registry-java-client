@@ -16,10 +16,6 @@
       <groupId>org.ccci.gto</groupId>
       <artifactId>global-registry-client-api</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.ccci.gto</groupId>
-      <artifactId>global-registry-client-base</artifactId>
-    </dependency>
 
     <dependency>
       <groupId>javax.ws.rs</groupId>
@@ -29,13 +25,7 @@
     <!-- Test dependencies -->
     <dependency>
       <groupId>org.ccci.gto</groupId>
-      <artifactId>global-registry-client-base</artifactId>
-      <type>test-jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.ccci.gto</groupId>
-      <artifactId>global-registry-client-serializer-json</artifactId>
-      <scope>test</scope>
+      <artifactId>global-registry-client-testing</artifactId>
     </dependency>
     <dependency>
       <groupId>com.sun.jersey</groupId>

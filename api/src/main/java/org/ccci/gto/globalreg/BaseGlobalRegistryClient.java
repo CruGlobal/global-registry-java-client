@@ -1,4 +1,4 @@
-package org.ccci.gto.globalreg.base;
+package org.ccci.gto.globalreg;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;

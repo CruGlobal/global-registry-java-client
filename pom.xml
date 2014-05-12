@@ -14,7 +14,7 @@
 
   <modules>
     <module>api</module>
-    <module>base-client</module>
+    <module>client-testing</module>
     <module>httpclient</module>
     <module>jaxrs10</module>
     <module>serializer-jackson</module>
@@ -35,18 +35,6 @@
       </dependency>
       <dependency>
         <groupId>org.ccci.gto</groupId>
-        <artifactId>global-registry-client-base</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.ccci.gto</groupId>
-        <artifactId>global-registry-client-base</artifactId>
-        <version>${project.version}</version>
-        <type>test-jar</type>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.ccci.gto</groupId>
         <artifactId>global-registry-client-api</artifactId>
         <version>${project.version}</version>
         <type>test-jar</type>
@@ -56,6 +44,12 @@
         <groupId>org.ccci.gto</groupId>
         <artifactId>global-registry-client-serializer-json</artifactId>
         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.ccci.gto</groupId>
+        <artifactId>global-registry-client-testing</artifactId>
+        <version>${project.version}</version>
+        <scope>test</scope>
       </dependency>
 
       <!-- Joda-Time dependencies -->

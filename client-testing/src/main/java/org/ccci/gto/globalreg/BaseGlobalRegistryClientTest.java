@@ -1,4 +1,4 @@
-package org.ccci.gto.globalreg.base;
+package org.ccci.gto.globalreg;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
 
+import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
 import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.Filter;
 import org.ccci.gto.globalreg.GlobalRegistryClient;

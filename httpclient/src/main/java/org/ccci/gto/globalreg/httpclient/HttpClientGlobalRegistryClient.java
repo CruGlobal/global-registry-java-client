@@ -20,7 +20,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.ccci.gto.globalreg.UnauthorizedException;
-import org.ccci.gto.globalreg.base.BaseGlobalRegistryClient;
+import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
 
 import java.io.IOException;
 import java.net.URI;
