@@ -1,4 +1,4 @@
-package org.ccci.gto.globalreg.serializer.base;
+package org.ccci.gto.globalreg.serializer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -14,7 +14,6 @@ import org.ccci.gto.globalreg.MeasurementType;
 import org.ccci.gto.globalreg.RegisteredSystem;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
-import org.ccci.gto.globalreg.serializer.Serializer;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Test;

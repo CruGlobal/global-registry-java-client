@@ -8,8 +8,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.base.Throwables;
 import org.ccci.gto.globalreg.Type;
 import org.ccci.gto.globalreg.serializer.SerializerException;
-import org.ccci.gto.globalreg.serializer.base.JsonIntermediateSerializer;
-import org.ccci.gto.globalreg.serializer.base.UnparsableJsonException;
+import org.ccci.gto.globalreg.serializer.JsonIntermediateSerializer;
+import org.ccci.gto.globalreg.serializer.UnparsableJsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

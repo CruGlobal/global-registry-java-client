@@ -1,4 +1,4 @@
-package org.ccci.gto.globalreg.serializer.base;
+package org.ccci.gto.globalreg.serializer;
 
 import com.google.common.primitives.Ints;
 import org.ccci.gto.globalreg.EntityType;
@@ -7,8 +7,6 @@ import org.ccci.gto.globalreg.MeasurementType;
 import org.ccci.gto.globalreg.RegisteredSystem;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
-import org.ccci.gto.globalreg.serializer.AbstractSerializer;
-import org.ccci.gto.globalreg.serializer.SerializerException;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
@@ -298,7 +296,5 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         protected abstract int size();
 
         protected abstract JsonObj<O, A> getObject(int index);
-
-
     }
 }

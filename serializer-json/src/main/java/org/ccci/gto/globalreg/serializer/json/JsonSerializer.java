@@ -1,8 +1,8 @@
 package org.ccci.gto.globalreg.serializer.json;
 
 import org.ccci.gto.globalreg.Type;
-import org.ccci.gto.globalreg.serializer.base.JsonIntermediateSerializer;
-import org.ccci.gto.globalreg.serializer.base.UnparsableJsonException;
+import org.ccci.gto.globalreg.serializer.JsonIntermediateSerializer;
+import org.ccci.gto.globalreg.serializer.UnparsableJsonException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

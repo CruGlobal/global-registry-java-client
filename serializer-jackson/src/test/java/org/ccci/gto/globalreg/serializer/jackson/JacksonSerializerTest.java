@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
-import org.ccci.gto.globalreg.serializer.base.AbstractSerializerTest;
+import org.ccci.gto.globalreg.serializer.AbstractSerializerTest;
 import org.junit.Test;
 
 import java.util.Collection;
