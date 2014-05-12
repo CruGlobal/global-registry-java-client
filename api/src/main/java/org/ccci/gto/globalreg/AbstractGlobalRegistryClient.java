@@ -12,9 +12,9 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     public static final int DEFAULT_PAGE = 1;
 
     @Override
-    public final <T> T getEntity(final Type<T> type, final String id, final String ownedBy) throws
-            SerializerException, UnauthorizedException {
-        return this.getEntity(type, id, Filter.OWNED_BY.value(ownedBy));
+    public final <T> T getEntity(final Type<T> type, final String id, final String ownedBy,
+                                 final Filter... filters) throws SerializerException, UnauthorizedException {
+        return this.getEntity(type, id, ArrayUtil.merge(filters, Filter.OWNED_BY.value(ownedBy)));
     }
 
     @Override

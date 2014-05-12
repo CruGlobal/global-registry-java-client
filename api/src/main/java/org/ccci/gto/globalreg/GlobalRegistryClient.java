@@ -25,11 +25,13 @@ public interface GlobalRegistryClient {
      * @param type    the type of entity to retrieve
      * @param id      the id of the entity being retrieved
      * @param ownedBy the system id the entity is being retrieved for
+     * @param filters any filters for the data being returned
      * @return The entity that is stored in the Global Registry, or null if it doesn't exist
      * @throws UnauthorizedException Thrown when the request is unauthorized.
      * @throws SerializerException   Thrown when there was an exception with entity deserialization.
      */
-    <T> T getEntity(Type<T> type, String id, String ownedBy) throws SerializerException, UnauthorizedException;
+    <T> T getEntity(Type<T> type, String id, String ownedBy, Filter... filters) throws SerializerException,
+            UnauthorizedException;
 
     /**
      * Retrieve an entity from the Global Registry
