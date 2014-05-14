@@ -50,7 +50,6 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // build the request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITIES, id};
-        request.queryParams.put(PARAM_ENTITY_TYPE, type.getEntityType());
         for (final Filter filter : filters) {
             request.queryParams.put(this.buildFilterParamName(filter), filter.getValue());
         }
