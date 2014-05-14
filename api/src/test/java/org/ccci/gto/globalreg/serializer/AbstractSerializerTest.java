@@ -115,6 +115,43 @@ public abstract class AbstractSerializerTest {
         assertEquals("authentication", auth.getName());
         assertEquals(EntityType.FieldType.ENTITY, auth.getFieldType());
         assertEquals(5, auth.getFields().size());
+
+        // validate person relationship_type
+        final List<EntityType.RelationshipType> relationships = person.getRelationshipTypes();
+        assertNotNull(relationships);
+        assertEquals("Invalid number of relationships for a person entity type", 2, relationships.size());
+        {
+            final EntityType.RelationshipType relationship = relationships.get(0);
+            assertNotNull(relationship);
+            assertEquals("7cd27938-d558-11e3-868a-12725f8f377c", relationship.getId());
+            assertEquals("6c79a444-d558-11e3-908c-12725f8f377c", relationship.getEnumEntityTypeId());
+            assertFalse(relationship.isReflexive());
+            final EntityType.RelationshipType.Relationship local = relationship.getLocalRelationship();
+            assertNotNull(local);
+            assertEquals("person", local.getEntityType());
+            assertEquals("person", local.getName());
+            final EntityType.RelationshipType.Relationship target = relationship.getTargetRelationship();
+            assertNotNull(target);
+            assertEquals("ministry", target.getEntityType());
+            assertEquals("ministry", target.getName());
+        }
+        {
+            final EntityType.RelationshipType relationship = relationships.get(1);
+            assertNotNull(relationship);
+            assertEquals("7cf075aa-d558-11e3-b33d-12725f8f377c", relationship.getId());
+            assertNull(relationship.getEnumEntityTypeId());
+            assertTrue(relationship.isReflexive());
+
+            //TODO: these can be in either order because it's reflexive
+            final EntityType.RelationshipType.Relationship local = relationship.getLocalRelationship();
+            assertNotNull(local);
+            assertEquals("person", local.getEntityType());
+            assertEquals("husband", local.getName());
+            final EntityType.RelationshipType.Relationship target = relationship.getTargetRelationship();
+            assertNotNull(target);
+            assertEquals("person", target.getEntityType());
+            assertEquals("wife", target.getName());
+        }
     }
 
     protected <T> void testSerializeEntity(final Type<T> type, final T entity) throws Exception {

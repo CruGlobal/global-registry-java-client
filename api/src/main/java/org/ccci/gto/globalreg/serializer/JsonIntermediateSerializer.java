@@ -154,8 +154,30 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
             type.addField(this.parseEntityType(fields.getObject(i), type));
         }
 
+        // parse relationships
+        final JsonArr<O, A> relationships = json.getArray("relationships");
+        for (int i = 0; i < relationships.size(); i++) {
+            type.addRelationshipType(this.parseRelationshipType(relationships.getObject(i).getObject
+                    ("relationship_type"), type));
+        }
+
         // return the parsed entity_type
         return type;
+    }
+
+    private EntityType.RelationshipType parseRelationshipType(final JsonObj<O, A> json, final EntityType entityType) {
+        // build & return RelationshipType object
+        final EntityType.RelationshipType relationship = new EntityType.RelationshipType(entityType);
+        relationship.setId(json.getString("id", null));
+        relationship.setRelationships(this.parseRelationship(json.getObject("relationship1")),
+                this.parseRelationship(json.getObject("relationship2")));
+        relationship.setEnumEntityTypeId(json.getString("enum_entity_type_id", null));
+        return relationship;
+    }
+
+    private EntityType.RelationshipType.Relationship parseRelationship(final JsonObj<O, A> json) {
+        return new EntityType.RelationshipType.Relationship(json.getString("entity_type"),
+                json.getString("relationship_name"));
     }
 
     private RegisteredSystem parseSystem(final JsonObj<O, A> json) {

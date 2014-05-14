@@ -70,6 +70,7 @@ public final class EntityType {
     private final List<String> enumValues = new ArrayList<>();
 
     private final List<EntityType> fields = new ArrayList<>();
+    private final List<RelationshipType> relationships = new ArrayList<>();
 
     public String getId() {
         return this.id;
@@ -143,7 +144,9 @@ public final class EntityType {
 
     public void setEnumValues(final Collection<String> values) {
         this.enumValues.clear();
-        this.enumValues.addAll(values);
+        if (values != null) {
+            this.enumValues.addAll(values);
+        }
     }
 
     public void addEnumValue(final String value) {
@@ -166,10 +169,102 @@ public final class EntityType {
 
     public void setFields(final Collection<EntityType> fields) {
         this.fields.clear();
-        this.fields.addAll(fields);
+        if (fields != null) {
+            this.fields.addAll(fields);
+        }
     }
 
     public void addField(final EntityType field) {
         this.fields.add(field);
+    }
+
+    public List<RelationshipType> getRelationshipTypes() {
+        return Collections.unmodifiableList(this.relationships);
+    }
+
+    public void setRelationshipTypes(final Collection<RelationshipType> relationships) {
+        this.relationships.clear();
+        if (relationships != null) {
+            this.relationships.addAll(relationships);
+        }
+    }
+
+    public void addRelationshipType(final RelationshipType relationship) {
+        this.relationships.add(relationship);
+    }
+
+    public static class RelationshipType {
+        private final EntityType entityType;
+
+        private String id;
+        private String enumEntityTypeId;
+        private Relationship local;
+        private Relationship target;
+
+        public RelationshipType(final EntityType entityType) {
+            this.entityType = entityType;
+        }
+
+        public String getId() {
+            return this.id;
+        }
+
+        public void setId(final String id) {
+            this.id = id;
+        }
+
+        public String getEnumEntityTypeId() {
+            return this.enumEntityTypeId;
+        }
+
+        public void setEnumEntityTypeId(final String enumEntityTypeId) {
+            this.enumEntityTypeId = enumEntityTypeId;
+        }
+
+        public void setRelationships(final Relationship relationship1, final Relationship relationship2) {
+            if (relationship1 == null || relationship2 == null) {
+                throw new NullPointerException("neither relationship1 nor relationship2 can be null");
+            }
+
+            // determine which relationship is local, prefer relationship1 if we can't tell
+            if (this.entityType == null || Objects.equals(this.entityType.getName(), relationship1.getEntityType())) {
+                this.local = relationship1;
+                this.target = relationship2;
+            } else {
+                this.local = relationship2;
+                this.target = relationship1;
+            }
+        }
+
+        public boolean isReflexive() {
+            return this.local != null && this.target != null && Objects.equals(this.local.getEntityType(),
+                    this.target.getEntityType());
+        }
+
+        public Relationship getLocalRelationship() {
+            return this.local;
+        }
+
+        public Relationship getTargetRelationship() {
+            return this.target;
+        }
+
+        public static class Relationship {
+            private final String entityType;
+            private final String name;
+
+            public Relationship(final String entityType, final String name) {
+                this.entityType = entityType;
+                this.name = name;
+            }
+
+            public String getEntityType() {
+                return this.entityType;
+            }
+
+            public String getName() {
+                return this.name;
+            }
+        }
     }
 }

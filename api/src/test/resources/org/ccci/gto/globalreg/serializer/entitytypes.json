@@ -385,18 +385,28 @@
                 {
                     "relationship_type": {
                         "id": "7cd27938-d558-11e3-868a-12725f8f377c",
-                        "relationship1": "person",
-                        "relationship2": "ministry",
-                        "related_entity_type": "ministry",
+                        "relationship1": {
+                            "entity_type": "person",
+                            "relationship_name": "person"
+                        },
+                        "relationship2": {
+                            "entity_type": "ministry",
+                            "relationship_name": "ministry"
+                        },
                         "enum_entity_type_id": "6c79a444-d558-11e3-908c-12725f8f377c"
                     }
                 },
                 {
                     "relationship_type": {
                         "id": "7cf075aa-d558-11e3-b33d-12725f8f377c",
-                        "relationship1": "husband",
-                        "relationship2": "wife",
-                        "related_entity_type": "person"
+                        "relationship1": {
+                            "entity_type": "person",
+                            "relationship_name": "husband"
+                        },
+                        "relationship2": {
+                            "entity_type": "person",
+                            "relationship_name": "wife"
+                        }
                     }
                 }
             ]
