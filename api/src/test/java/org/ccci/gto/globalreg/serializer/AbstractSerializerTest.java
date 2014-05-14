@@ -95,6 +95,12 @@ public abstract class AbstractSerializerTest {
         assertEquals(EntityType.FieldType.ENUM_VALUES, gender.getFieldType());
         assertEquals("Root level gender entity type to store enum values", gender.getDescription());
         assertEquals(0, gender.getFields().size());
+        final List<String> genderValues = gender.getEnumValues();
+        assertNotNull(genderValues);
+        assertEquals(2, genderValues.size());
+        assertTrue("gender doesn't contains Male", genderValues.contains("Male"));
+        assertTrue("gender doesn't contains Female", genderValues.contains("Female"));
+        assertFalse("gender contains Alien", genderValues.contains("Alien"));
 
         // validate second entity_type (person)
         final EntityType person = types.get(1);

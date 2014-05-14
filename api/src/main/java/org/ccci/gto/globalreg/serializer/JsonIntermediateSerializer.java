@@ -137,8 +137,16 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
 
         type.setId(json.getString("id", null));
         type.setName(json.getString("name", null));
-        type.setDescription(json.getString("description", null));
         type.setFieldType(json.getString("field_type", "entity"));
+        type.setDescription(json.getString("description", null));
+
+        // parse enum values
+        if (type.getFieldType() == EntityType.FieldType.ENUM_VALUES) {
+            final JsonArr<O, A> values = json.getArray("enum_values");
+            for (int i = 0; i < values.size(); i++) {
+                type.addEnumValue(values.getString(i));
+            }
+        }
 
         // parse nested fields
         final JsonArr<O, A> fields = json.getArray("fields");
@@ -296,5 +304,11 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         protected abstract int size();
 
         protected abstract JsonObj<O, A> getObject(int index);
+
+        protected String getString(final int index) {
+            return this.getString(index, null);
+        }
+
+        protected abstract String getString(int index, String def);
     }
 }

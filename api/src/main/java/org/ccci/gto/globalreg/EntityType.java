@@ -65,8 +65,9 @@ public final class EntityType {
     private EntityType parent;
     private String parentId;
     private String name;
-    private String description;
     private FieldType fieldType = FieldType.NONE;
+    private String description;
+    private final List<String> enumValues = new ArrayList<>();
 
     private final List<EntityType> fields = new ArrayList<>();
 
@@ -134,6 +135,19 @@ public final class EntityType {
 
     public void setFieldType(final String type) {
         this.fieldType = type != null ? FieldType.fromString(type) : FieldType.ENTITY;
+    }
+
+    public List<String> getEnumValues() {
+        return Collections.unmodifiableList(this.enumValues);
+    }
+
+    public void setEnumValues(final Collection<String> values) {
+        this.enumValues.clear();
+        this.enumValues.addAll(values);
+    }
+
+    public void addEnumValue(final String value) {
+        this.enumValues.add(value);
     }
 
     public EntityType getField(final String name) {

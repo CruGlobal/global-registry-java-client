@@ -161,5 +161,10 @@ public class JsonSerializer extends JsonIntermediateSerializer<JSONObject, JSONA
         protected IntJsonObj getObject(final int index) {
             return new IntJsonObj(arr == null ? null : arr.optJSONObject(index));
         }
+
+        @Override
+        protected String getString(final int index, final String def) {
+            return arr != null ? arr.optString(index, def) : def;
+        }
     }
 }

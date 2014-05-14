@@ -7,8 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.base.Throwables;
 import org.ccci.gto.globalreg.Type;
-import org.ccci.gto.globalreg.serializer.SerializerException;
 import org.ccci.gto.globalreg.serializer.JsonIntermediateSerializer;
+import org.ccci.gto.globalreg.serializer.SerializerException;
 import org.ccci.gto.globalreg.serializer.UnparsableJsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -211,6 +211,12 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
         @Override
         protected IntJsonObj getObject(final int index) {
             return new IntJsonObj(arr.path(index));
+        }
+
+        @Override
+        protected String getString(final int index, final String def) {
+            final JsonNode val = arr.get(index);
+            return val != null ? val.asText() : def;
         }
     }
 }
