@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.ccci.gto</groupId>
     <artifactId>java-parent</artifactId>
-    <version>15</version>
+    <version>16</version>
   </parent>
 
   <artifactId>global-registry-client</artifactId>
@@ -21,11 +21,6 @@
     <module>serializer-json</module>
   </modules>
 
-  <properties>
-    <joda-time.version>2.3</joda-time.version>
-    <rest-assured.version>2.3.1</rest-assured.version>
-  </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -35,6 +30,13 @@
       </dependency>
       <dependency>
         <groupId>org.ccci.gto</groupId>
+        <artifactId>global-registry-client-serializer-json</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <!-- Testing dependencies -->
+      <dependency>
+        <groupId>org.ccci.gto</groupId>
         <artifactId>global-registry-client-api</artifactId>
         <version>${project.version}</version>
         <type>test-jar</type>
@@ -42,28 +44,9 @@
       </dependency>
       <dependency>
         <groupId>org.ccci.gto</groupId>
-        <artifactId>global-registry-client-serializer-json</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.ccci.gto</groupId>
         <artifactId>global-registry-client-testing</artifactId>
         <version>${project.version}</version>
         <scope>test</scope>
-      </dependency>
-
-      <!-- Joda-Time dependencies -->
-      <dependency>
-        <groupId>joda-time</groupId>
-        <artifactId>joda-time</artifactId>
-        <version>${joda-time.version}</version>
-      </dependency>
-
-      <!-- REST-assured dependencies -->
-      <dependency>
-        <groupId>com.jayway.restassured</groupId>
-        <artifactId>json-path</artifactId>
-        <version>${rest-assured.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
