@@ -14,7 +14,7 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     @Override
     public final <T> T getEntity(final Type<T> type, final String id, final String ownedBy,
                                  final Filter... filters) throws SerializerException, UnauthorizedException {
-        return this.getEntity(type, id, ArrayUtil.merge(filters, Filter.OWNED_BY.value(ownedBy)));
+        return this.getEntity(type, id, ArrayUtil.merge(filters, Filter.OWNED_BY.values(ownedBy)));
     }
 
     @Override
@@ -28,7 +28,7 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     public final <T> ResponseList<T> getEntities(final Type<T> type, final String ownedBy, final int page,
                                                  final Filter... filters) throws UnauthorizedException,
             SerializerException {
-        return this.getEntities(type, page, ArrayUtil.merge(filters, Filter.OWNED_BY.value(ownedBy)));
+        return this.getEntities(type, page, ArrayUtil.merge(filters, Filter.OWNED_BY.values(ownedBy)));
     }
 
     @Override
@@ -61,10 +61,10 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
                                              final Filter... filters) throws UnauthorizedException, SerializerException {
         final ArrayList<Filter> tmp = new ArrayList<>(Arrays.asList(filters));
         if (from != null) {
-            tmp.add(Filter.PERIOD_FROM.value(MeasurementType.Frequency.MONTHLY.getFormatter().print(from)));
+            tmp.add(Filter.PERIOD_FROM.values(MeasurementType.Frequency.MONTHLY.getFormatter().print(from)));
         }
         if (to != null) {
-            tmp.add(Filter.PERIOD_TO.value(MeasurementType.Frequency.MONTHLY.getFormatter().print(to)));
+            tmp.add(Filter.PERIOD_TO.values(MeasurementType.Frequency.MONTHLY.getFormatter().print(to)));
         }
 
         return this.getMeasurements(type, tmp.toArray(new Filter[tmp.size()]));

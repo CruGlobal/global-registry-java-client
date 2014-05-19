@@ -1,6 +1,7 @@
 package org.ccci.gto.globalreg;
 
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.net.HttpHeaders;
 import com.google.common.net.MediaType;
@@ -30,16 +31,22 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         this.serializer = serializer;
     }
 
-    protected final String buildFilterParamName(final Filter filter) {
-        if (filter != null && filter.isValid()) {
-            final StringBuilder sb = new StringBuilder(PARAM_FILTER);
-            for (final String field : filter.getPath()) {
-                sb.append("[").append(field).append("]");
-            }
-            return sb.toString();
-        }
+    private void attachFilters(final Request request, final Filter... filters) {
+        for (final Filter filter : filters) {
+            if (filter != null && filter.isValid()) {
+                // generate the name for this filter
+                final StringBuilder name = new StringBuilder(PARAM_FILTER);
+                for (final String field : filter.getPath()) {
+                    name.append("[").append(field).append("]");
+                }
+                if (filter.getValues().length > 1) {
+                    name.append("[]");
+                }
 
-        return null;
+                // append all values for this filter
+                request.queryParams.putAll(name.toString(), Lists.newArrayList(filter.getValues()));
+            }
+        }
     }
 
     protected abstract Response processRequest(Request request) throws UnauthorizedException;
@@ -50,9 +57,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // build the request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITIES, id};
-        for (final Filter filter : filters) {
-            request.queryParams.put(this.buildFilterParamName(filter), filter.getValue());
-        }
+        this.attachFilters(request, filters);
 
         // process request
         final Response response = this.processRequest(request);
@@ -71,9 +76,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         request.path = new String[]{PATH_ENTITIES};
         request.queryParams.put(PARAM_ENTITY_TYPE, type.getEntityType());
         request.queryParams.put(PARAM_PAGE, Integer.toString(page));
-        for (final Filter filter : filters) {
-            request.queryParams.put(this.buildFilterParamName(filter), filter.getValue());
-        }
+        this.attachFilters(request, filters);
 
         // execute request
         final Response response = this.processRequest(request);
@@ -148,9 +151,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITY_TYPES};
         request.queryParams.put(PARAM_PAGE, Integer.toString(page));
-        for (final Filter filter : filters) {
-            request.queryParams.put(this.buildFilterParamName(filter), filter.getValue());
-        }
+        this.attachFilters(request, filters);
 
         // execute request
         final Response response = this.processRequest(request);
@@ -227,9 +228,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         final Request request = new Request();
         request.path = new String[]{PATH_MEASUREMENT_TYPES};
         request.queryParams.put(PARAM_PAGE, Integer.toString(page));
-        for (final Filter filter : filters) {
-            request.queryParams.put(this.buildFilterParamName(filter), filter.getValue());
-        }
+        this.attachFilters(request, filters);
 
         // execute request
         final Response response = this.processRequest(request);
@@ -248,9 +247,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_MEASUREMENT_TYPES, id};
-        for (final Filter filter : filters) {
-            request.queryParams.put(this.buildFilterParamName(filter), filter.getValue());
-        }
+        this.attachFilters(request, filters);
 
         // execute request
         final Response response = this.processRequest(request);
