@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 public final class Filter implements Serializable {
-    private static final long serialVersionUID = 1900099970741635758L;
+    private static final long serialVersionUID = 7723108591216268801L;
 
     // several common filters
     public static final Filter OWNED_BY = new Filter().path("owned_by");
