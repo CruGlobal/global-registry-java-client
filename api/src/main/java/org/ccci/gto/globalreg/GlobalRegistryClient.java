@@ -12,6 +12,7 @@ public interface GlobalRegistryClient {
     public static final String PATH_SYSTEMS = "systems";
     public static final String PARAM_ENTITY_TYPE = "entity_type";
     public static final String PARAM_PAGE = "page";
+    public static final String PARAM_PER_PAGE = "per_page";
     public static final String PARAM_FILTER = "filters";
 
     /* Entity Endpoints */
@@ -48,10 +49,15 @@ public interface GlobalRegistryClient {
     <T> ResponseList<T> getEntities(Type<T> type, String ownedBy, int page,
                                     Filter... filters) throws UnauthorizedException, SerializerException;
 
+    <T> ResponseList<T> getEntities(Type<T> type, String ownedBy, int page, int perPage,
+                                    Filter... filters) throws UnauthorizedException, SerializerException;
+
     <T> ResponseList<T> getEntities(Type<T> type, Filter... filters) throws UnauthorizedException, SerializerException;
 
     <T> ResponseList<T> getEntities(Type<T> type, int page, Filter... filters) throws UnauthorizedException,
             SerializerException;
+
+    <T> ResponseList<T> getEntities(Type<T> type, int page, int perPage, Filter... filters) throws UnauthorizedException, SerializerException;
 
     /**
      * Store an entity in the Global Registry

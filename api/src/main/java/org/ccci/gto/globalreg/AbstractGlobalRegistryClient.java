@@ -10,6 +10,7 @@ import java.util.List;
 
 public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClient {
     public static final int DEFAULT_PAGE = 1;
+    public static final int DEFAULT_PER_PAGE_ENTITIES = 1000;
 
     @Override
     public final <T> T getEntity(final Type<T> type, final String id, final String ownedBy,
@@ -28,13 +29,27 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     public final <T> ResponseList<T> getEntities(final Type<T> type, final String ownedBy, final int page,
                                                  final Filter... filters) throws UnauthorizedException,
             SerializerException {
-        return this.getEntities(type, page, ArrayUtil.merge(filters, Filter.OWNED_BY.values(ownedBy)));
+        return this.getEntities(type, ownedBy, page, DEFAULT_PER_PAGE_ENTITIES, filters);
+    }
+
+    @Override
+    public final <T> ResponseList<T> getEntities(final Type<T> type, final String ownedBy, final int page,
+                                                 final int perPage, final Filter... filters) throws
+            UnauthorizedException, SerializerException {
+        return this.getEntities(type, page, perPage, ArrayUtil.merge(filters, Filter.OWNED_BY.values(ownedBy)));
     }
 
     @Override
     public final <T> ResponseList<T> getEntities(final Type<T> type, final Filter... filters) throws
             UnauthorizedException, SerializerException {
         return this.getEntities(type, DEFAULT_PAGE, filters);
+    }
+
+    @Override
+    public final <T> ResponseList<T> getEntities(final Type<T> type, final int page,
+                                                 final Filter... filters) throws UnauthorizedException,
+            SerializerException {
+        return this.getEntities(type, page, DEFAULT_PER_PAGE_ENTITIES, filters);
     }
 
     @Override

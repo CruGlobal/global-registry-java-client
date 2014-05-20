@@ -69,13 +69,14 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public <T> ResponseList<T> getEntities(final Type<T> type, final int page, final Filter... filters) throws
-            UnauthorizedException, SerializerException {
+    public <T> ResponseList<T> getEntities(final Type<T> type, final int page, final int perPage,
+                                           final Filter... filters) throws UnauthorizedException, SerializerException {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITIES};
         request.queryParams.put(PARAM_ENTITY_TYPE, type.getEntityType());
         request.queryParams.put(PARAM_PAGE, Integer.toString(page));
+        request.queryParams.put(PARAM_PER_PAGE, Integer.toString(perPage));
         this.attachFilters(request, filters);
 
         // execute request
