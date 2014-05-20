@@ -14,8 +14,8 @@ public final class EntityType {
 
     public enum FieldType {
         ENTITY("entity"), BOOLEAN("boolean"), INTEGER("integer"), DECIMAL("decimal"), STRING("string"), DATE("date"),
-        DATETIME("datetime"), ENUM("enum"), ENUM_VALUES("enum_values"), EMAIL("email"), TEXT("text"), UNKNOWN(""),
-        NONE("");
+        DATETIME("datetime"), ENUM("enum"), ENUM_VALUES("enum_values"), EMAIL("email"), TEXT("text"), UUID("uuid"),
+        UNKNOWN(""), NONE("");
         private final String raw;
 
         private FieldType(final String raw) {
@@ -47,6 +47,8 @@ public final class EntityType {
                         return EMAIL;
                     case "text":
                         return TEXT;
+                    case "uuid":
+                        return UUID;
                     default:
                         LOG.error("unrecognized field_type: {}", type);
                 }
