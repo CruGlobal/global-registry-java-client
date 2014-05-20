@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.ccci.gto</groupId>
     <artifactId>java-parent</artifactId>
-    <version>16</version>
+    <version>17-SNAPSHOT</version>
   </parent>
 
   <artifactId>global-registry-client</artifactId>
@@ -90,6 +90,10 @@
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
       </plugin>
     </plugins>
   </build>

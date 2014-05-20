@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public abstract class BaseGlobalRegistryClientTest {
+public abstract class BaseGlobalRegistryClientIT {
     private static final String ACCESS_TOKEN = "";
 
     private static final Random RAND = new SecureRandom();
