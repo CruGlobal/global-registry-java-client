@@ -14,9 +14,6 @@ public interface GlobalRegistryClient {
     public static final String PARAM_PAGE = "page";
     public static final String PARAM_FILTER = "filters";
 
-    @Deprecated
-    public static final String PARAM_CREATED_BY = "created_by";
-
     /* Entity Endpoints */
 
     /**
