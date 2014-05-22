@@ -41,7 +41,7 @@ public final class Filter implements Serializable {
 
     @Deprecated
     public final Filter value(final String value) {
-        return new Filter(this.path, new String[]{value != null ? value : ""});
+        return new Filter(this.path, value != null ? new String[]{value} : new String[0]);
     }
 
     public final Filter value(final MeasurementType.Category category) {
