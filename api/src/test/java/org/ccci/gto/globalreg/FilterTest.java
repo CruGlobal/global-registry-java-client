@@ -30,4 +30,15 @@ public class FilterTest {
                     new Filter().value((String) null));
         }
     }
+
+    @Test
+    public void testAppendValues() throws Exception {
+        final Filter expected = new Filter().values("a", "b", "c", "d");
+
+        assertEquals(expected, new Filter().values().appendValues("a", "b", "c", "d"));
+        assertEquals(expected, new Filter().values("a").appendValues("b", "c", "d"));
+        assertEquals(expected, new Filter().values("a", "b").appendValues("c", "d"));
+        assertEquals(expected, new Filter().values("a", "b", "c").appendValues("d"));
+        assertEquals(expected, new Filter().values("a", "b", "c", "d").appendValues());
+    }
 }

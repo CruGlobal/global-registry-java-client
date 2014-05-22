@@ -52,6 +52,16 @@ public final class Filter implements Serializable {
         return new Filter(this.path, values);
     }
 
+    public final Filter appendValues(final String... values) {
+        // short-circuit if there is nothing to do
+        if (values == null || values.length == 0) {
+            return this;
+        }
+
+        // return a filter with the appended values
+        return new Filter(this.path, ArrayUtil.merge(this.values, values));
+    }
+
     public final boolean isValid() {
         return this.path.length > 0 && this.values.length > 0;
     }
