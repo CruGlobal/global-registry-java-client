@@ -19,8 +19,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.ccci.gto.globalreg.UnauthorizedException;
 import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
+import org.ccci.gto.globalreg.UnauthorizedException;
 
 import java.io.IOException;
 import java.net.URI;
@@ -43,13 +43,7 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
     protected Response processRequest(final Request request) throws UnauthorizedException {
         try {
             // build the request uri
-            final URIBuilder builder = new URIBuilder(this.apiUrl);
-            final String path = builder.getPath();
-            builder.setPath(JOINER_PATH.join(path, null, request.path));
-            for (final Map.Entry<String, String> param : request.queryParams.entries()) {
-                builder.addParameter(param.getKey(), param.getValue());
-            }
-            final URI uri = builder.build();
+            final URI uri = this.buildUri(request);
 
             // build the base request
             HttpUriRequest req = null;
@@ -98,5 +92,16 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
         } catch (final IOException | URISyntaxException e) {
             throw Throwables.propagate(e);
         }
+    }
+
+    URI buildUri(final Request request) throws URISyntaxException {
+        // build the request uri
+        final URIBuilder builder = new URIBuilder(this.apiUrl);
+        final String path = builder.getPath();
+        builder.setPath(path + JOINER_PATH.join(request.path));
+        for (final Map.Entry<String, String> param : request.queryParams.entries()) {
+            builder.addParameter(param.getKey(), param.getValue());
+        }
+        return builder.build();
     }
 }

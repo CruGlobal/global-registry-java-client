@@ -20,7 +20,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     protected Serializer serializer;
 
     public void setApiUrl(final String apiUrl) {
-        this.apiUrl = apiUrl;
+        this.apiUrl = apiUrl != null && !apiUrl.endsWith("/") ? apiUrl + "/" : apiUrl;
     }
 
     public void setAccessToken(final String accessToken) {
@@ -261,7 +261,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         return null;
     }
 
-    protected final static class Request {
+    public final static class Request {
         public String method = "GET";
         public String[] path = new String[0];
         public final Map<String, String> headers = new HashMap<>();
@@ -269,12 +269,12 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         public String contentType = null;
         public String content = null;
 
-        public Request() {
+        Request() {
             this.headers.put(HttpHeaders.ACCEPT, APPLICATION_JSON.toString());
         }
     }
 
-    protected final static class Response {
+    public final static class Response {
         public final int code;
         public final String content;
 
