@@ -5,6 +5,8 @@
         "created_at": "2014-02-24T23:21:23.890Z",
         "updated_at": "2014-02-24T23:21:23.890Z",
         "root": true,
+        "contact_name": "Bobby Tables",
+        "contact_email": "robert.drop.tables@example.com",
         "is_trusted": false,
         "access_token": "accessToken"
     }

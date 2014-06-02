@@ -185,6 +185,8 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         final RegisteredSystem system = new RegisteredSystem();
         system.setId(json.getString("id"));
         system.setName(json.getString("name"));
+        system.setContactName(json.getString("contact_name"));
+        system.setContactEmail(json.getString("contact_email"));
         system.setRoot(json.getBoolean("root"));
         system.setTrusted(json.getBoolean("is_trusted"));
         system.setAccessToken(json.getString("access_token"));

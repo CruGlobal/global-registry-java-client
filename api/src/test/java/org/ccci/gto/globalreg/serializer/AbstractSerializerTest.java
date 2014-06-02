@@ -204,6 +204,8 @@ public abstract class AbstractSerializerTest {
         assertNotNull(system);
         assertEquals("a6c9c498-5687-11e3-a202-12725f8f377c", system.getId());
         assertEquals("System 1", system.getName());
+        assertEquals("Bobby Tables", system.getContactName());
+        assertEquals("robert.drop.tables@example.com", system.getContactEmail());
         assertEquals(Boolean.TRUE, system.getRoot());
         assertTrue(system.isRoot());
         assertEquals(Boolean.FALSE, system.getTrusted());
@@ -222,6 +224,8 @@ public abstract class AbstractSerializerTest {
             assertNotNull(system);
             assertEquals("a6c9c498-d554-11e3-2456-12725f8f377c", system.getId());
             assertEquals("System 1", system.getName());
+            assertNull(system.getContactName());
+            assertNull(system.getContactEmail());
             assertEquals(Boolean.FALSE, system.getRoot());
             assertFalse(system.isRoot());
             assertEquals(Boolean.FALSE, system.getTrusted());
@@ -233,6 +237,8 @@ public abstract class AbstractSerializerTest {
             assertNotNull(system);
             assertEquals("a6c9cb96-4568-11e3-98ab-12725f8f377c", system.getId());
             assertEquals("System 2", system.getName());
+            assertNull(system.getContactName());
+            assertNull(system.getContactEmail());
             assertEquals(Boolean.TRUE, system.getRoot());
             assertTrue(system.isRoot());
             assertEquals(Boolean.TRUE, system.getTrusted());
@@ -244,6 +250,8 @@ public abstract class AbstractSerializerTest {
             assertNotNull(system);
             assertEquals("a6c9cb96-d554-9999-98ab-12725f8f377c", system.getId());
             assertEquals("System 10", system.getName());
+            assertNull(system.getContactName());
+            assertNull(system.getContactEmail());
             assertNull(system.getRoot());
             assertFalse(system.isRoot());
             assertNull(system.getTrusted());

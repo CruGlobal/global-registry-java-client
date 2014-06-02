@@ -5,6 +5,8 @@ import java.util.Objects;
 public final class RegisteredSystem {
     private String id;
     private String name;
+    private String contactName;
+    private String contactEmail;
     private Boolean root;
     private Boolean trusted;
     private String accessToken;
@@ -23,6 +25,22 @@ public final class RegisteredSystem {
 
     public void setName(final String name) {
         this.name = name;
+    }
+
+    public String getContactName() {
+        return this.contactName;
+    }
+
+    public void setContactName(final String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getContactEmail() {
+        return this.contactEmail;
+    }
+
+    public void setContactEmail(final String contactEmail) {
+        this.contactEmail = contactEmail;
     }
 
     public Boolean getRoot() {
