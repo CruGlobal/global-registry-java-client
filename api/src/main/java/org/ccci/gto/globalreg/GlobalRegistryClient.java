@@ -71,6 +71,9 @@ public interface GlobalRegistryClient {
 
     <T> T updateEntity(Type<T> type, String id, T entity) throws UnauthorizedException, SerializerException;
 
+    void deleteEntity(String id) throws UnauthorizedException;
+
+    @Deprecated
     <T> void deleteEntity(Type<T> type, String id) throws UnauthorizedException;
 
     /* Entity Type Endpoints */

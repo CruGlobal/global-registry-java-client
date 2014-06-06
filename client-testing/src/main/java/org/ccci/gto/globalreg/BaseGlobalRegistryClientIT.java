@@ -89,7 +89,7 @@ public abstract class BaseGlobalRegistryClientIT {
         assertEquals("Last", updatedEntity.getString("last_name"));
         assertEquals(newEntity.getString("id"), updatedEntity.getString("id"));
 
-        client.deleteEntity(TYPE_PERSON, newEntity.getString("id"));
+        client.deleteEntity(newEntity.getString("id"));
     }
 
     @Test

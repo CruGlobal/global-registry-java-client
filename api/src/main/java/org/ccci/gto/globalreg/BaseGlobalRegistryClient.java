@@ -135,14 +135,14 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public <T> void deleteEntity(final Type<T> type, final String id) throws UnauthorizedException {
+    public void deleteEntity(final String id) throws UnauthorizedException {
         // build the request
         final Request request = new Request();
         request.method = "DELETE";
         request.path = new String[]{PATH_ENTITIES, id};
 
         // execute request
-        final Response response = this.processRequest(request);
+        this.processRequest(request);
     }
 
     @Override

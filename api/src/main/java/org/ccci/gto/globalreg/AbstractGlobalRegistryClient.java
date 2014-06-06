@@ -53,6 +53,11 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     }
 
     @Override
+    public final <T> void deleteEntity(final Type<T> type, final String id) throws UnauthorizedException {
+        this.deleteEntity(id);
+    }
+
+    @Override
     public final ResponseList<EntityType> getEntityTypes(final Filter... filters) throws UnauthorizedException,
             SerializerException {
         return this.getEntityTypes(1, filters);
