@@ -3,8 +3,8 @@ package org.ccci.gto.globalreg.jaxrs;
 import com.google.common.base.Throwables;
 import com.google.common.io.CharStreams;
 import com.google.common.net.HttpHeaders;
-import org.ccci.gto.globalreg.UnauthorizedException;
 import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
+import org.ccci.gto.globalreg.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,13 +58,16 @@ public class JaxrsGlobalRegistryClient extends BaseGlobalRegistryClient {
             }
 
             // throw an UnauthorizedException when the request is unauthorized
-            if (conn.getResponseCode() == 401) {
+            final int code = conn.getResponseCode();
+            if (code == 401) {
                 throw new UnauthorizedException();
             }
 
             // read & return response
             try (InputStream raw = conn.getInputStream(); InputStreamReader in = new InputStreamReader(raw)) {
-                return new Response(conn.getResponseCode(), CharStreams.toString(in));
+                return new Response(code, CharStreams.toString(in));
+            } catch (final IOException e) {
+                return new Response(code, "");
             }
         } catch (final IOException e) {
             LOG.debug("error processing request: {}", uri, e);
