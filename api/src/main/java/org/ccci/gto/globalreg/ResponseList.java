@@ -17,6 +17,10 @@ public class ResponseList<T> extends ForwardingList<T> {
         return this.meta;
     }
 
+    public boolean hasMore() {
+        return this.meta != null && this.meta.totalPages > this.meta.page;
+    }
+
     @Override
     protected List<T> delegate() {
         return this.results;
