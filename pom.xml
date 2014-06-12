@@ -22,6 +22,12 @@
     <module>serializer-jsonpath</module>
   </modules>
 
+  <scm>
+    <connection>scm:git:git@github.com:GlobalTechnology/global-registry-java-client.git</connection>
+    <developerConnection>scm:git:git@github.com:GlobalTechnology/global-registry-java-client.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
