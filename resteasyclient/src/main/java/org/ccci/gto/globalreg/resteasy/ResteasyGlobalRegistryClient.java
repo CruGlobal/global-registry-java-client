@@ -44,10 +44,15 @@ public class ResteasyGlobalRegistryClient extends BaseGlobalRegistryClient
 	{
 		StringBuilder pathBuilder = new StringBuilder();
 
+		// add initial slash in case base URL doesn't have it
+		if(!apiUrl.endsWith("/")) pathBuilder.append("/");
+
+		boolean first = true;
 		for(String pathElement : request.path)
 		{
+			if(!first) pathBuilder.append("/");
 			pathBuilder.append(pathElement);
-
+			first = false;
 		}
 
 		return pathBuilder.toString();
