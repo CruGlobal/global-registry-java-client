@@ -17,6 +17,7 @@
     <module>client-testing</module>
     <module>httpclient</module>
     <module>jaxrs10</module>
+    <module>resteasyclient</module>
     <module>serializer-jackson</module>
     <module>serializer-json</module>
     <module>serializer-jsonpath</module>
