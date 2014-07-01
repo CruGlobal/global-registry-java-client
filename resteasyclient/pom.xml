@@ -22,5 +22,11 @@
             <artifactId>resteasy-client</artifactId>
             <version>3.0.8.Final</version>
         </dependency>
+
+      <!-- Test dependencies -->
+      <dependency>
+        <groupId>org.ccci.gto</groupId>
+        <artifactId>global-registry-client-testing</artifactId>
+      </dependency>
     </dependencies>
 </project>
