@@ -56,8 +56,7 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
 		catch(IOException exception)
 		{
 			LOG.error("Error writing JsonNode to String", exception);
-			Throwables.propagate(exception);
-			return null; // unreachable
+			throw Throwables.propagate(exception);
 		}
     }
 
