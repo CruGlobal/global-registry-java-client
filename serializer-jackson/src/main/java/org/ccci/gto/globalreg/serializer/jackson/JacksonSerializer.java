@@ -49,7 +49,15 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
 
     @Override
     protected String jsonObjToString(final JsonObj<JsonNode, JsonNode> json) {
-        return json.getRawObject().toString();
+		try
+		{
+			return mapper.writeValueAsString(json.getRawObject());
+		}
+		catch(IOException exception)
+		{
+			LOG.error("Error writing JsonNode to String", exception);
+			throw Throwables.propagate(exception);
+		}
     }
 
     @Override
