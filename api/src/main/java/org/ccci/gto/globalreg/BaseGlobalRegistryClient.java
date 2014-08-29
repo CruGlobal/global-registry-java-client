@@ -6,7 +6,6 @@ import com.google.common.collect.Multimap;
 import com.google.common.net.HttpHeaders;
 import com.google.common.net.MediaType;
 import org.ccci.gto.globalreg.serializer.Serializer;
-import org.ccci.gto.globalreg.serializer.SerializerException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,8 +51,8 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     protected abstract Response processRequest(Request request) throws UnauthorizedException;
 
     @Override
-    public <T> T getEntity(final Type<T> type, final String id, final Filter... filters) throws
-            UnauthorizedException, SerializerException {
+    public <T> T getEntity(final Type<T> type, final String id, final Filter... filters) throws GlobalRegistryException
+	{
         // build the request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITIES, id};
@@ -61,16 +60,16 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
         // process request
         final Response response = this.processRequest(request);
-        if (response.code == 200) {
-            return this.serializer.deserializeEntity(type, response.content);
-        }
 
-        return null;
+        checkResponseForError(response);
+
+        return this.serializer.deserializeEntity(type, response.content);
     }
 
     @Override
     public <T> ResponseList<T> getEntities(final Type<T> type, final int page, final int perPage,
-                                           final Filter... filters) throws UnauthorizedException, SerializerException {
+                                           final Filter... filters) throws GlobalRegistryException
+    {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITIES};
@@ -82,16 +81,14 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // execute request
         final Response response = this.processRequest(request);
 
-        // process response
-        if (response.code == 200) {
-            return this.serializer.deserializeEntities(type, response.content);
-        }
+        checkResponseForError(response);
 
-        return null;
+        return this.serializer.deserializeEntities(type, response.content);
     }
 
     @Override
-    public <T> T addEntity(final Type<T> type, final T entity) throws UnauthorizedException, SerializerException {
+    public <T> T addEntity(final Type<T> type, final T entity) throws GlobalRegistryException
+    {
         // build request
         final Request request = new Request();
         request.method = "POST";
@@ -102,19 +99,14 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // execute request
         final Response response = this.processRequest(request);
 
-        // process response
-        // 200: existing entity updated
-        // 201: new entity created
-        if (response.code == 200 || response.code == 201) {
-            return this.serializer.deserializeEntity(type, response.content);
-        }
+        checkResponseForError(response);
 
-        return null;
+        return this.serializer.deserializeEntity(type, response.content);
     }
 
     @Override
-    public <T> T updateEntity(final Type<T> type, final String id, final T entity) throws UnauthorizedException,
-            SerializerException {
+    public <T> T updateEntity(final Type<T> type, final String id, final T entity) throws GlobalRegistryException
+    {
         // build the request
         final Request request = new Request();
         request.method = "PUT";
@@ -125,29 +117,28 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // execute request
         final Response response = this.processRequest(request);
 
-        // process response
-        // 200: successful update
-        if (response.code == 200) {
-            return this.serializer.deserializeEntity(type, response.content);
-        }
+        checkResponseForError(response);
 
-        return null;
+        return this.serializer.deserializeEntity(type, response.content);
     }
 
     @Override
-    public void deleteEntity(final String id) throws UnauthorizedException {
+    public void deleteEntity(final String id) throws GlobalRegistryException
+    {
         // build the request
         final Request request = new Request();
         request.method = "DELETE";
         request.path = new String[]{PATH_ENTITIES, id};
 
         // execute request
-        this.processRequest(request);
+        Response response = this.processRequest(request);
+
+        checkResponseForError(response);
     }
 
     @Override
-    public ResponseList<EntityType> getEntityTypes(final int page, final Filter... filters) throws
-            UnauthorizedException, SerializerException {
+    public ResponseList<EntityType> getEntityTypes(final int page, final Filter... filters) throws GlobalRegistryException
+    {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITY_TYPES};
@@ -157,17 +148,15 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // execute request
         final Response response = this.processRequest(request);
 
-        // process response
-        if (response.code == 200) {
-            return this.serializer.deserializeEntityTypes(response.content);
-        }
+        checkResponseForError(response);
 
-        return null;
+        return this.serializer.deserializeEntityTypes(response.content);
     }
 
     // XXX: this is currently untested
     @Override
-    public final EntityType addEntityType(final EntityType type) throws UnauthorizedException, SerializerException {
+    public final EntityType addEntityType(final EntityType type) throws GlobalRegistryException
+    {
         // build request
         final Request request = new Request();
         request.method = "POST";
@@ -178,18 +167,14 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // execute request
         final Response response = this.processRequest(request);
 
-        // process response
-        // 200: existing entity type updated
-        // 201: new entity type created
-        if (response.code == 200 || response.code == 201) {
-            return this.serializer.deserializeEntityType(response.content);
-        }
+        checkResponseForError(response);
 
-        return null;
+        return this.serializer.deserializeEntityType(response.content);
     }
 
     @Override
-    public RegisteredSystem getSystem(final String id) throws SerializerException, UnauthorizedException {
+    public RegisteredSystem getSystem(final String id) throws GlobalRegistryException
+    {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_SYSTEMS, id};
@@ -197,16 +182,15 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // execute request
         final Response response = this.processRequest(request);
 
-        // process response
-        if (response.code == 200) {
-            return this.serializer.deserializeSystem(response.content);
-        }
+        checkResponseForError(response);
 
-        return null;
+        // process response
+        return this.serializer.deserializeSystem(response.content);
     }
 
     @Override
-    public List<RegisteredSystem> getSystems() throws UnauthorizedException, SerializerException {
+    public List<RegisteredSystem> getSystems() throws GlobalRegistryException
+    {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_SYSTEMS};
@@ -214,17 +198,14 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // execute request
         final Response response = this.processRequest(request);
 
-        // process response
-        if (response.code == 200) {
-            return this.serializer.deserializeSystems(response.content);
-        }
+        checkResponseForError(response);
 
-        return null;
+        return this.serializer.deserializeSystems(response.content);
     }
 
     @Override
-    public ResponseList<MeasurementType> getMeasurementTypes(final int page, final Filter... filters) throws
-            UnauthorizedException, SerializerException {
+    public ResponseList<MeasurementType> getMeasurementTypes(final int page, final Filter... filters) throws GlobalRegistryException
+    {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_MEASUREMENT_TYPES};
@@ -234,17 +215,14 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // execute request
         final Response response = this.processRequest(request);
 
-        // process response
-        if (response.code == 200) {
-            return this.serializer.deserializeMeasurementTypes(response.content);
-        }
+        checkResponseForError(response);
 
-        return null;
+        return this.serializer.deserializeMeasurementTypes(response.content);
     }
 
     @Override
-    public MeasurementType getMeasurementType(final String id, final Filter... filters) throws UnauthorizedException,
-            SerializerException {
+    public MeasurementType getMeasurementType(final String id, final Filter... filters) throws GlobalRegistryException
+    {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_MEASUREMENT_TYPES, id};
@@ -253,12 +231,19 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // execute request
         final Response response = this.processRequest(request);
 
-        // process response
-        if (response.code == 200) {
-            return this.serializer.deserializeMeasurementType(response.content);
-        }
+        checkResponseForError(response);
 
-        return null;
+        // process response
+        return this.serializer.deserializeMeasurementType(response.content);
+    }
+
+    private void checkResponseForError(Response response) throws ClientErrorException, ServerErrorException
+    {
+        if (response.code / 100 == 4) {
+            throw new ClientErrorException(response.code, response.content);
+        } else if (response.code / 100 == 5) {
+            throw new ServerErrorException(response.code, response.content);
+        }
     }
 
     public final static class Request {
