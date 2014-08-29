@@ -6,7 +6,6 @@ import com.google.common.collect.Multimap;
 import com.google.common.net.HttpHeaders;
 import com.google.common.net.MediaType;
 import org.ccci.gto.globalreg.serializer.Serializer;
-import org.ccci.gto.globalreg.serializer.SerializerException;
 
 import java.util.HashMap;
 import java.util.List;
