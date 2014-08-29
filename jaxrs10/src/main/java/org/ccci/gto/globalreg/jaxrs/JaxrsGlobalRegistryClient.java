@@ -57,16 +57,12 @@ public class JaxrsGlobalRegistryClient extends BaseGlobalRegistryClient {
                 }
             }
 
-            // throw an UnauthorizedException when the request is unauthorized
-            final int code = conn.getResponseCode();
-            if (code == 401) {
-                throw new UnauthorizedException();
-            }
-
             // read & return response
+            final int code = conn.getResponseCode();
             try (InputStream raw = conn.getInputStream(); InputStreamReader in = new InputStreamReader(raw)) {
-                return new Response(code, CharStreams.toString(in));
+                return new Response(conn.getResponseCode(), CharStreams.toString(in));
             } catch (final IOException e) {
+                // XXX: this probably isn't right for 200 & 201 responses
                 return new Response(code, "");
             }
         } catch (final IOException e) {

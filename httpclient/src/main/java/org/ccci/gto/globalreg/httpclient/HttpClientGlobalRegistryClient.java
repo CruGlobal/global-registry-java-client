@@ -79,15 +79,7 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
 
             // execute request & return response
             try (CloseableHttpClient client = HttpClients.createDefault()) {
-                final Response response = client.execute(req, RESPONSE_HANDLER);
-
-                // check to see if there was an unauthorized response
-                if (response.code == 401) {
-                    throw new UnauthorizedException();
-                }
-
-                // return the response
-                return response;
+                return client.execute(req, RESPONSE_HANDLER);
             }
         } catch (final IOException | URISyntaxException e) {
             throw Throwables.propagate(e);

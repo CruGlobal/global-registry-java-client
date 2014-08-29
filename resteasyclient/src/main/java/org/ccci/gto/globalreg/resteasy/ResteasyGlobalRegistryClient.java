@@ -140,12 +140,6 @@ public class ResteasyGlobalRegistryClient extends BaseGlobalRegistryClient
 	 * @return
 	 */
     private Response buildResponse(javax.ws.rs.core.Response resteasyResponse) throws UnauthorizedException {
-        // XXX: maybe this should be abstracted out instead of requiring implementations to handle it
-        final int status = resteasyResponse.getStatus();
-        if (status == 401) {
-            throw new UnauthorizedException();
-        }
-
-        return new Response(status, resteasyResponse.readEntity(String.class));
+        return new Response(resteasyResponse.getStatus(), resteasyResponse.readEntity(String.class));
     }
 }
