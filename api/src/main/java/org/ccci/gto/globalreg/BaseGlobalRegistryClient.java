@@ -48,7 +48,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         }
     }
 
-    protected abstract Response processRequest(Request request) throws UnauthorizedException;
+    protected abstract Response processRequest(Request request) throws GlobalRegistryException;
 
     @Override
     public <T> T getEntity(final Type<T> type, final String id, final Filter... filters) throws GlobalRegistryException
