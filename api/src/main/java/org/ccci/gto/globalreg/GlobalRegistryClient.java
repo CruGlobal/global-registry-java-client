@@ -25,11 +25,11 @@ public interface GlobalRegistryClient {
      * @param ownedBy the system id the entity is being retrieved for
      * @param filters any filters for the data being returned
      * @return The entity that is stored in the Global Registry, or null if it doesn't exist
-     * @throws UnauthorizedException Thrown when the request is unauthorized.
-     * @throws SerializerException   Thrown when there was an exception with entity deserialization.
+     * @throws GlobalRegistryException Thrown when there is an error retrieving the entity.
+     * @throws UnauthorizedException   Thrown when the request is unauthorized.
+     * @throws SerializerException     Thrown when there was an exception with entity deserialization.
      */
-    <T> T getEntity(Type<T> type, String id, String ownedBy, Filter... filters) throws SerializerException,
-            UnauthorizedException;
+    <T> T getEntity(Type<T> type, String id, String ownedBy, Filter... filters) throws GlobalRegistryException;
 
     /**
      * Retrieve an entity from the Global Registry
@@ -38,26 +38,26 @@ public interface GlobalRegistryClient {
      * @param id      the id of the entity being retrieved
      * @param filters any filters for the data being returned
      * @return The entity that is stored in the Global Registry, or null if it doesn't exist
-     * @throws UnauthorizedException Thrown when the request is unauthorized.
-     * @throws SerializerException   Thrown when there was an exception with entity deserialization.
+     * @throws GlobalRegistryException Thrown when there is an error retrieving the entity.
+     * @throws UnauthorizedException   Thrown when the request is unauthorized.
+     * @throws SerializerException     Thrown when there was an exception with entity deserialization.
      */
-    <T> T getEntity(Type<T> type, String id, Filter... filters) throws SerializerException, UnauthorizedException;
+    <T> T getEntity(Type<T> type, String id, Filter... filters) throws GlobalRegistryException;
 
-    <T> ResponseList<T> getEntities(Type<T> type, String ownedBy, Filter... filters) throws UnauthorizedException,
-            SerializerException;
+    <T> ResponseList<T> getEntities(Type<T> type, String ownedBy, Filter... filters) throws GlobalRegistryException;
 
     <T> ResponseList<T> getEntities(Type<T> type, String ownedBy, int page,
-                                    Filter... filters) throws UnauthorizedException, SerializerException;
+                                    Filter... filters) throws GlobalRegistryException;
 
     <T> ResponseList<T> getEntities(Type<T> type, String ownedBy, int page, int perPage,
-                                    Filter... filters) throws UnauthorizedException, SerializerException;
+                                    Filter... filters) throws GlobalRegistryException;
 
-    <T> ResponseList<T> getEntities(Type<T> type, Filter... filters) throws UnauthorizedException, SerializerException;
+    <T> ResponseList<T> getEntities(Type<T> type, Filter... filters) throws GlobalRegistryException;
 
-    <T> ResponseList<T> getEntities(Type<T> type, int page, Filter... filters) throws UnauthorizedException,
-            SerializerException;
+    <T> ResponseList<T> getEntities(Type<T> type, int page, Filter... filters) throws GlobalRegistryException;
 
-    <T> ResponseList<T> getEntities(Type<T> type, int page, int perPage, Filter... filters) throws UnauthorizedException, SerializerException;
+    <T> ResponseList<T> getEntities(Type<T> type, int page, int perPage,
+                                    Filter... filters) throws GlobalRegistryException;
 
     /**
      * Store an entity in the Global Registry
@@ -65,49 +65,47 @@ public interface GlobalRegistryClient {
      * @param type   The type of entity to add
      * @param entity The actual entity to store in the Global Registry
      * @return the entity stored in the Global Registry
-     * @throws UnauthorizedException Thrown when the request is unauthorized.
+     * @throws GlobalRegistryException Thrown when there is an error adding the entity.
+     * @throws UnauthorizedException   Thrown when the request is unauthorized.
      */
-    <T> T addEntity(Type<T> type, T entity) throws UnauthorizedException, SerializerException;
+    <T> T addEntity(Type<T> type, T entity) throws GlobalRegistryException;
 
-    <T> T updateEntity(Type<T> type, String id, T entity) throws UnauthorizedException, SerializerException;
+    <T> T updateEntity(Type<T> type, String id, T entity) throws GlobalRegistryException;
 
-    void deleteEntity(String id) throws UnauthorizedException;
+    void deleteEntity(String id) throws GlobalRegistryException;
 
     @Deprecated
-    <T> void deleteEntity(Type<T> type, String id) throws UnauthorizedException;
+    <T> void deleteEntity(Type<T> type, String id) throws GlobalRegistryException;
 
     /* Entity Type Endpoints */
 
-    ResponseList<EntityType> getEntityTypes(Filter... filters) throws UnauthorizedException, SerializerException;
+    ResponseList<EntityType> getEntityTypes(Filter... filters) throws GlobalRegistryException;
 
-    ResponseList<EntityType> getEntityTypes(int page, Filter... filters) throws UnauthorizedException, SerializerException;
+    ResponseList<EntityType> getEntityTypes(int page, Filter... filters) throws GlobalRegistryException;
 
-    EntityType addEntityType(EntityType type) throws UnauthorizedException, SerializerException;
+    EntityType addEntityType(EntityType type) throws GlobalRegistryException;
 
     /* System Endpoints */
 
-    RegisteredSystem getSystem(String id) throws SerializerException, UnauthorizedException;
+    RegisteredSystem getSystem(String id) throws GlobalRegistryException;
 
-    List<RegisteredSystem> getSystems() throws UnauthorizedException, SerializerException;
+    List<RegisteredSystem> getSystems() throws GlobalRegistryException;
 
     /* Measurement Endpoints */
 
-    ResponseList<MeasurementType> getMeasurementTypes(Filter... filters) throws UnauthorizedException,
-            SerializerException;
+    ResponseList<MeasurementType> getMeasurementTypes(Filter... filters) throws GlobalRegistryException;
 
-    ResponseList<MeasurementType> getMeasurementTypes(int page, Filter... filters) throws UnauthorizedException,
-            SerializerException;
+    ResponseList<MeasurementType> getMeasurementTypes(int page, Filter... filters) throws GlobalRegistryException;
 
-    MeasurementType getMeasurementType(String id, Filter... filters) throws UnauthorizedException, SerializerException;
+    MeasurementType getMeasurementType(String id, Filter... filters) throws GlobalRegistryException;
 
     List<Measurement> getMeasurements(MeasurementType type, ReadableInstant from, ReadableInstant to,
-                                      Filter... filters) throws UnauthorizedException, SerializerException;
+                                      Filter... filters) throws GlobalRegistryException;
 
     List<Measurement> getMeasurements(String type, ReadableInstant from, ReadableInstant to,
-                                      Filter... filters) throws UnauthorizedException, SerializerException;
+                                      Filter... filters) throws GlobalRegistryException;
 
-    List<Measurement> getMeasurements(MeasurementType type, Filter... filters) throws UnauthorizedException,
-            SerializerException;
+    List<Measurement> getMeasurements(MeasurementType type, Filter... filters) throws GlobalRegistryException;
 
-    List<Measurement> getMeasurements(String type, Filter... filters) throws UnauthorizedException, SerializerException;
+    List<Measurement> getMeasurements(String type, Filter... filters) throws GlobalRegistryException;
 }

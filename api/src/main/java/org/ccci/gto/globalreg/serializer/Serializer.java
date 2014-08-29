@@ -11,7 +11,7 @@ import java.util.List;
 public interface Serializer {
     /* Entity serialization methods */
 
-    <T> String serializeEntity(final Type<T> type, final T entity);
+    <T> String serializeEntity(final Type<T> type, final T entity) throws SerializerException;
 
     <T> T deserializeEntity(final Type<T> type, final String raw) throws SerializerException;
 
@@ -19,7 +19,7 @@ public interface Serializer {
 
     /* EntityType serialization methods */
 
-    String serializeEntityType(final EntityType type);
+    String serializeEntityType(final EntityType type) throws SerializerException;
 
     EntityType deserializeEntityType(final String raw) throws SerializerException;
 
