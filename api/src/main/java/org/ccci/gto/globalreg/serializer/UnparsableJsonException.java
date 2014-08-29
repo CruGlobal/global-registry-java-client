@@ -1,8 +1,8 @@
 package org.ccci.gto.globalreg.serializer;
 
-import org.ccci.gto.globalreg.serializer.SerializerException;
-
 public class UnparsableJsonException extends SerializerException {
+    private static final long serialVersionUID = -3474782748768543895L;
+
     public UnparsableJsonException() {
         super();
     }
