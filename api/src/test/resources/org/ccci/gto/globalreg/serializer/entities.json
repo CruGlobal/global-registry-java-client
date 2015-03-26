@@ -68,6 +68,7 @@
         }
     ],
     "meta": {
+      "next_page": true,
         "total": 60,
         "from": 7,
         "to": 12,

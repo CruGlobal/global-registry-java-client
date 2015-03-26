@@ -54,6 +54,8 @@ public abstract class AbstractSerializerTest {
         assertEquals(12, meta.getTo());
         assertEquals(2, meta.getPage());
         assertEquals(10, meta.getTotalPages());
+        assertTrue(meta.hasMore());
+        assertTrue(entities.hasMore());
 
         // return the parsed entities list
         return entities;
@@ -87,6 +89,8 @@ public abstract class AbstractSerializerTest {
         assertEquals(9, meta.getTo());
         assertEquals(3, meta.getPage());
         assertEquals(4, meta.getTotalPages());
+        assertTrue(meta.hasMore());
+        assertTrue(types.hasMore());
 
         // validate first entity_type (gender)
         final EntityType gender = types.get(0);
@@ -331,6 +335,8 @@ public abstract class AbstractSerializerTest {
         assertEquals(20, meta.getTo());
         assertEquals(4, meta.getPage());
         assertEquals(9, meta.getTotalPages());
+        assertTrue(meta.hasMore());
+        assertTrue(types.hasMore());
 
         // validate first measurement type
         {

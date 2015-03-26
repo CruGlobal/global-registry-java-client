@@ -18,7 +18,7 @@ public class ResponseList<T> extends ForwardingList<T> {
     }
 
     public boolean hasMore() {
-        return this.meta != null && this.meta.totalPages > this.meta.page;
+        return this.meta != null && (this.meta.hasMore || this.meta.totalPages > this.meta.page);
     }
 
     @Override
@@ -27,11 +27,20 @@ public class ResponseList<T> extends ForwardingList<T> {
     }
 
     public static final class Meta {
+        private boolean hasMore = false;
         private int total;
         private int from;
         private int to;
         private int page;
         private int totalPages;
+
+        public boolean hasMore() {
+            return hasMore;
+        }
+
+        public void setHasMore(final boolean hasMore) {
+            this.hasMore = hasMore;
+        }
 
         public int getTotal() {
             return this.total;
