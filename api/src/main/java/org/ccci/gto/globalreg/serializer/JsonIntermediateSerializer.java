@@ -197,6 +197,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         // parse the meta-data
         final JsonObj<O, A> metaJson = json.getObject("meta");
         final ResponseList.Meta meta = list.getMeta();
+        meta.setHasMore(metaJson.getBoolean("next_page", false));
         meta.setTotal(metaJson.getInt("total", 0));
         meta.setFrom(metaJson.getInt("from", 0));
         meta.setTo(metaJson.getInt("to", 0));
