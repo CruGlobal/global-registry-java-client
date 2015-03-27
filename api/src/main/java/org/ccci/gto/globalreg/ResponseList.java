@@ -30,11 +30,8 @@ public class ResponseList<T> extends ForwardingList<T> {
         private boolean hasMore = false;
         @Deprecated
         private int total;
-        @Deprecated
         private int from;
-        @Deprecated
         private int to;
-        @Deprecated
         private int page;
         @Deprecated
         private int totalPages;
@@ -57,32 +54,26 @@ public class ResponseList<T> extends ForwardingList<T> {
             this.total = total;
         }
 
-        @Deprecated
         public int getFrom() {
             return this.from;
         }
 
-        @Deprecated
         public void setFrom(final int from) {
             this.from = from;
         }
 
-        @Deprecated
         public int getTo() {
             return this.to;
         }
 
-        @Deprecated
         public void setTo(final int to) {
             this.to = to;
         }
 
-        @Deprecated
         public int getPage() {
             return page;
         }
 
-        @Deprecated
         public void setPage(final int page) {
             this.page = page;
         }
