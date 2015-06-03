@@ -5,11 +5,11 @@
   <parent>
     <groupId>org.ccci.gto</groupId>
     <artifactId>java-parent</artifactId>
-    <version>23-SNAPSHOT</version>
+    <version>23</version>
   </parent>
 
   <artifactId>global-registry-client</artifactId>
-  <version>0.2.0-SNAPSHOT</version>
+  <version>0.2.0</version>
   <packaging>pom</packaging>
 
   <modules>
@@ -26,7 +26,7 @@
   <scm>
     <connection>scm:git:git@github.com:GlobalTechnology/global-registry-java-client.git</connection>
     <developerConnection>scm:git:git@github.com:GlobalTechnology/global-registry-java-client.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>v0.2.0</tag>
   </scm>
 
   <dependencyManagement>
