@@ -39,6 +39,8 @@ public class JaxrsGlobalRegistryClient extends BaseGlobalRegistryClient {
         HttpURLConnection conn = null;
         try {
             conn = (HttpURLConnection) uri.toURL().openConnection();
+            conn.setConnectTimeout(connectTimeout);
+            conn.setReadTimeout(readTimeout);
             conn.setRequestMethod(request.method);
             conn.setRequestProperty(HttpHeaders.AUTHORIZATION, "Bearer " + this.accessToken);
             for (final Map.Entry<String, String> header : request.headers.entrySet()) {

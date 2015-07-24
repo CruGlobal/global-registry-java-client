@@ -18,6 +18,9 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     protected String accessToken;
     protected Serializer serializer;
 
+    protected int connectTimeout = 3000;
+    protected int readTimeout = 20000;
+
     public void setApiUrl(final String apiUrl) {
         this.apiUrl = apiUrl != null && !apiUrl.endsWith("/") ? apiUrl + "/" : apiUrl;
     }
@@ -28,6 +31,14 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
     public void setSerializer(final Serializer serializer) {
         this.serializer = serializer;
+    }
+
+    public void setConnectTimeout(final int timeout) {
+        this.connectTimeout = timeout;
+    }
+
+    public void setReadTimeout(final int timeout) {
+        this.readTimeout = timeout;
     }
 
     private void attachFilters(final Request request, final Filter... filters) {
