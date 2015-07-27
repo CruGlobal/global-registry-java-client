@@ -8,11 +8,12 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -46,7 +47,7 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
             final URI uri = this.buildUri(request);
 
             // build the base request
-            HttpUriRequest req = null;
+            HttpRequestBase req = null;
             if (request.method != null) {
                 switch (request.method) {
                     case "GET":
@@ -70,6 +71,14 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
             for (final Map.Entry<String, String> header : request.headers.entrySet()) {
                 req.addHeader(header.getKey(), header.getValue());
             }
+
+            // set connect & read timeouts
+            final RequestConfig oldConfig = req.getConfig();
+            final RequestConfig.Builder config = oldConfig != null ? RequestConfig.copy(oldConfig) : RequestConfig
+                    .custom();
+            config.setConnectTimeout(connectTimeout).setConnectionRequestTimeout(connectTimeout).setSocketTimeout
+                    (readTimeout);
+            req.setConfig(config.build());
 
             // send content when necessary
             if (request.content != null && req instanceof HttpEntityEnclosingRequest) {

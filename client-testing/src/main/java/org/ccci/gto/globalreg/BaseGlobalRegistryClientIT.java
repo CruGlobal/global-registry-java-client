@@ -31,7 +31,7 @@ public abstract class BaseGlobalRegistryClientIT {
         }
 
         final BaseGlobalRegistryClient client = this.newClient();
-        client.setApiUrl("http://gr.stage.uscm.org");
+        client.setApiUrl("https://stage-api.global-registry.org");
         client.setAccessToken(ACCESS_TOKEN);
         client.setSerializer(new JsonSerializer());
         return client;
@@ -59,7 +59,7 @@ public abstract class BaseGlobalRegistryClientIT {
                 "4e9541b8-e02a-11e3-a00d-12725f8f377c", new Filter().path("last_name").values("Vellacott"));
 
         assertEquals(1, entities.getMeta().getPage());
-        assertTrue(entities.getMeta().getTotal() > 0);
+        assertTrue(entities.size() > 0);
 
         for (final JSONObject entity : entities) {
             assertEquals("Vellacott", entity.getString("last_name"));
