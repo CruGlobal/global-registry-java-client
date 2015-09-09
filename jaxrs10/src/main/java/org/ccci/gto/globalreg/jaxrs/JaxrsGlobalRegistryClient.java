@@ -51,21 +51,35 @@ public class JaxrsGlobalRegistryClient extends BaseGlobalRegistryClient {
             if (request.content != null) {
                 conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, request.contentType);
                 conn.setDoOutput(true);
-                try (OutputStream raw = conn.getOutputStream(); OutputStreamWriter out = new OutputStreamWriter(raw)) {
+                OutputStream raw = null;
+                OutputStreamWriter out = null;
+                try {
+                    raw = conn.getOutputStream();
+                    out = new OutputStreamWriter(raw);
                     out.write(request.content);
                 } catch (final IOException e) {
                     LOG.debug("error writing data to connection", e);
                     throw Throwables.propagate(e);
+                } finally {
+                    if(raw != null) raw.close();
+                    if(out != null) out.close();
                 }
             }
 
             // read & return response
             final int code = conn.getResponseCode();
-            try (InputStream raw = conn.getInputStream(); InputStreamReader in = new InputStreamReader(raw)) {
+            InputStream raw = null;
+            InputStreamReader in = null;
+            try {
+                raw = conn.getInputStream();
+                in = new InputStreamReader(raw);
                 return new Response(conn.getResponseCode(), CharStreams.toString(in));
             } catch (final IOException e) {
                 // XXX: this probably isn't right for 200 & 201 responses
                 return new Response(code, "");
+            } finally {
+                if(raw != null) raw.close();
+                if(in != null) in.close();
             }
         } catch (final IOException e) {
             LOG.debug("error processing request: {}", uri, e);

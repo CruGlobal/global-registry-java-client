@@ -31,9 +31,13 @@ public abstract class AbstractSerializerTest {
     }
 
     private String loadResource(final String name) throws IOException {
-        try (final InputStreamReader in = new InputStreamReader(AbstractSerializerTest.class.getResourceAsStream
-                (name), Charsets.UTF_8)) {
-            return CharStreams.toString(in);
+        InputStreamReader inputStreamReader =
+                new InputStreamReader(AbstractSerializerTest.class.getResourceAsStream(name), Charsets.UTF_8);
+        try {
+            return CharStreams.toString(inputStreamReader);
+        } finally
+        {
+            inputStreamReader.close();
         }
     }
 

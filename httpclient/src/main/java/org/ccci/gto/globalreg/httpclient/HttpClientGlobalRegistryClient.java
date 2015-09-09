@@ -87,8 +87,11 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
             }
 
             // execute request & return response
-            try (CloseableHttpClient client = HttpClients.createDefault()) {
+            CloseableHttpClient client = HttpClients.createDefault();
+            try {
                 return client.execute(req, RESPONSE_HANDLER);
+            } finally {
+                client.close();
             }
         } catch (final IOException | URISyntaxException e) {
             throw Throwables.propagate(e);
