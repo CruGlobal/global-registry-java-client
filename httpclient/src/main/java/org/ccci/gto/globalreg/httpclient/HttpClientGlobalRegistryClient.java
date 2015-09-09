@@ -91,7 +91,9 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
             } finally {
                 client.close();
             }
-        } catch (final IOException | URISyntaxException e) {
+        } catch (final IOException e) {
+            throw Throwables.propagate(e);
+        } catch (final URISyntaxException e) {
             throw Throwables.propagate(e);
         }
     }
