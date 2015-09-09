@@ -25,33 +25,44 @@ public final class EntityType {
 
         public static FieldType fromString(final String type) {
             if (type != null) {
-                switch (type) {
-                    case "entity":
-                        return ENTITY;
-                    case "boolean":
-                        return BOOLEAN;
-                    case "integer":
-                        return INTEGER;
-                    case "decimal":
-                        return DECIMAL;
-                    case "string":
-                        return STRING;
-                    case "date":
-                        return DATE;
-                    case "datetime":
-                        return DATETIME;
-                    case "enum":
-                        return ENUM;
-                    case "enum_values":
-                        return ENUM_VALUES;
-                    case "email":
-                        return EMAIL;
-                    case "text":
-                        return TEXT;
-                    case "uuid":
-                        return UUID;
-                    default:
-                        LOG.error("unrecognized field_type: {}", type);
+                if("entity".equals(type)) {
+                    return ENTITY;
+                }
+                if ("boolean".equals(type)) {
+                    return BOOLEAN;
+                }
+                if("integer".equals(type)) {
+                    return INTEGER;
+                }
+                if("decimal".equals(type)) {
+                    return DECIMAL;
+                }
+                if("string".equals(type)) {
+                    return STRING;
+                }
+                if("date".equals(type)) {
+                    return DATE;
+                }
+                if("datetime".equals(type)) {
+                    return DATETIME;
+                }
+                if("enum".equals(type)) {
+                    return ENUM;
+                }
+                if("enum_values".equals(type)) {
+                    return ENUM_VALUES;
+                }
+                if("email".equals(type)) {
+                    return EMAIL;
+                }
+                if("text".equals(type)) {
+                    return TEXT;
+                }
+                if("uuid".equals(type)) {
+                    return UUID;
+                }
+                else {
+                    LOG.error("unrecognized field_type: {}", type);
                 }
             }
 

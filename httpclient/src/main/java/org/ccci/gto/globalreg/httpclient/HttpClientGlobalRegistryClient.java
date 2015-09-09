@@ -49,19 +49,17 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
             // build the base request
             HttpRequestBase req = null;
             if (request.method != null) {
-                switch (request.method) {
-                    case "GET":
-                        req = new HttpGet(uri);
-                        break;
-                    case "POST":
-                        req = new HttpPost(uri);
-                        break;
-                    case "PUT":
-                        req = new HttpPut(uri);
-                        break;
-                    case "DELETE":
-                        req = new HttpDelete(uri);
-                        break;
+                if ("GET".equals(request.method)) {
+                    req = new HttpGet(uri);
+                }
+                else if ("POST".equals(request.method)) {
+                    req = new HttpPost(uri);
+                }
+                else if ("PUT".equals(request.method)) {
+                    req = new HttpPut(uri);
+                }
+                else if ("DELETE".equals(request.method)) {
+                    req = new HttpDelete(uri);
                 }
             }
             if (req == null) {
