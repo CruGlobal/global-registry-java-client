@@ -1,6 +1,6 @@
 package org.ccci.gto.globalreg;
 
-import java.util.Objects;
+import org.ccci.gto.globalreg.util.Objects;
 
 public final class RegisteredSystem {
     private String id;
