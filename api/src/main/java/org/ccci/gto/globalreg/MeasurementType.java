@@ -97,7 +97,7 @@ public class MeasurementType {
     private String unit;
     private String relatedEntityType;
 
-    private final List<Measurement> measurements = new ArrayList<>();
+    private final List<Measurement> measurements = new ArrayList<Measurement>();
 
     public String getId() {
         return this.id;

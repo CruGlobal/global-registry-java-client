@@ -69,10 +69,10 @@ public final class EntityType {
     private String name;
     private FieldType fieldType = FieldType.NONE;
     private String description;
-    private final List<String> enumValues = new ArrayList<>();
+    private final List<String> enumValues = new ArrayList<String>();
 
-    private final List<EntityType> fields = new ArrayList<>();
-    private final List<RelationshipType> relationships = new ArrayList<>();
+    private final List<EntityType> fields = new ArrayList<EntityType>();
+    private final List<RelationshipType> relationships = new ArrayList<RelationshipType>();
 
     public String getId() {
         return this.id;

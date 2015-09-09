@@ -27,7 +27,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
 
     @Override
     public <T> ResponseList<T> deserializeEntities(final Type<T> type, final String raw) throws SerializerException {
-        final ResponseList<T> list = new ResponseList<>();
+        final ResponseList<T> list = new ResponseList<T>();
 
         final JsonObj<O, A> json = this.stringToJsonObj(raw);
         final JsonArr<O, A> entities = json.getArray("entities");
@@ -66,7 +66,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
 
     @Override
     public ResponseList<EntityType> deserializeEntityTypes(final String raw) throws UnparsableJsonException {
-        final ResponseList<EntityType> list = new ResponseList<>();
+        final ResponseList<EntityType> list = new ResponseList<EntityType>();
 
         final JsonObj<O, A> json = this.stringToJsonObj(raw);
         final JsonArr<O, A> types = json.getArray("entity_types");
@@ -90,7 +90,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         final JsonArr<O, A> json = this.stringToJsonObj(raw).getArray("systems");
 
         // process into an array & return
-        final List<RegisteredSystem> systems = new ArrayList<>(json.size());
+        final List<RegisteredSystem> systems = new ArrayList<RegisteredSystem>(json.size());
         for (int i = 0; i < json.size(); i++) {
             systems.add(this.parseSystem(json.getObject(i)));
         }
@@ -104,7 +104,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
 
     @Override
     public ResponseList<MeasurementType> deserializeMeasurementTypes(final String raw) throws SerializerException {
-        final ResponseList<MeasurementType> list = new ResponseList<>();
+        final ResponseList<MeasurementType> list = new ResponseList<MeasurementType>();
 
         final JsonObj<O, A> json = this.stringToJsonObj(raw);
         final JsonArr<O, A> types = json.getArray("measurement_types");
