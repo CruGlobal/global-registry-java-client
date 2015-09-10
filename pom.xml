@@ -29,6 +29,11 @@
     <tag>HEAD</tag>
   </scm>
 
+  <properties>
+    <maven.compiler.source>1.6</maven.compiler.source>
+    <maven.compiler.target>1.6</maven.compiler.target>
+  </properties>
+
   <dependencyManagement>
     <dependencies>
       <dependency>

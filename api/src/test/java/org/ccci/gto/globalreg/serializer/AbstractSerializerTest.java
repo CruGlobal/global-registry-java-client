@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
 import com.jayway.restassured.path.json.JsonPath;
 import org.ccci.gto.globalreg.EntityType;
@@ -20,7 +21,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public abstract class AbstractSerializerTest {
@@ -31,9 +31,13 @@ public abstract class AbstractSerializerTest {
     }
 
     private String loadResource(final String name) throws IOException {
-        try (final InputStreamReader in = new InputStreamReader(AbstractSerializerTest.class.getResourceAsStream
-                (name), StandardCharsets.UTF_8)) {
-            return CharStreams.toString(in);
+        InputStreamReader inputStreamReader =
+                new InputStreamReader(AbstractSerializerTest.class.getResourceAsStream(name), Charsets.UTF_8);
+        try {
+            return CharStreams.toString(inputStreamReader);
+        } finally
+        {
+            inputStreamReader.close();
         }
     }
 

@@ -1,5 +1,6 @@
 package org.ccci.gto.globalreg;
 
+import com.google.common.base.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
+
 
 public final class EntityType {
     private static final Logger LOG = LoggerFactory.getLogger(EntityType.class);
@@ -24,33 +25,44 @@ public final class EntityType {
 
         public static FieldType fromString(final String type) {
             if (type != null) {
-                switch (type) {
-                    case "entity":
-                        return ENTITY;
-                    case "boolean":
-                        return BOOLEAN;
-                    case "integer":
-                        return INTEGER;
-                    case "decimal":
-                        return DECIMAL;
-                    case "string":
-                        return STRING;
-                    case "date":
-                        return DATE;
-                    case "datetime":
-                        return DATETIME;
-                    case "enum":
-                        return ENUM;
-                    case "enum_values":
-                        return ENUM_VALUES;
-                    case "email":
-                        return EMAIL;
-                    case "text":
-                        return TEXT;
-                    case "uuid":
-                        return UUID;
-                    default:
-                        LOG.error("unrecognized field_type: {}", type);
+                if("entity".equals(type)) {
+                    return ENTITY;
+                }
+                if ("boolean".equals(type)) {
+                    return BOOLEAN;
+                }
+                if("integer".equals(type)) {
+                    return INTEGER;
+                }
+                if("decimal".equals(type)) {
+                    return DECIMAL;
+                }
+                if("string".equals(type)) {
+                    return STRING;
+                }
+                if("date".equals(type)) {
+                    return DATE;
+                }
+                if("datetime".equals(type)) {
+                    return DATETIME;
+                }
+                if("enum".equals(type)) {
+                    return ENUM;
+                }
+                if("enum_values".equals(type)) {
+                    return ENUM_VALUES;
+                }
+                if("email".equals(type)) {
+                    return EMAIL;
+                }
+                if("text".equals(type)) {
+                    return TEXT;
+                }
+                if("uuid".equals(type)) {
+                    return UUID;
+                }
+                else {
+                    LOG.error("unrecognized field_type: {}", type);
                 }
             }
 
@@ -69,10 +81,10 @@ public final class EntityType {
     private String name;
     private FieldType fieldType = FieldType.NONE;
     private String description;
-    private final List<String> enumValues = new ArrayList<>();
+    private final List<String> enumValues = new ArrayList<String>();
 
-    private final List<EntityType> fields = new ArrayList<>();
-    private final List<RelationshipType> relationships = new ArrayList<>();
+    private final List<EntityType> fields = new ArrayList<EntityType>();
+    private final List<RelationshipType> relationships = new ArrayList<RelationshipType>();
 
     public String getId() {
         return this.id;
@@ -157,7 +169,7 @@ public final class EntityType {
 
     public EntityType getField(final String name) {
         for (final EntityType field : this.fields) {
-            if (Objects.equals(name, field.getName())) {
+            if (Objects.equal(name, field.getName())) {
                 return field;
             }
         }
@@ -229,7 +241,7 @@ public final class EntityType {
             }
 
             // determine which relationship is local, prefer relationship1 if we can't tell
-            if (this.entityType == null || Objects.equals(this.entityType.getName(), relationship1.getEntityType())) {
+            if (this.entityType == null || Objects.equal(this.entityType.getName(), relationship1.getEntityType())) {
                 this.local = relationship1;
                 this.target = relationship2;
             } else {
@@ -239,7 +251,7 @@ public final class EntityType {
         }
 
         public boolean isReflexive() {
-            return this.local != null && this.target != null && Objects.equals(this.local.getEntityType(),
+            return this.local != null && this.target != null && Objects.equal(this.local.getEntityType(),
                     this.target.getEntityType());
         }
 

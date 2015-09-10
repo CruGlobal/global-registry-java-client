@@ -2,6 +2,7 @@ package org.ccci.gto.globalreg.jaxrs;
 
 import com.google.common.base.Throwables;
 import com.google.common.io.CharStreams;
+import com.google.common.io.Closer;
 import com.google.common.net.HttpHeaders;
 import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
 import org.ccci.gto.globalreg.UnauthorizedException;
@@ -51,8 +52,17 @@ public class JaxrsGlobalRegistryClient extends BaseGlobalRegistryClient {
             if (request.content != null) {
                 conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, request.contentType);
                 conn.setDoOutput(true);
-                try (OutputStream raw = conn.getOutputStream(); OutputStreamWriter out = new OutputStreamWriter(raw)) {
-                    out.write(request.content);
+                Closer closer = Closer.create();
+                try {
+                    try {
+                        OutputStream raw = closer.register(conn.getOutputStream());
+                        OutputStreamWriter out = closer.register(new OutputStreamWriter(raw));
+                        out.write(request.content);
+                    } catch (Throwable t) {
+                        throw closer.rethrow(t);
+                    } finally {
+                        closer.close();
+                    }
                 } catch (final IOException e) {
                     LOG.debug("error writing data to connection", e);
                     throw Throwables.propagate(e);
@@ -61,8 +71,17 @@ public class JaxrsGlobalRegistryClient extends BaseGlobalRegistryClient {
 
             // read & return response
             final int code = conn.getResponseCode();
-            try (InputStream raw = conn.getInputStream(); InputStreamReader in = new InputStreamReader(raw)) {
-                return new Response(conn.getResponseCode(), CharStreams.toString(in));
+            Closer closer = Closer.create();
+            try {
+                try {
+                    InputStream raw = closer.register(conn.getInputStream());
+                    InputStreamReader in = closer.register(new InputStreamReader(raw));
+                    return new Response(conn.getResponseCode(), CharStreams.toString(in));
+                } catch (Throwable t) {
+                    throw closer.rethrow(t);
+                } finally {
+                    closer.close();
+                }
             } catch (final IOException e) {
                 // XXX: this probably isn't right for 200 & 201 responses
                 return new Response(code, "");

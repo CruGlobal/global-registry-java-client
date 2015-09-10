@@ -25,17 +25,20 @@ public class MeasurementType {
 
         public static Category fromString(final String category) {
             if (category != null) {
-                switch (category) {
-                    case "Finance":
-                        return FINANCE;
-                    case "LMI":
-                        return LMI;
-                    case "MPD":
-                        return MPD;
-                    case "HR":
-                        return HR;
-                    default:
-                        LOG.error("Unrecognized category: {}", category);
+                if("Finance".equals(category)) {
+                    return FINANCE;
+                }
+                if("LMI".equals(category)) {
+                    return LMI;
+                }
+                if("MPD".equals(category)) {
+                    return MPD;
+                }
+                if("HR".equals(category)) {
+                    return HR;
+                }
+                else {
+                    LOG.error("Unrecognized category: {}", category);
                 }
             }
 
@@ -58,11 +61,11 @@ public class MeasurementType {
 
         public static Frequency fromString(final String frequency) {
             if (frequency != null) {
-                switch (frequency) {
-                    case "monthly":
-                        return MONTHLY;
-                    default:
-                        LOG.error("Unrecognized frequency: {}", frequency);
+                if("monthly".equals(frequency)) {
+                    return MONTHLY;
+                }
+                else {
+                    LOG.error("Unrecognized frequency: {}", frequency);
                 }
             }
 
@@ -97,7 +100,7 @@ public class MeasurementType {
     private String unit;
     private String relatedEntityType;
 
-    private final List<Measurement> measurements = new ArrayList<>();
+    private final List<Measurement> measurements = new ArrayList<Measurement>();
 
     public String getId() {
         return this.id;

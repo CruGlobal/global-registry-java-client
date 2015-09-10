@@ -264,7 +264,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     public final static class Request {
         public String method = "GET";
         public String[] path = new String[0];
-        public final Map<String, String> headers = new HashMap<>();
+        public final Map<String, String> headers = new HashMap<String, String>();
         public final Multimap<String, String> queryParams = HashMultimap.create();
         public String contentType = null;
         public String content = null;
