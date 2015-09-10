@@ -3,6 +3,7 @@ package org.ccci.gto.globalreg.httpclient;
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
 import com.google.common.base.Throwables;
+import com.google.common.io.Closer;
 import com.google.common.net.HttpHeaders;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
@@ -85,11 +86,14 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
             }
 
             // execute request & return response
-            CloseableHttpClient client = HttpClients.createDefault();
+            Closer closer = Closer.create();
             try {
+                CloseableHttpClient client = closer.register(HttpClients.createDefault());
                 return client.execute(req, RESPONSE_HANDLER);
+            } catch(Throwable t) {
+                throw closer.rethrow(t);
             } finally {
-                client.close();
+                closer.close();
             }
         } catch (final IOException e) {
             throw Throwables.propagate(e);
