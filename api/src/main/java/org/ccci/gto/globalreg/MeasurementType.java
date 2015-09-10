@@ -60,13 +60,10 @@ public class MeasurementType {
         private final Period period;
 
         public static Frequency fromString(final String frequency) {
-            if (frequency != null) {
-                if("monthly".equals(frequency)) {
-                    return MONTHLY;
-                }
-                else {
-                    LOG.error("Unrecognized frequency: {}", frequency);
-                }
+            if ("monthly".equals(frequency)) {
+                return MONTHLY;
+            } else {
+                LOG.error("Unrecognized frequency: {}", frequency);
             }
 
             return UNKNOWN;
