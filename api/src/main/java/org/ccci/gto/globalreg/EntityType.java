@@ -1,6 +1,6 @@
 package org.ccci.gto.globalreg;
 
-import org.ccci.gto.globalreg.util.Objects;
+import com.google.common.base.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -169,7 +169,7 @@ public final class EntityType {
 
     public EntityType getField(final String name) {
         for (final EntityType field : this.fields) {
-            if (Objects.equals(name, field.getName())) {
+            if (Objects.equal(name, field.getName())) {
                 return field;
             }
         }
@@ -241,7 +241,7 @@ public final class EntityType {
             }
 
             // determine which relationship is local, prefer relationship1 if we can't tell
-            if (this.entityType == null || Objects.equals(this.entityType.getName(), relationship1.getEntityType())) {
+            if (this.entityType == null || Objects.equal(this.entityType.getName(), relationship1.getEntityType())) {
                 this.local = relationship1;
                 this.target = relationship2;
             } else {
@@ -251,7 +251,7 @@ public final class EntityType {
         }
 
         public boolean isReflexive() {
-            return this.local != null && this.target != null && Objects.equals(this.local.getEntityType(),
+            return this.local != null && this.target != null && Objects.equal(this.local.getEntityType(),
                     this.target.getEntityType());
         }
 
