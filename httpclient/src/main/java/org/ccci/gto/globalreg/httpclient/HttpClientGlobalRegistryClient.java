@@ -81,12 +81,12 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
             }
 
             // execute request & return response
-            Closer closer = Closer.create();
+            final Closer closer = Closer.create();
             try {
-                CloseableHttpClient client = closer.register(HttpClients.createDefault());
+                final CloseableHttpClient client = closer.register(HttpClients.createDefault());
                 return client.execute(req, RESPONSE_HANDLER);
-            } catch(Throwable t) {
-                throw closer.rethrow(t);
+            } catch (final Throwable e) {
+                throw closer.rethrow(e);
             } finally {
                 closer.close();
             }
