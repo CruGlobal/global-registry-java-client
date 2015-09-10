@@ -24,22 +24,16 @@ public class MeasurementType {
         }
 
         public static Category fromString(final String category) {
-            if (category != null) {
-                if("Finance".equals(category)) {
-                    return FINANCE;
-                }
-                if("LMI".equals(category)) {
-                    return LMI;
-                }
-                if("MPD".equals(category)) {
-                    return MPD;
-                }
-                if("HR".equals(category)) {
-                    return HR;
-                }
-                else {
-                    LOG.error("Unrecognized category: {}", category);
-                }
+            if ("Finance".equals(category)) {
+                return FINANCE;
+            } else if ("LMI".equals(category)) {
+                return LMI;
+            } else if ("MPD".equals(category)) {
+                return MPD;
+            } else if ("HR".equals(category)) {
+                return HR;
+            } else {
+                LOG.error("Unrecognized category: {}", category);
             }
 
             return UNKNOWN;
