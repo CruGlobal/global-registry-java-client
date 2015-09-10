@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
+import com.google.common.io.Closer;
 import com.jayway.restassured.path.json.JsonPath;
 import org.ccci.gto.globalreg.EntityType;
 import org.ccci.gto.globalreg.Measurement;
@@ -31,13 +32,15 @@ public abstract class AbstractSerializerTest {
     }
 
     private String loadResource(final String name) throws IOException {
-        InputStreamReader inputStreamReader =
-                new InputStreamReader(AbstractSerializerTest.class.getResourceAsStream(name), Charsets.UTF_8);
+        final Closer closer = Closer.create();
         try {
-            return CharStreams.toString(inputStreamReader);
-        } finally
-        {
-            inputStreamReader.close();
+            final InputStreamReader in = closer.register(new InputStreamReader(AbstractSerializerTest.class
+                    .getResourceAsStream(name), Charsets.UTF_8));
+            return CharStreams.toString(in);
+        } catch (final Throwable e) {
+            throw closer.rethrow(e);
+        } finally {
+            closer.close();
         }
     }
 
