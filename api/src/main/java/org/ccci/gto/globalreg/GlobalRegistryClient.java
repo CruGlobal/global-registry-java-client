@@ -6,14 +6,14 @@ import org.joda.time.ReadableInstant;
 import java.util.List;
 
 public interface GlobalRegistryClient {
-    public static final String PATH_ENTITIES = "entities";
-    public static final String PATH_ENTITY_TYPES = "entity_types";
-    public static final String PATH_MEASUREMENT_TYPES = "measurement_types";
-    public static final String PATH_SYSTEMS = "systems";
-    public static final String PARAM_ENTITY_TYPE = "entity_type";
-    public static final String PARAM_PAGE = "page";
-    public static final String PARAM_PER_PAGE = "per_page";
-    public static final String PARAM_FILTER = "filters";
+    String PATH_ENTITIES = "entities";
+    String PATH_ENTITY_TYPES = "entity_types";
+    String PATH_MEASUREMENT_TYPES = "measurement_types";
+    String PATH_SYSTEMS = "systems";
+    String PARAM_ENTITY_TYPE = "entity_type";
+    String PARAM_PAGE = "page";
+    String PARAM_PER_PAGE = "per_page";
+    String PARAM_FILTER = "filters";
 
     /* Entity Endpoints */
 
