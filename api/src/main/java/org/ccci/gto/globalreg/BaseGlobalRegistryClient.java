@@ -60,6 +60,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         }
     }
 
+    @Nonnull
     protected abstract Response processRequest(Request request) throws GlobalRegistryException;
 
     @Override
@@ -184,9 +185,9 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         return this.serializer.deserializeEntityType(response.content);
     }
 
+    @Nonnull
     @Override
-    public RegisteredSystem getSystem(final String id) throws GlobalRegistryException
-    {
+    public final RegisteredSystem getSystem(final String id) throws GlobalRegistryException {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_SYSTEMS, id};
@@ -200,9 +201,9 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         return this.serializer.deserializeSystem(response.content);
     }
 
+    @Nonnull
     @Override
-    public List<RegisteredSystem> getSystems() throws GlobalRegistryException
-    {
+    public final List<RegisteredSystem> getSystems() throws GlobalRegistryException {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_SYSTEMS};

@@ -3,6 +3,7 @@ package org.ccci.gto.globalreg.resteasy;
 import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
 import org.ccci.gto.globalreg.UnauthorizedException;
 
+import javax.annotation.Nonnull;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -20,6 +21,7 @@ import java.util.Collection;
 public class ResteasyGlobalRegistryClient extends BaseGlobalRegistryClient
 {
 
+	@Nonnull
 	@Override
 	protected Response processRequest(Request request) throws UnauthorizedException
 	{
@@ -139,7 +141,8 @@ public class ResteasyGlobalRegistryClient extends BaseGlobalRegistryClient
 	 * @param resteasyResponse
 	 * @return
 	 */
-    private Response buildResponse(javax.ws.rs.core.Response resteasyResponse) throws UnauthorizedException {
+	@Nonnull
+	private Response buildResponse(javax.ws.rs.core.Response resteasyResponse) throws UnauthorizedException {
         return new Response(resteasyResponse.getStatus(), resteasyResponse.readEntity(String.class));
     }
 }

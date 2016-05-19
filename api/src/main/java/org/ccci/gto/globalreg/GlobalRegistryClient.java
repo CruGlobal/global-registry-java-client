@@ -3,6 +3,7 @@ package org.ccci.gto.globalreg;
 import org.ccci.gto.globalreg.serializer.SerializerException;
 import org.joda.time.ReadableInstant;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public interface GlobalRegistryClient {
@@ -87,8 +88,10 @@ public interface GlobalRegistryClient {
 
     /* System Endpoints */
 
+    @Nonnull
     RegisteredSystem getSystem(String id) throws GlobalRegistryException;
 
+    @Nonnull
     List<RegisteredSystem> getSystems() throws GlobalRegistryException;
 
     /* Measurement Endpoints */

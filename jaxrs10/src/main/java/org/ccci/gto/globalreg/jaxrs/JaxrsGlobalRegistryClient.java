@@ -9,6 +9,7 @@ import org.ccci.gto.globalreg.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +24,7 @@ import java.util.Map;
 public class JaxrsGlobalRegistryClient extends BaseGlobalRegistryClient {
     private static final Logger LOG = LoggerFactory.getLogger(JaxrsGlobalRegistryClient.class);
 
+    @Nonnull
     @Override
     protected Response processRequest(final Request request) throws UnauthorizedException {
         // build the request uri
@@ -32,7 +34,7 @@ public class JaxrsGlobalRegistryClient extends BaseGlobalRegistryClient {
         }
         for (final String key : request.queryParams.keySet()) {
             final Collection<String> values = request.queryParams.get(key);
-            uriBuilder.queryParam(key, values.toArray(new String[values.size()]));
+            uriBuilder.queryParam(key, (Object[]) values.toArray(new Object[values.size()]));
         }
         final URI uri = uriBuilder.build();
 

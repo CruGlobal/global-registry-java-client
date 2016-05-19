@@ -24,6 +24,7 @@ import org.apache.http.util.EntityUtils;
 import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
 import org.ccci.gto.globalreg.UnauthorizedException;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -33,6 +34,7 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
     private final static Joiner JOINER_PATH = Joiner.on("/").skipNulls();
 
     private final static ResponseHandler<Response> RESPONSE_HANDLER = new ResponseHandler<Response>() {
+        @Nonnull
         @Override
         public Response handleResponse(final HttpResponse response) throws IOException {
             final HttpEntity entity = response.getEntity();
@@ -41,6 +43,7 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
         }
     };
 
+    @Nonnull
     @Override
     protected Response processRequest(final Request request) throws UnauthorizedException {
         try {

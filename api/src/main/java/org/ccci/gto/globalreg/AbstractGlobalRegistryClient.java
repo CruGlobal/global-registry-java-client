@@ -49,6 +49,7 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     }
 
     @Override
+    @Deprecated
     public final <T> void deleteEntity(final Type<T> type, final String id) throws GlobalRegistryException {
         this.deleteEntity(id);
     }
