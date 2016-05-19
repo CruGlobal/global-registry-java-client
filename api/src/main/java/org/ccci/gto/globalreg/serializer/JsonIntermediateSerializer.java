@@ -21,7 +21,8 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
     }
 
     @Override
-    public <T> T deserializeEntity(@Nonnull final Type<T> type, final String raw) throws SerializerException {
+    public final <T> T deserializeEntity(@Nonnull final Type<T> type, @Nonnull final String raw)
+            throws SerializerException {
         final JsonObj<O, A> json = this.stringToJsonObj(raw).getObject("entity").getObject(type.getEntityType());
         return jsonObjToEntity(type, json);
     }
@@ -264,13 +265,14 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
     }
 
     @Nonnull
-    protected abstract JsonObj<O, A> stringToJsonObj(String raw) throws UnparsableJsonException;
+    protected abstract JsonObj<O, A> stringToJsonObj(@Nonnull String raw) throws UnparsableJsonException;
 
     protected abstract String jsonObjToString(JsonObj<O, A> json);
 
     protected abstract <T> JsonObj<O, A> entityToJsonObj(Type<T> type, T entity);
 
-    protected abstract <T> T jsonObjToEntity(Type<T> type, JsonObj<O, A> json) throws SerializerException;
+    protected abstract <T> T jsonObjToEntity(@Nonnull Type<T> type, @Nonnull JsonObj<O, A> json)
+            throws SerializerException;
 
     @Nonnull
     protected abstract JsonObj<O, A> emptyJsonObj();

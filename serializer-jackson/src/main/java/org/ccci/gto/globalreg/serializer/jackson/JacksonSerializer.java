@@ -38,7 +38,7 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
 
     @Nonnull
     @Override
-    protected IntJsonObj stringToJsonObj(final String raw) throws UnparsableJsonException {
+    protected IntJsonObj stringToJsonObj(@Nonnull final String raw) throws UnparsableJsonException {
         try {
             return new IntJsonObj(this.mapper.readTree(raw));
         } catch (final JsonProcessingException e) {
@@ -70,8 +70,8 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
     }
 
     @Override
-    protected <T> T jsonObjToEntity(final Type<T> type, final JsonObj<JsonNode,
-            JsonNode> json) throws SerializerException {
+    protected <T> T jsonObjToEntity(@Nonnull final Type<T> type, @Nonnull final JsonObj<JsonNode, JsonNode> json)
+            throws SerializerException {
         try {
             return this.mapper.treeToValue(json.getRawObject(), type.getEntityClass());
         } catch (final JsonProcessingException e) {

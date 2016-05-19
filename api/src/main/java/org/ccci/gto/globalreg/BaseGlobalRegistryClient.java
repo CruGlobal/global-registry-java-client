@@ -1,5 +1,6 @@
 package org.ccci.gto.globalreg;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
@@ -8,6 +9,7 @@ import com.google.common.net.MediaType;
 import org.ccci.gto.globalreg.serializer.Serializer;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -278,11 +280,12 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
     public final static class Response {
         public final int code;
+        @Nonnull
         public final String content;
 
-        public Response(final int code, final String content) {
+        public Response(final int code, @Nullable final String content) {
             this.code = code;
-            this.content = content;
+            this.content = Strings.nullToEmpty(content);
         }
     }
 }

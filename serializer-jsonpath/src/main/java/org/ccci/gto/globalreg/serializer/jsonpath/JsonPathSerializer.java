@@ -14,7 +14,7 @@ import java.util.List;
 public class JsonPathSerializer extends JsonIntermediateSerializer<JsonModel, JsonModel> {
     @Nonnull
     @Override
-    protected IntJsonObj stringToJsonObj(final String raw) throws UnparsableJsonException {
+    protected IntJsonObj stringToJsonObj(@Nonnull final String raw) throws UnparsableJsonException {
         return new IntJsonObj(JsonModel.model(raw));
     }
 
@@ -34,8 +34,8 @@ public class JsonPathSerializer extends JsonIntermediateSerializer<JsonModel, Js
     }
 
     @Override
-    protected <T> T jsonObjToEntity(final Type<T> type, final JsonObj<JsonModel,
-            JsonModel> json) throws SerializerException {
+    protected <T> T jsonObjToEntity(@Nonnull final Type<T> type, @Nonnull final JsonObj<JsonModel, JsonModel> json)
+            throws SerializerException {
         final Class<? extends T> clazz = type.getEntityClass();
         if (JsonModel.class.equals(clazz)) {
             return clazz.cast(json.getRawObject());

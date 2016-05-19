@@ -23,7 +23,7 @@ public class JsonSerializer extends JsonIntermediateSerializer<JSONObject, JSONA
 
     @Nonnull
     @Override
-    protected IntJsonObj stringToJsonObj(final String raw) throws UnparsableJsonException {
+    protected IntJsonObj stringToJsonObj(@Nonnull final String raw) throws UnparsableJsonException {
         try {
             return new IntJsonObj(new JSONObject(raw));
         } catch (final JSONException e) {
@@ -50,7 +50,7 @@ public class JsonSerializer extends JsonIntermediateSerializer<JSONObject, JSONA
     }
 
     @Override
-    protected <T> T jsonObjToEntity(final Type<T> type, final JsonObj<JSONObject, JSONArray> json) {
+    protected <T> T jsonObjToEntity(@Nonnull final Type<T> type, @Nonnull final JsonObj<JSONObject, JSONArray> json) {
         final Class<? extends T> clazz = type.getEntityClass();
         if (JSONObject.class.equals(clazz)) {
             return clazz.cast(json.getRawObject());
