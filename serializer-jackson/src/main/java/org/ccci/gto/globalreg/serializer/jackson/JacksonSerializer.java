@@ -13,6 +13,7 @@ import org.ccci.gto.globalreg.serializer.UnparsableJsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 
 public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, JsonNode> {
@@ -29,11 +30,13 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
         this.mapper = mapper;
     }
 
+    @Nonnull
     @Override
     protected JsonObj<JsonNode, JsonNode> emptyJsonObj() {
         return new IntJsonObj(this.mapper.createObjectNode());
     }
 
+    @Nonnull
     @Override
     protected IntJsonObj stringToJsonObj(final String raw) throws UnparsableJsonException {
         try {
@@ -47,6 +50,7 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
         }
     }
 
+    @Nonnull
     @Override
     protected String jsonObjToString(final JsonObj<JsonNode, JsonNode> json) {
 		try
@@ -80,6 +84,7 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
             super(obj);
         }
 
+        @Nonnull
         @Override
         protected IntJsonObj wrap(final String key) {
             final ObjectNode wrapper = mapper.createObjectNode();
@@ -87,6 +92,7 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
             return new IntJsonObj(wrapper);
         }
 
+        @Nonnull
         @Override
         protected IntJsonObj getObject(final String key) {
             return new IntJsonObj(obj.path(key));

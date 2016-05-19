@@ -7,6 +7,7 @@ import com.google.common.net.HttpHeaders;
 import com.google.common.net.MediaType;
 import org.ccci.gto.globalreg.serializer.Serializer;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -248,8 +249,8 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         return this.serializer.deserializeMeasurementType(response.content);
     }
 
-    private void checkResponseForError(Response response) throws ClientErrorException, ServerErrorException
-    {
+    private void checkResponseForError(@Nonnull final Response response)
+            throws ClientErrorException, ServerErrorException {
         switch(response.code) {
             case 401:
                 throw new UnauthorizedException();

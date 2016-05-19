@@ -21,7 +21,7 @@ public interface Serializer {
 
     /* EntityType serialization methods */
 
-    String serializeEntityType(final EntityType type) throws SerializerException;
+    String serializeEntityType(@Nonnull final EntityType type) throws SerializerException;
 
     @Nonnull
     EntityType deserializeEntityType(final String raw) throws SerializerException;
@@ -38,8 +38,10 @@ public interface Serializer {
      * @return the deserialized System object
      * @throws SerializerException Thrown when there is an error deserializing the provided JSON
      */
+    @Nonnull
     RegisteredSystem deserializeSystem(final String raw) throws SerializerException;
 
+    @Nonnull
     List<RegisteredSystem> deserializeSystems(final String raw) throws SerializerException;
 
     /* Measurement serialization methods */

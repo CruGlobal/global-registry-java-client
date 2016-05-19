@@ -45,7 +45,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
     }
 
     @Override
-    public String serializeEntityType(final EntityType type) {
+    public final String serializeEntityType(@Nonnull final EntityType type) {
         final JsonObj<O, A> json = this.emptyJsonObj();
         json.put("name", type.getName()).put("description", type.getDescription());
 
@@ -84,13 +84,15 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         return list;
     }
 
+    @Nonnull
     @Override
-    public RegisteredSystem deserializeSystem(final String raw) throws UnparsableJsonException {
+    public final RegisteredSystem deserializeSystem(final String raw) throws UnparsableJsonException {
         return this.parseSystem(this.stringToJsonObj(raw).getObject("system"));
     }
 
+    @Nonnull
     @Override
-    public List<RegisteredSystem> deserializeSystems(final String raw) throws UnparsableJsonException {
+    public final List<RegisteredSystem> deserializeSystems(final String raw) throws UnparsableJsonException {
         final JsonArr<O, A> json = this.stringToJsonObj(raw).getArray("systems");
 
         // process into an array & return
@@ -261,6 +263,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         return measurement;
     }
 
+    @Nonnull
     protected abstract JsonObj<O, A> stringToJsonObj(String raw) throws UnparsableJsonException;
 
     protected abstract String jsonObjToString(JsonObj<O, A> json);
@@ -269,6 +272,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
 
     protected abstract <T> T jsonObjToEntity(Type<T> type, JsonObj<O, A> json) throws SerializerException;
 
+    @Nonnull
     protected abstract JsonObj<O, A> emptyJsonObj();
 
     protected abstract static class JsonObj<O, A> {
@@ -284,6 +288,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
 
         protected abstract JsonObj<O, A> wrap(String key);
 
+        @Nonnull
         protected abstract JsonObj<O, A> getObject(String key);
 
         protected abstract JsonArr<O, A> getArray(String key);

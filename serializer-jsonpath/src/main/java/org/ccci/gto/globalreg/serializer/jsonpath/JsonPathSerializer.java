@@ -7,10 +7,12 @@ import org.ccci.gto.globalreg.serializer.JsonIntermediateSerializer;
 import org.ccci.gto.globalreg.serializer.SerializerException;
 import org.ccci.gto.globalreg.serializer.UnparsableJsonException;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 
 public class JsonPathSerializer extends JsonIntermediateSerializer<JsonModel, JsonModel> {
+    @Nonnull
     @Override
     protected IntJsonObj stringToJsonObj(final String raw) throws UnparsableJsonException {
         return new IntJsonObj(JsonModel.model(raw));
@@ -42,6 +44,7 @@ public class JsonPathSerializer extends JsonIntermediateSerializer<JsonModel, Js
         }
     }
 
+    @Nonnull
     @Override
     protected IntJsonObj emptyJsonObj() {
         return new IntJsonObj(JsonModel.create("{}"));
@@ -62,6 +65,7 @@ public class JsonPathSerializer extends JsonIntermediateSerializer<JsonModel, Js
             return newObj;
         }
 
+        @Nonnull
         @Override
         protected IntJsonObj getObject(final String key) {
             return new IntJsonObj(obj.getSubModel(key));

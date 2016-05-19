@@ -9,16 +9,19 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
 
 public class JsonSerializer extends JsonIntermediateSerializer<JSONObject, JSONArray> {
     private static final Logger LOG = LoggerFactory.getLogger(JsonSerializer.class);
 
+    @Nonnull
     @Override
     protected IntJsonObj emptyJsonObj() {
         return new IntJsonObj(new JSONObject());
     }
 
+    @Nonnull
     @Override
     protected IntJsonObj stringToJsonObj(final String raw) throws UnparsableJsonException {
         try {
@@ -29,6 +32,7 @@ public class JsonSerializer extends JsonIntermediateSerializer<JSONObject, JSONA
         }
     }
 
+    @Nonnull
     @Override
     protected String jsonObjToString(final JsonObj<JSONObject, JSONArray> json) {
         final JSONObject obj = json.getRawObject();
@@ -60,11 +64,13 @@ public class JsonSerializer extends JsonIntermediateSerializer<JSONObject, JSONA
             super(obj);
         }
 
+        @Nonnull
         @Override
         protected IntJsonObj wrap(final String key) {
             return new IntJsonObj(new JSONObject(Collections.singletonMap(key, obj)));
         }
 
+        @Nonnull
         @Override
         protected IntJsonObj getObject(final String key) {
             if (obj == null) {
@@ -73,6 +79,7 @@ public class JsonSerializer extends JsonIntermediateSerializer<JSONObject, JSONA
             return new IntJsonObj(obj.optJSONObject(key));
         }
 
+        @Nonnull
         @Override
         protected IntJsonArr getArray(final String key) {
             return new IntJsonArr(obj != null ? obj.optJSONArray(key) : null);
@@ -148,7 +155,7 @@ public class JsonSerializer extends JsonIntermediateSerializer<JSONObject, JSONA
     }
 
     private static class IntJsonArr extends JsonArr<JSONObject, JSONArray> {
-        protected IntJsonArr(final JSONArray arr) {
+        IntJsonArr(final JSONArray arr) {
             super(arr);
         }
 
@@ -157,11 +164,13 @@ public class JsonSerializer extends JsonIntermediateSerializer<JSONObject, JSONA
             return arr != null ? arr.length() : 0;
         }
 
+        @Nonnull
         @Override
         protected IntJsonObj getObject(final int index) {
             return new IntJsonObj(arr == null ? null : arr.optJSONObject(index));
         }
 
+        @Nonnull
         @Override
         protected String getString(final int index, final String def) {
             return arr != null ? arr.optString(index, def) : def;
