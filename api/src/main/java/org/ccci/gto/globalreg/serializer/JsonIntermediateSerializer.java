@@ -10,6 +10,7 @@ import org.ccci.gto.globalreg.Type;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +21,12 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
     }
 
     @Override
-    public <T> T deserializeEntity(final Type<T> type, final String raw) throws SerializerException {
+    public <T> T deserializeEntity(@Nonnull final Type<T> type, final String raw) throws SerializerException {
         final JsonObj<O, A> json = this.stringToJsonObj(raw).getObject("entity").getObject(type.getEntityType());
         return jsonObjToEntity(type, json);
     }
 
+    @Nonnull
     @Override
     public <T> ResponseList<T> deserializeEntities(final Type<T> type, final String raw) throws SerializerException {
         final ResponseList<T> list = new ResponseList<T>();
@@ -59,11 +61,13 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         return this.jsonObjToString(json.wrap("entity_type"));
     }
 
+    @Nonnull
     @Override
     public EntityType deserializeEntityType(final String raw) throws UnparsableJsonException {
         return this.parseEntityType(this.stringToJsonObj(raw).getObject("entity_type"));
     }
 
+    @Nonnull
     @Override
     public ResponseList<EntityType> deserializeEntityTypes(final String raw) throws UnparsableJsonException {
         final ResponseList<EntityType> list = new ResponseList<EntityType>();
@@ -102,6 +106,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         return this.parseMeasurementType(this.stringToJsonObj(raw).getObject("measurement_type"));
     }
 
+    @Nonnull
     @Override
     public ResponseList<MeasurementType> deserializeMeasurementTypes(final String raw) throws SerializerException {
         final ResponseList<MeasurementType> list = new ResponseList<MeasurementType>();
@@ -118,10 +123,12 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         return list;
     }
 
+    @Nonnull
     private EntityType parseEntityType(final JsonObj<O, A> json) {
         return this.parseEntityType(json, null);
     }
 
+    @Nonnull
     private EntityType parseEntityType(final JsonObj<O, A> json, final EntityType parent) {
         final EntityType type = new EntityType();
 
@@ -165,6 +172,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         return type;
     }
 
+    @Nonnull
     private EntityType.RelationshipType parseRelationshipType(final JsonObj<O, A> json, final EntityType entityType) {
         // build & return RelationshipType object
         final EntityType.RelationshipType relationship = new EntityType.RelationshipType(entityType);
@@ -175,11 +183,13 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         return relationship;
     }
 
+    @Nonnull
     private EntityType.RelationshipType.Relationship parseRelationship(final JsonObj<O, A> json) {
         return new EntityType.RelationshipType.Relationship(json.getString("entity_type"),
                 json.getString("relationship_name"));
     }
 
+    @Nonnull
     private RegisteredSystem parseSystem(final JsonObj<O, A> json) {
         // build & return System object
         final RegisteredSystem system = new RegisteredSystem();
@@ -205,6 +215,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         meta.setTotalPages(metaJson.getInt("total_pages", 0));
     }
 
+    @Nonnull
     private MeasurementType parseMeasurementType(final JsonObj<O, A> json) {
         // build & return MeasurementType
         final MeasurementType type = new MeasurementType();
@@ -224,6 +235,7 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         return type;
     }
 
+    @Nonnull
     private Measurement parseMeasurement(final MeasurementType type, final JsonObj<O, A> json) {
         final Measurement measurement = new Measurement();
         measurement.setType(type);

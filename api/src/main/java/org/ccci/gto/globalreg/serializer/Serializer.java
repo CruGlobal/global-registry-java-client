@@ -6,6 +6,7 @@ import org.ccci.gto.globalreg.RegisteredSystem;
 import org.ccci.gto.globalreg.ResponseList;
 import org.ccci.gto.globalreg.Type;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public interface Serializer {
@@ -13,16 +14,19 @@ public interface Serializer {
 
     <T> String serializeEntity(final Type<T> type, final T entity) throws SerializerException;
 
-    <T> T deserializeEntity(final Type<T> type, final String raw) throws SerializerException;
+    <T> T deserializeEntity(@Nonnull final Type<T> type, final String raw) throws SerializerException;
 
+    @Nonnull
     <T> ResponseList<T> deserializeEntities(final Type<T> type, final String raw) throws SerializerException;
 
     /* EntityType serialization methods */
 
     String serializeEntityType(final EntityType type) throws SerializerException;
 
+    @Nonnull
     EntityType deserializeEntityType(final String raw) throws SerializerException;
 
+    @Nonnull
     ResponseList<EntityType> deserializeEntityTypes(final String raw) throws SerializerException;
 
     /* System serialization methods */
