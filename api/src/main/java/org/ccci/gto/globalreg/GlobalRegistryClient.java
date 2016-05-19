@@ -4,6 +4,7 @@ import org.ccci.gto.globalreg.serializer.SerializerException;
 import org.joda.time.ReadableInstant;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 public interface GlobalRegistryClient {
@@ -69,14 +70,14 @@ public interface GlobalRegistryClient {
      * @throws GlobalRegistryException Thrown when there is an error adding the entity.
      * @throws UnauthorizedException   Thrown when the request is unauthorized.
      */
-    <T> T addEntity(Type<T> type, T entity) throws GlobalRegistryException;
+    <T> T addEntity(@Nonnull Type<T> type, @Nonnull T entity) throws GlobalRegistryException;
 
-    <T> T updateEntity(Type<T> type, String id, T entity) throws GlobalRegistryException;
+    <T> T updateEntity(@Nonnull Type<T> type, @Nonnull String id, @Nonnull T entity) throws GlobalRegistryException;
 
-    void deleteEntity(String id) throws GlobalRegistryException;
+    void deleteEntity(@Nonnull String id) throws GlobalRegistryException;
 
     @Deprecated
-    <T> void deleteEntity(Type<T> type, String id) throws GlobalRegistryException;
+    <T> void deleteEntity(@Nullable Type<T> type, @Nonnull String id) throws GlobalRegistryException;
 
     /* Entity Type Endpoints */
 

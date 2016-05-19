@@ -3,6 +3,7 @@ package org.ccci.gto.globalreg;
 import org.ccci.gto.globalreg.util.ArrayUtil;
 import org.joda.time.ReadableInstant;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +51,7 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
 
     @Override
     @Deprecated
-    public final <T> void deleteEntity(final Type<T> type, final String id) throws GlobalRegistryException {
+    public final <T> void deleteEntity(final Type<T> type, @Nonnull final String id) throws GlobalRegistryException {
         this.deleteEntity(id);
     }
 

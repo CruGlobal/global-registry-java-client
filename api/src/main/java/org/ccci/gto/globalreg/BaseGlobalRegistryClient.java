@@ -102,8 +102,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public <T> T addEntity(final Type<T> type, final T entity) throws GlobalRegistryException
-    {
+    public final <T> T addEntity(@Nonnull final Type<T> type, @Nonnull final T entity) throws GlobalRegistryException {
         // build request
         final Request request = new Request();
         request.method = "POST";
@@ -120,8 +119,8 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public <T> T updateEntity(final Type<T> type, final String id, final T entity) throws GlobalRegistryException
-    {
+    public final <T> T updateEntity(@Nonnull final Type<T> type, @Nonnull final String id, @Nonnull final T entity)
+            throws GlobalRegistryException {
         // build the request
         final Request request = new Request();
         request.method = "PUT";
@@ -138,8 +137,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public void deleteEntity(final String id) throws GlobalRegistryException
-    {
+    public final void deleteEntity(@Nonnull final String id) throws GlobalRegistryException {
         // build the request
         final Request request = new Request();
         request.method = "DELETE";
