@@ -1,12 +1,10 @@
-
-package org.ccci.gto.globalreg.serializer.entity.person;
+package org.ccci.gto.globalreg.entity.jackson;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 
 import javax.annotation.Generated;
 
@@ -21,7 +19,6 @@ import javax.annotation.Generated;
     "client_integration_id"
 })
 public class PhoneNumber {
-
     @JsonProperty("id")
     private String id;
     @JsonProperty("number")
@@ -157,24 +154,31 @@ public class PhoneNumber {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return MoreObjects.toStringHelper(this)
+                .add("id", id)
+                .add("number", number)
+                .add("location", location)
+                .add("primary", primary)
+                .add("parentId", parentId)
+                .add("clientIntegrationId", clientIntegrationId)
+                .toString();
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) { return true; }
+        if (!(o instanceof PhoneNumber)) { return false; }
+        final PhoneNumber that = (PhoneNumber) o;
+        return Objects.equal(id, that.id) &&
+                Objects.equal(number, that.number) &&
+                Objects.equal(location, that.location) &&
+                Objects.equal(primary, that.primary) &&
+                Objects.equal(parentId, that.parentId) &&
+                Objects.equal(clientIntegrationId, that.clientIntegrationId);
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(id).append(number).append(location).append(primary).append(parentId).append(clientIntegrationId).toHashCode();
+        return Objects.hashCode(id, number, location, primary, parentId, clientIntegrationId);
     }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if ((other instanceof PhoneNumber) == false) {
-            return false;
-        }
-        PhoneNumber rhs = ((PhoneNumber) other);
-        return new EqualsBuilder().append(id, rhs.id).append(number, rhs.number).append(location, rhs.location).append(primary, rhs.primary).append(parentId, rhs.parentId).append(clientIntegrationId, rhs.clientIntegrationId).isEquals();
-    }
-
 }

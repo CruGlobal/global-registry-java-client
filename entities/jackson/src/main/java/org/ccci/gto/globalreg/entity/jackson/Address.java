@@ -1,11 +1,10 @@
-package org.ccci.gto.globalreg.serializer.entity.person;
+package org.ccci.gto.globalreg.entity.jackson;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 
 import javax.annotation.Generated;
 
@@ -283,9 +282,7 @@ public class Address {
     }
 
     /**
-     * 
-     * @param currentAddress
-     *     The current_address
+     * @param currentAddress The current_address
      */
     @JsonProperty("current_address")
     public void setCurrentAddress(Boolean currentAddress) {
@@ -294,24 +291,44 @@ public class Address {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return MoreObjects.toStringHelper(this)
+                .add("id", id)
+                .add("active", active)
+                .add("addressType", addressType)
+                .add("startDate", startDate)
+                .add("line1", line1)
+                .add("city", city)
+                .add("state", state)
+                .add("postalCode", postalCode)
+                .add("country", country)
+                .add("parentId", parentId)
+                .add("clientIntegrationId", clientIntegrationId)
+                .add("currentAddress", currentAddress)
+                .toString();
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) { return true; }
+        if (!(o instanceof Address)) { return false; }
+        final Address address = (Address) o;
+        return Objects.equal(id, address.id) &&
+                Objects.equal(active, address.active) &&
+                Objects.equal(addressType, address.addressType) &&
+                Objects.equal(startDate, address.startDate) &&
+                Objects.equal(line1, address.line1) &&
+                Objects.equal(city, address.city) &&
+                Objects.equal(state, address.state) &&
+                Objects.equal(postalCode, address.postalCode) &&
+                Objects.equal(country, address.country) &&
+                Objects.equal(parentId, address.parentId) &&
+                Objects.equal(clientIntegrationId, address.clientIntegrationId) &&
+                Objects.equal(currentAddress, address.currentAddress);
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(id).append(active).append(addressType).append(startDate).append(line1).append(city).append(state).append(postalCode).append(country).append(parentId).append(clientIntegrationId).append(currentAddress).toHashCode();
+        return Objects.hashCode(id, active, addressType, startDate, line1, city, state, postalCode, country,
+                parentId, clientIntegrationId, currentAddress);
     }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if ((other instanceof Address) == false) {
-            return false;
-        }
-        Address rhs = ((Address) other);
-        return new EqualsBuilder().append(id, rhs.id).append(active, rhs.active).append(addressType, rhs.addressType).append(startDate, rhs.startDate).append(line1, rhs.line1).append(city, rhs.city).append(state, rhs.state).append(postalCode, rhs.postalCode).append(country, rhs.country).append(parentId, rhs.parentId).append(clientIntegrationId, rhs.clientIntegrationId).append(currentAddress, rhs.currentAddress).isEquals();
-    }
-
 }

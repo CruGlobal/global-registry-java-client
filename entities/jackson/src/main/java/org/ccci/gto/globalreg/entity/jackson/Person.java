@@ -1,12 +1,10 @@
-
-package org.ccci.gto.globalreg.serializer.entity.person;
+package org.ccci.gto.globalreg.entity.jackson;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 
 import javax.annotation.Generated;
 import java.util.ArrayList;
@@ -872,24 +870,98 @@ public class Person {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return MoreObjects.toStringHelper(this)
+                .add("id", id)
+                .add("accountNumber", accountNumber)
+                .add("activeStatus", activeStatus)
+                .add("birthDay", birthDay)
+                .add("birthMonth", birthMonth)
+                .add("cruEmployee", cruEmployee)
+                .add("dateJoinedStaff", dateJoinedStaff)
+                .add("firstName", firstName)
+                .add("deptCode", deptCode)
+                .add("fundingSource", fundingSource)
+                .add("gender", gender)
+                .add("hrStatusCode", hrStatusCode)
+                .add("isStaff", isStaff)
+                .add("jobCode", jobCode)
+                .add("jobDescr", jobDescr)
+                .add("lakeHartMailCode", lakeHartMailCode)
+                .add("lastName", lastName)
+                .add("locationCode", locationCode)
+                .add("locationWork", locationWork)
+                .add("maritalStatus", maritalStatus)
+                .add("middleName", middleName)
+                .add("ministryCode", ministryCode)
+                .add("ministryDescr", ministryDescr)
+                .add("nameAddressEditFlag", nameAddressEditFlag)
+                .add("originalHireDate", originalHireDate)
+                .add("paygroup", paygroup)
+                .add("preferredName", preferredName)
+                .add("subMinistryCode", subMinistryCode)
+                .add("subMinistryDescr", subMinistryDescr)
+                .add("suffix", suffix)
+                .add("supervisorEmplid", supervisorEmplid)
+                .add("title", title)
+                .add("address", address)
+                .add("emailAddress", emailAddress)
+                .add("phoneNumber", phoneNumber)
+                .add("deptDescr", deptDescr)
+                .add("clientIntegrationId", clientIntegrationId)
+                .toString();
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) { return true; }
+        if (!(o instanceof Person)) { return false; }
+        final Person person = (Person) o;
+        return Objects.equal(id, person.id) &&
+                Objects.equal(accountNumber, person.accountNumber) &&
+                Objects.equal(activeStatus, person.activeStatus) &&
+                Objects.equal(birthDay, person.birthDay) &&
+                Objects.equal(birthMonth, person.birthMonth) &&
+                Objects.equal(cruEmployee, person.cruEmployee) &&
+                Objects.equal(dateJoinedStaff, person.dateJoinedStaff) &&
+                Objects.equal(firstName, person.firstName) &&
+                Objects.equal(deptCode, person.deptCode) &&
+                Objects.equal(fundingSource, person.fundingSource) &&
+                Objects.equal(gender, person.gender) &&
+                Objects.equal(hrStatusCode, person.hrStatusCode) &&
+                Objects.equal(isStaff, person.isStaff) &&
+                Objects.equal(jobCode, person.jobCode) &&
+                Objects.equal(jobDescr, person.jobDescr) &&
+                Objects.equal(lakeHartMailCode, person.lakeHartMailCode) &&
+                Objects.equal(lastName, person.lastName) &&
+                Objects.equal(locationCode, person.locationCode) &&
+                Objects.equal(locationWork, person.locationWork) &&
+                Objects.equal(maritalStatus, person.maritalStatus) &&
+                Objects.equal(middleName, person.middleName) &&
+                Objects.equal(ministryCode, person.ministryCode) &&
+                Objects.equal(ministryDescr, person.ministryDescr) &&
+                Objects.equal(nameAddressEditFlag, person.nameAddressEditFlag) &&
+                Objects.equal(originalHireDate, person.originalHireDate) &&
+                Objects.equal(paygroup, person.paygroup) &&
+                Objects.equal(preferredName, person.preferredName) &&
+                Objects.equal(subMinistryCode, person.subMinistryCode) &&
+                Objects.equal(subMinistryDescr, person.subMinistryDescr) &&
+                Objects.equal(suffix, person.suffix) &&
+                Objects.equal(supervisorEmplid, person.supervisorEmplid) &&
+                Objects.equal(title, person.title) &&
+                Objects.equal(address, person.address) &&
+                Objects.equal(emailAddress, person.emailAddress) &&
+                Objects.equal(phoneNumber, person.phoneNumber) &&
+                Objects.equal(deptDescr, person.deptDescr) &&
+                Objects.equal(clientIntegrationId, person.clientIntegrationId);
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(id).append(accountNumber).append(activeStatus).append(birthDay).append(birthMonth).append(cruEmployee).append(dateJoinedStaff).append(firstName).append(deptCode).append(fundingSource).append(gender).append(hrStatusCode).append(isStaff).append(jobCode).append(jobDescr).append(lakeHartMailCode).append(lastName).append(locationCode).append(locationWork).append(maritalStatus).append(middleName).append(ministryCode).append(ministryDescr).append(nameAddressEditFlag).append(originalHireDate).append(paygroup).append(preferredName).append(subMinistryCode).append(subMinistryDescr).append(suffix).append(supervisorEmplid).append(title).append(address).append(emailAddress).append(phoneNumber).append(deptDescr).append(clientIntegrationId).toHashCode();
+        return Objects.hashCode(id, accountNumber, activeStatus, birthDay, birthMonth, cruEmployee, dateJoinedStaff,
+                firstName, deptCode, fundingSource, gender, hrStatusCode, isStaff, jobCode, jobDescr,
+                lakeHartMailCode, lastName, locationCode, locationWork, maritalStatus, middleName, ministryCode,
+                ministryDescr, nameAddressEditFlag, originalHireDate, paygroup, preferredName, subMinistryCode,
+                subMinistryDescr, suffix, supervisorEmplid, title, address, emailAddress, phoneNumber, deptDescr,
+                clientIntegrationId);
     }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if ((other instanceof Person) == false) {
-            return false;
-        }
-        Person rhs = ((Person) other);
-        return new EqualsBuilder().append(id, rhs.id).append(accountNumber, rhs.accountNumber).append(activeStatus, rhs.activeStatus).append(birthDay, rhs.birthDay).append(birthMonth, rhs.birthMonth).append(cruEmployee, rhs.cruEmployee).append(dateJoinedStaff, rhs.dateJoinedStaff).append(firstName, rhs.firstName).append(deptCode, rhs.deptCode).append(fundingSource, rhs.fundingSource).append(gender, rhs.gender).append(hrStatusCode, rhs.hrStatusCode).append(isStaff, rhs.isStaff).append(jobCode, rhs.jobCode).append(jobDescr, rhs.jobDescr).append(lakeHartMailCode, rhs.lakeHartMailCode).append(lastName, rhs.lastName).append(locationCode, rhs.locationCode).append(locationWork, rhs.locationWork).append(maritalStatus, rhs.maritalStatus).append(middleName, rhs.middleName).append(ministryCode, rhs.ministryCode).append(ministryDescr, rhs.ministryDescr).append(nameAddressEditFlag, rhs.nameAddressEditFlag).append(originalHireDate, rhs.originalHireDate).append(paygroup, rhs.paygroup).append(preferredName, rhs.preferredName).append(subMinistryCode, rhs.subMinistryCode).append(subMinistryDescr, rhs.subMinistryDescr).append(suffix, rhs.suffix).append(supervisorEmplid, rhs.supervisorEmplid).append(title, rhs.title).append(address, rhs.address).append(emailAddress, rhs.emailAddress).append(phoneNumber, rhs.phoneNumber).append(deptDescr, rhs.deptDescr).append(clientIntegrationId, rhs.clientIntegrationId).isEquals();
-    }
-
 }
