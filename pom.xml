@@ -21,6 +21,7 @@
     <module>serializer-jackson</module>
     <module>serializer-json</module>
     <module>serializer-jsonpath</module>
+    <module>entities/jackson</module>
   </modules>
 
   <scm>
