@@ -1,36 +1,62 @@
+
 package org.ccci.gto.globalreg.entity.jackson;
 
+import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
-import javax.annotation.Generated;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
     "id",
-    "number",
-    "location",
     "primary",
+    "location",
+    "number",
     "parent_id",
     "client_integration_id"
 })
 public class PhoneNumber {
+
     @JsonProperty("id")
     private String id;
-    @JsonProperty("number")
-    private String number;
-    @JsonProperty("location")
-    private String location;
     @JsonProperty("primary")
     private Boolean primary;
+    @JsonProperty("location")
+    private String location;
+    @JsonProperty("number")
+    private String number;
     @JsonProperty("parent_id")
     private String parentId;
     @JsonProperty("client_integration_id")
     private String clientIntegrationId;
+
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
+    public PhoneNumber() {
+    }
+
+    /**
+     * 
+     * @param clientIntegrationId
+     * @param number
+     * @param location
+     * @param id
+     * @param parentId
+     * @param primary
+     */
+    public PhoneNumber(String id, Boolean primary, String location, String number, String parentId, String clientIntegrationId) {
+        this.id = id;
+        this.primary = primary;
+        this.location = location;
+        this.number = number;
+        this.parentId = parentId;
+        this.clientIntegrationId = clientIntegrationId;
+    }
 
     /**
      * 
@@ -55,21 +81,21 @@ public class PhoneNumber {
     /**
      * 
      * @return
-     *     The number
+     *     The primary
      */
-    @JsonProperty("number")
-    public String getNumber() {
-        return number;
+    @JsonProperty("primary")
+    public Boolean getPrimary() {
+        return primary;
     }
 
     /**
      * 
-     * @param number
-     *     The number
+     * @param primary
+     *     The primary
      */
-    @JsonProperty("number")
-    public void setNumber(String number) {
-        this.number = number;
+    @JsonProperty("primary")
+    public void setPrimary(Boolean primary) {
+        this.primary = primary;
     }
 
     /**
@@ -95,21 +121,21 @@ public class PhoneNumber {
     /**
      * 
      * @return
-     *     The primary
+     *     The number
      */
-    @JsonProperty("primary")
-    public Boolean getPrimary() {
-        return primary;
+    @JsonProperty("number")
+    public String getNumber() {
+        return number;
     }
 
     /**
      * 
-     * @param primary
-     *     The primary
+     * @param number
+     *     The number
      */
-    @JsonProperty("primary")
-    public void setPrimary(Boolean primary) {
-        this.primary = primary;
+    @JsonProperty("number")
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     /**
@@ -156,29 +182,29 @@ public class PhoneNumber {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
-                .add("number", number)
-                .add("location", location)
                 .add("primary", primary)
+                .add("location", location)
+                .add("number", number)
                 .add("parentId", parentId)
                 .add("clientIntegrationId", clientIntegrationId)
                 .toString();
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) { return true; }
-        if (!(o instanceof PhoneNumber)) { return false; }
-        final PhoneNumber that = (PhoneNumber) o;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PhoneNumber)) return false;
+        PhoneNumber that = (PhoneNumber) o;
         return Objects.equal(id, that.id) &&
-                Objects.equal(number, that.number) &&
-                Objects.equal(location, that.location) &&
                 Objects.equal(primary, that.primary) &&
+                Objects.equal(location, that.location) &&
+                Objects.equal(number, that.number) &&
                 Objects.equal(parentId, that.parentId) &&
                 Objects.equal(clientIntegrationId, that.clientIntegrationId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, number, location, primary, parentId, clientIntegrationId);
+        return Objects.hashCode(id, primary, location, number, parentId, clientIntegrationId);
     }
 }
