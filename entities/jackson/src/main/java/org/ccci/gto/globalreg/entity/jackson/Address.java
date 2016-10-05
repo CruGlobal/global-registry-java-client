@@ -1,12 +1,12 @@
+
 package org.ccci.gto.globalreg.entity.jackson;
 
+import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-
-import javax.annotation.Generated;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
@@ -21,8 +21,7 @@ import javax.annotation.Generated;
     "postal_code",
     "country",
     "parent_id",
-    "client_integration_id",
-    "current_address"
+    "client_integration_id"
 })
 public class Address {
 
@@ -48,8 +47,41 @@ public class Address {
     private String parentId;
     @JsonProperty("client_integration_id")
     private String clientIntegrationId;
-    @JsonProperty("current_address")
-    private Boolean currentAddress;
+
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
+    public Address() {
+    }
+
+    /**
+     * 
+     * @param clientIntegrationId
+     * @param country
+     * @param city
+     * @param addressType
+     * @param postalCode
+     * @param active
+     * @param id
+     * @param state
+     * @param startDate
+     * @param line1
+     * @param parentId
+     */
+    public Address(String id, Boolean active, String addressType, String startDate, String line1, String city, String state, String postalCode, String country, String parentId, String clientIntegrationId) {
+        this.id = id;
+        this.active = active;
+        this.addressType = addressType;
+        this.startDate = startDate;
+        this.line1 = line1;
+        this.city = city;
+        this.state = state;
+        this.postalCode = postalCode;
+        this.country = country;
+        this.parentId = parentId;
+        this.clientIntegrationId = clientIntegrationId;
+    }
 
     /**
      * 
@@ -271,24 +303,6 @@ public class Address {
         this.clientIntegrationId = clientIntegrationId;
     }
 
-    /**
-     * 
-     * @return
-     *     The currentAddress
-     */
-    @JsonProperty("current_address")
-    public Boolean getCurrentAddress() {
-        return currentAddress;
-    }
-
-    /**
-     * @param currentAddress The current_address
-     */
-    @JsonProperty("current_address")
-    public void setCurrentAddress(Boolean currentAddress) {
-        this.currentAddress = currentAddress;
-    }
-
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -303,15 +317,14 @@ public class Address {
                 .add("country", country)
                 .add("parentId", parentId)
                 .add("clientIntegrationId", clientIntegrationId)
-                .add("currentAddress", currentAddress)
                 .toString();
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) { return true; }
-        if (!(o instanceof Address)) { return false; }
-        final Address address = (Address) o;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Address)) return false;
+        Address address = (Address) o;
         return Objects.equal(id, address.id) &&
                 Objects.equal(active, address.active) &&
                 Objects.equal(addressType, address.addressType) &&
@@ -322,13 +335,11 @@ public class Address {
                 Objects.equal(postalCode, address.postalCode) &&
                 Objects.equal(country, address.country) &&
                 Objects.equal(parentId, address.parentId) &&
-                Objects.equal(clientIntegrationId, address.clientIntegrationId) &&
-                Objects.equal(currentAddress, address.currentAddress);
+                Objects.equal(clientIntegrationId, address.clientIntegrationId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, active, addressType, startDate, line1, city, state, postalCode, country,
-                parentId, clientIntegrationId, currentAddress);
+        return Objects.hashCode(id, active, addressType, startDate, line1, city, state, postalCode, country, parentId, clientIntegrationId);
     }
 }

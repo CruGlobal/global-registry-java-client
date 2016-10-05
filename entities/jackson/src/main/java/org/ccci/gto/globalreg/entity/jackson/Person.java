@@ -1,14 +1,12 @@
+
 package org.ccci.gto.globalreg.entity.jackson;
 
+import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-
-import javax.annotation.Generated;
-import java.util.ArrayList;
-import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
@@ -21,34 +19,42 @@ import java.util.List;
     "cru_employee",
     "date_joined_staff",
     "first_name",
-    "dept_code",
     "funding_source",
     "gender",
     "hr_status_code",
     "is_staff",
-    "job_code",
-    "job_descr",
     "lake_hart_mail_code",
     "last_name",
     "location_code",
     "location_work",
     "marital_status",
     "middle_name",
-    "ministry_code",
-    "ministry_descr",
     "name_address_edit_flag",
     "original_hire_date",
     "paygroup",
     "preferred_name",
+    "ministry_code",
+    "ministry_descr",
+    "suffix",
+    "title",
     "sub_ministry_code",
     "sub_ministry_descr",
-    "suffix",
-    "supervisor_emplid",
-    "title",
-    "address",
     "email_address",
     "phone_number",
+    "authentication",
+    "address",
+    "birth_year",
+    "birth_date",
+    "country_of_residence",
+    "employment_country",
+    "language",
+    "job_status",
+    "dept_code",
     "dept_descr",
+    "job_code",
+    "job_descr",
+    "supervisor_emplid",
+    "client_updated_at",
     "client_integration_id"
 })
 public class Person {
@@ -69,8 +75,6 @@ public class Person {
     private String dateJoinedStaff;
     @JsonProperty("first_name")
     private String firstName;
-    @JsonProperty("dept_code")
-    private String deptCode;
     @JsonProperty("funding_source")
     private String fundingSource;
     @JsonProperty("gender")
@@ -79,10 +83,6 @@ public class Person {
     private String hrStatusCode;
     @JsonProperty("is_staff")
     private Boolean isStaff;
-    @JsonProperty("job_code")
-    private String jobCode;
-    @JsonProperty("job_descr")
-    private String jobDescr;
     @JsonProperty("lake_hart_mail_code")
     private String lakeHartMailCode;
     @JsonProperty("last_name")
@@ -95,10 +95,6 @@ public class Person {
     private String maritalStatus;
     @JsonProperty("middle_name")
     private String middleName;
-    @JsonProperty("ministry_code")
-    private String ministryCode;
-    @JsonProperty("ministry_descr")
-    private String ministryDescr;
     @JsonProperty("name_address_edit_flag")
     private String nameAddressEditFlag;
     @JsonProperty("original_hire_date")
@@ -107,26 +103,155 @@ public class Person {
     private String paygroup;
     @JsonProperty("preferred_name")
     private String preferredName;
+    @JsonProperty("ministry_code")
+    private String ministryCode;
+    @JsonProperty("ministry_descr")
+    private String ministryDescr;
+    @JsonProperty("suffix")
+    private String suffix;
+    @JsonProperty("title")
+    private String title;
     @JsonProperty("sub_ministry_code")
     private String subMinistryCode;
     @JsonProperty("sub_ministry_descr")
     private String subMinistryDescr;
-    @JsonProperty("suffix")
-    private String suffix;
-    @JsonProperty("supervisor_emplid")
-    private String supervisorEmplid;
-    @JsonProperty("title")
-    private String title;
-    @JsonProperty("address")
-    private List<Address> address = new ArrayList<Address>();
     @JsonProperty("email_address")
-    private List<EmailAddress> emailAddress = new ArrayList<EmailAddress>();
+    private EmailAddress emailAddress;
     @JsonProperty("phone_number")
-    private List<PhoneNumber> phoneNumber = new ArrayList<PhoneNumber>();
+    private PhoneNumber phoneNumber;
+    @JsonProperty("authentication")
+    private Authentication authentication;
+    @JsonProperty("address")
+    private Address address;
+    @JsonProperty("birth_year")
+    private Integer birthYear;
+    @JsonProperty("birth_date")
+    private String birthDate;
+    @JsonProperty("country_of_residence")
+    private String countryOfResidence;
+    @JsonProperty("employment_country")
+    private String employmentCountry;
+    @JsonProperty("language")
+    private String language;
+    @JsonProperty("job_status")
+    private String jobStatus;
+    @JsonProperty("dept_code")
+    private String deptCode;
     @JsonProperty("dept_descr")
     private String deptDescr;
+    @JsonProperty("job_code")
+    private String jobCode;
+    @JsonProperty("job_descr")
+    private String jobDescr;
+    @JsonProperty("supervisor_emplid")
+    private String supervisorEmplid;
+    @JsonProperty("client_updated_at")
+    private String clientUpdatedAt;
     @JsonProperty("client_integration_id")
     private String clientIntegrationId;
+
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
+    public Person() {
+    }
+
+    /**
+     * 
+     * @param originalHireDate
+     * @param supervisorEmplid
+     * @param lastName
+     * @param jobStatus
+     * @param gender
+     * @param jobCode
+     * @param language
+     * @param paygroup
+     * @param suffix
+     * @param title
+     * @param countryOfResidence
+     * @param clientUpdatedAt
+     * @param ministryCode
+     * @param deptDescr
+     * @param lakeHartMailCode
+     * @param subMinistryCode
+     * @param emailAddress
+     * @param nameAddressEditFlag
+     * @param employmentCountry
+     * @param id
+     * @param preferredName
+     * @param cruEmployee
+     * @param authentication
+     * @param birthDay
+     * @param locationWork
+     * @param address
+     * @param isStaff
+     * @param accountNumber
+     * @param birthDate
+     * @param clientIntegrationId
+     * @param birthMonth
+     * @param firstName
+     * @param phoneNumber
+     * @param activeStatus
+     * @param dateJoinedStaff
+     * @param birthYear
+     * @param subMinistryDescr
+     * @param middleName
+     * @param fundingSource
+     * @param hrStatusCode
+     * @param locationCode
+     * @param ministryDescr
+     * @param jobDescr
+     * @param maritalStatus
+     * @param deptCode
+     */
+    public Person(String id, String accountNumber, String activeStatus, Integer birthDay, Integer birthMonth, Boolean cruEmployee, String dateJoinedStaff, String firstName, String fundingSource, String gender, String hrStatusCode, Boolean isStaff, String lakeHartMailCode, String lastName, String locationCode, String locationWork, String maritalStatus, String middleName, String nameAddressEditFlag, String originalHireDate, String paygroup, String preferredName, String ministryCode, String ministryDescr, String suffix, String title, String subMinistryCode, String subMinistryDescr, EmailAddress emailAddress, PhoneNumber phoneNumber, Authentication authentication, Address address, Integer birthYear, String birthDate, String countryOfResidence, String employmentCountry, String language, String jobStatus, String deptCode, String deptDescr, String jobCode, String jobDescr, String supervisorEmplid, String clientUpdatedAt, String clientIntegrationId) {
+        this.id = id;
+        this.accountNumber = accountNumber;
+        this.activeStatus = activeStatus;
+        this.birthDay = birthDay;
+        this.birthMonth = birthMonth;
+        this.cruEmployee = cruEmployee;
+        this.dateJoinedStaff = dateJoinedStaff;
+        this.firstName = firstName;
+        this.fundingSource = fundingSource;
+        this.gender = gender;
+        this.hrStatusCode = hrStatusCode;
+        this.isStaff = isStaff;
+        this.lakeHartMailCode = lakeHartMailCode;
+        this.lastName = lastName;
+        this.locationCode = locationCode;
+        this.locationWork = locationWork;
+        this.maritalStatus = maritalStatus;
+        this.middleName = middleName;
+        this.nameAddressEditFlag = nameAddressEditFlag;
+        this.originalHireDate = originalHireDate;
+        this.paygroup = paygroup;
+        this.preferredName = preferredName;
+        this.ministryCode = ministryCode;
+        this.ministryDescr = ministryDescr;
+        this.suffix = suffix;
+        this.title = title;
+        this.subMinistryCode = subMinistryCode;
+        this.subMinistryDescr = subMinistryDescr;
+        this.emailAddress = emailAddress;
+        this.phoneNumber = phoneNumber;
+        this.authentication = authentication;
+        this.address = address;
+        this.birthYear = birthYear;
+        this.birthDate = birthDate;
+        this.countryOfResidence = countryOfResidence;
+        this.employmentCountry = employmentCountry;
+        this.language = language;
+        this.jobStatus = jobStatus;
+        this.deptCode = deptCode;
+        this.deptDescr = deptDescr;
+        this.jobCode = jobCode;
+        this.jobDescr = jobDescr;
+        this.supervisorEmplid = supervisorEmplid;
+        this.clientUpdatedAt = clientUpdatedAt;
+        this.clientIntegrationId = clientIntegrationId;
+    }
 
     /**
      * 
@@ -291,26 +416,6 @@ public class Person {
     /**
      * 
      * @return
-     *     The deptCode
-     */
-    @JsonProperty("dept_code")
-    public String getDeptCode() {
-        return deptCode;
-    }
-
-    /**
-     * 
-     * @param deptCode
-     *     The dept_code
-     */
-    @JsonProperty("dept_code")
-    public void setDeptCode(String deptCode) {
-        this.deptCode = deptCode;
-    }
-
-    /**
-     * 
-     * @return
      *     The fundingSource
      */
     @JsonProperty("funding_source")
@@ -386,46 +491,6 @@ public class Person {
     @JsonProperty("is_staff")
     public void setIsStaff(Boolean isStaff) {
         this.isStaff = isStaff;
-    }
-
-    /**
-     * 
-     * @return
-     *     The jobCode
-     */
-    @JsonProperty("job_code")
-    public String getJobCode() {
-        return jobCode;
-    }
-
-    /**
-     * 
-     * @param jobCode
-     *     The job_code
-     */
-    @JsonProperty("job_code")
-    public void setJobCode(String jobCode) {
-        this.jobCode = jobCode;
-    }
-
-    /**
-     * 
-     * @return
-     *     The jobDescr
-     */
-    @JsonProperty("job_descr")
-    public String getJobDescr() {
-        return jobDescr;
-    }
-
-    /**
-     * 
-     * @param jobDescr
-     *     The job_descr
-     */
-    @JsonProperty("job_descr")
-    public void setJobDescr(String jobDescr) {
-        this.jobDescr = jobDescr;
     }
 
     /**
@@ -551,46 +616,6 @@ public class Person {
     /**
      * 
      * @return
-     *     The ministryCode
-     */
-    @JsonProperty("ministry_code")
-    public String getMinistryCode() {
-        return ministryCode;
-    }
-
-    /**
-     * 
-     * @param ministryCode
-     *     The ministry_code
-     */
-    @JsonProperty("ministry_code")
-    public void setMinistryCode(String ministryCode) {
-        this.ministryCode = ministryCode;
-    }
-
-    /**
-     * 
-     * @return
-     *     The ministryDescr
-     */
-    @JsonProperty("ministry_descr")
-    public String getMinistryDescr() {
-        return ministryDescr;
-    }
-
-    /**
-     * 
-     * @param ministryDescr
-     *     The ministry_descr
-     */
-    @JsonProperty("ministry_descr")
-    public void setMinistryDescr(String ministryDescr) {
-        this.ministryDescr = ministryDescr;
-    }
-
-    /**
-     * 
-     * @return
      *     The nameAddressEditFlag
      */
     @JsonProperty("name_address_edit_flag")
@@ -671,6 +696,86 @@ public class Person {
     /**
      * 
      * @return
+     *     The ministryCode
+     */
+    @JsonProperty("ministry_code")
+    public String getMinistryCode() {
+        return ministryCode;
+    }
+
+    /**
+     * 
+     * @param ministryCode
+     *     The ministry_code
+     */
+    @JsonProperty("ministry_code")
+    public void setMinistryCode(String ministryCode) {
+        this.ministryCode = ministryCode;
+    }
+
+    /**
+     * 
+     * @return
+     *     The ministryDescr
+     */
+    @JsonProperty("ministry_descr")
+    public String getMinistryDescr() {
+        return ministryDescr;
+    }
+
+    /**
+     * 
+     * @param ministryDescr
+     *     The ministry_descr
+     */
+    @JsonProperty("ministry_descr")
+    public void setMinistryDescr(String ministryDescr) {
+        this.ministryDescr = ministryDescr;
+    }
+
+    /**
+     * 
+     * @return
+     *     The suffix
+     */
+    @JsonProperty("suffix")
+    public String getSuffix() {
+        return suffix;
+    }
+
+    /**
+     * 
+     * @param suffix
+     *     The suffix
+     */
+    @JsonProperty("suffix")
+    public void setSuffix(String suffix) {
+        this.suffix = suffix;
+    }
+
+    /**
+     * 
+     * @return
+     *     The title
+     */
+    @JsonProperty("title")
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * 
+     * @param title
+     *     The title
+     */
+    @JsonProperty("title")
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * 
+     * @return
      *     The subMinistryCode
      */
     @JsonProperty("sub_ministry_code")
@@ -711,21 +816,281 @@ public class Person {
     /**
      * 
      * @return
-     *     The suffix
+     *     The emailAddress
      */
-    @JsonProperty("suffix")
-    public String getSuffix() {
-        return suffix;
+    @JsonProperty("email_address")
+    public EmailAddress getEmailAddress() {
+        return emailAddress;
     }
 
     /**
      * 
-     * @param suffix
-     *     The suffix
+     * @param emailAddress
+     *     The email_address
      */
-    @JsonProperty("suffix")
-    public void setSuffix(String suffix) {
-        this.suffix = suffix;
+    @JsonProperty("email_address")
+    public void setEmailAddress(EmailAddress emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    /**
+     * 
+     * @return
+     *     The phoneNumber
+     */
+    @JsonProperty("phone_number")
+    public PhoneNumber getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    /**
+     * 
+     * @param phoneNumber
+     *     The phone_number
+     */
+    @JsonProperty("phone_number")
+    public void setPhoneNumber(PhoneNumber phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    /**
+     * 
+     * @return
+     *     The authentication
+     */
+    @JsonProperty("authentication")
+    public Authentication getAuthentication() {
+        return authentication;
+    }
+
+    /**
+     * 
+     * @param authentication
+     *     The authentication
+     */
+    @JsonProperty("authentication")
+    public void setAuthentication(Authentication authentication) {
+        this.authentication = authentication;
+    }
+
+    /**
+     * 
+     * @return
+     *     The address
+     */
+    @JsonProperty("address")
+    public Address getAddress() {
+        return address;
+    }
+
+    /**
+     * 
+     * @param address
+     *     The address
+     */
+    @JsonProperty("address")
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    /**
+     * 
+     * @return
+     *     The birthYear
+     */
+    @JsonProperty("birth_year")
+    public Integer getBirthYear() {
+        return birthYear;
+    }
+
+    /**
+     * 
+     * @param birthYear
+     *     The birth_year
+     */
+    @JsonProperty("birth_year")
+    public void setBirthYear(Integer birthYear) {
+        this.birthYear = birthYear;
+    }
+
+    /**
+     * 
+     * @return
+     *     The birthDate
+     */
+    @JsonProperty("birth_date")
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    /**
+     * 
+     * @param birthDate
+     *     The birth_date
+     */
+    @JsonProperty("birth_date")
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    /**
+     * 
+     * @return
+     *     The countryOfResidence
+     */
+    @JsonProperty("country_of_residence")
+    public String getCountryOfResidence() {
+        return countryOfResidence;
+    }
+
+    /**
+     * 
+     * @param countryOfResidence
+     *     The country_of_residence
+     */
+    @JsonProperty("country_of_residence")
+    public void setCountryOfResidence(String countryOfResidence) {
+        this.countryOfResidence = countryOfResidence;
+    }
+
+    /**
+     * 
+     * @return
+     *     The employmentCountry
+     */
+    @JsonProperty("employment_country")
+    public String getEmploymentCountry() {
+        return employmentCountry;
+    }
+
+    /**
+     * 
+     * @param employmentCountry
+     *     The employment_country
+     */
+    @JsonProperty("employment_country")
+    public void setEmploymentCountry(String employmentCountry) {
+        this.employmentCountry = employmentCountry;
+    }
+
+    /**
+     * 
+     * @return
+     *     The language
+     */
+    @JsonProperty("language")
+    public String getLanguage() {
+        return language;
+    }
+
+    /**
+     * 
+     * @param language
+     *     The language
+     */
+    @JsonProperty("language")
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    /**
+     * 
+     * @return
+     *     The jobStatus
+     */
+    @JsonProperty("job_status")
+    public String getJobStatus() {
+        return jobStatus;
+    }
+
+    /**
+     * 
+     * @param jobStatus
+     *     The job_status
+     */
+    @JsonProperty("job_status")
+    public void setJobStatus(String jobStatus) {
+        this.jobStatus = jobStatus;
+    }
+
+    /**
+     * 
+     * @return
+     *     The deptCode
+     */
+    @JsonProperty("dept_code")
+    public String getDeptCode() {
+        return deptCode;
+    }
+
+    /**
+     * 
+     * @param deptCode
+     *     The dept_code
+     */
+    @JsonProperty("dept_code")
+    public void setDeptCode(String deptCode) {
+        this.deptCode = deptCode;
+    }
+
+    /**
+     * 
+     * @return
+     *     The deptDescr
+     */
+    @JsonProperty("dept_descr")
+    public String getDeptDescr() {
+        return deptDescr;
+    }
+
+    /**
+     * 
+     * @param deptDescr
+     *     The dept_descr
+     */
+    @JsonProperty("dept_descr")
+    public void setDeptDescr(String deptDescr) {
+        this.deptDescr = deptDescr;
+    }
+
+    /**
+     * 
+     * @return
+     *     The jobCode
+     */
+    @JsonProperty("job_code")
+    public String getJobCode() {
+        return jobCode;
+    }
+
+    /**
+     * 
+     * @param jobCode
+     *     The job_code
+     */
+    @JsonProperty("job_code")
+    public void setJobCode(String jobCode) {
+        this.jobCode = jobCode;
+    }
+
+    /**
+     * 
+     * @return
+     *     The jobDescr
+     */
+    @JsonProperty("job_descr")
+    public String getJobDescr() {
+        return jobDescr;
+    }
+
+    /**
+     * 
+     * @param jobDescr
+     *     The job_descr
+     */
+    @JsonProperty("job_descr")
+    public void setJobDescr(String jobDescr) {
+        this.jobDescr = jobDescr;
     }
 
     /**
@@ -751,101 +1116,21 @@ public class Person {
     /**
      * 
      * @return
-     *     The title
+     *     The clientUpdatedAt
      */
-    @JsonProperty("title")
-    public String getTitle() {
-        return title;
+    @JsonProperty("client_updated_at")
+    public String getClientUpdatedAt() {
+        return clientUpdatedAt;
     }
 
     /**
      * 
-     * @param title
-     *     The title
+     * @param clientUpdatedAt
+     *     The client_updated_at
      */
-    @JsonProperty("title")
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    /**
-     * 
-     * @return
-     *     The address
-     */
-    @JsonProperty("address")
-    public List<Address> getAddress() {
-        return address;
-    }
-
-    /**
-     * 
-     * @param address
-     *     The address
-     */
-    @JsonProperty("address")
-    public void setAddress(List<Address> address) {
-        this.address = address;
-    }
-
-    /**
-     * 
-     * @return
-     *     The emailAddress
-     */
-    @JsonProperty("email_address")
-    public List<EmailAddress> getEmailAddress() {
-        return emailAddress;
-    }
-
-    /**
-     * 
-     * @param emailAddress
-     *     The email_address
-     */
-    @JsonProperty("email_address")
-    public void setEmailAddress(List<EmailAddress> emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    /**
-     * 
-     * @return
-     *     The phoneNumber
-     */
-    @JsonProperty("phone_number")
-    public List<PhoneNumber> getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    /**
-     * 
-     * @param phoneNumber
-     *     The phone_number
-     */
-    @JsonProperty("phone_number")
-    public void setPhoneNumber(List<PhoneNumber> phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    /**
-     * 
-     * @return
-     *     The deptDescr
-     */
-    @JsonProperty("dept_descr")
-    public String getDeptDescr() {
-        return deptDescr;
-    }
-
-    /**
-     * 
-     * @param deptDescr
-     *     The dept_descr
-     */
-    @JsonProperty("dept_descr")
-    public void setDeptDescr(String deptDescr) {
-        this.deptDescr = deptDescr;
+    @JsonProperty("client_updated_at")
+    public void setClientUpdatedAt(String clientUpdatedAt) {
+        this.clientUpdatedAt = clientUpdatedAt;
     }
 
     /**
@@ -879,43 +1164,51 @@ public class Person {
                 .add("cruEmployee", cruEmployee)
                 .add("dateJoinedStaff", dateJoinedStaff)
                 .add("firstName", firstName)
-                .add("deptCode", deptCode)
                 .add("fundingSource", fundingSource)
                 .add("gender", gender)
                 .add("hrStatusCode", hrStatusCode)
                 .add("isStaff", isStaff)
-                .add("jobCode", jobCode)
-                .add("jobDescr", jobDescr)
                 .add("lakeHartMailCode", lakeHartMailCode)
                 .add("lastName", lastName)
                 .add("locationCode", locationCode)
                 .add("locationWork", locationWork)
                 .add("maritalStatus", maritalStatus)
                 .add("middleName", middleName)
-                .add("ministryCode", ministryCode)
-                .add("ministryDescr", ministryDescr)
                 .add("nameAddressEditFlag", nameAddressEditFlag)
                 .add("originalHireDate", originalHireDate)
                 .add("paygroup", paygroup)
                 .add("preferredName", preferredName)
+                .add("ministryCode", ministryCode)
+                .add("ministryDescr", ministryDescr)
+                .add("suffix", suffix)
+                .add("title", title)
                 .add("subMinistryCode", subMinistryCode)
                 .add("subMinistryDescr", subMinistryDescr)
-                .add("suffix", suffix)
-                .add("supervisorEmplid", supervisorEmplid)
-                .add("title", title)
-                .add("address", address)
                 .add("emailAddress", emailAddress)
                 .add("phoneNumber", phoneNumber)
+                .add("authentication", authentication)
+                .add("address", address)
+                .add("birthYear", birthYear)
+                .add("birthDate", birthDate)
+                .add("countryOfResidence", countryOfResidence)
+                .add("employmentCountry", employmentCountry)
+                .add("language", language)
+                .add("jobStatus", jobStatus)
+                .add("deptCode", deptCode)
                 .add("deptDescr", deptDescr)
+                .add("jobCode", jobCode)
+                .add("jobDescr", jobDescr)
+                .add("supervisorEmplid", supervisorEmplid)
+                .add("clientUpdatedAt", clientUpdatedAt)
                 .add("clientIntegrationId", clientIntegrationId)
                 .toString();
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) { return true; }
-        if (!(o instanceof Person)) { return false; }
-        final Person person = (Person) o;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person)) return false;
+        Person person = (Person) o;
         return Objects.equal(id, person.id) &&
                 Objects.equal(accountNumber, person.accountNumber) &&
                 Objects.equal(activeStatus, person.activeStatus) &&
@@ -924,44 +1217,47 @@ public class Person {
                 Objects.equal(cruEmployee, person.cruEmployee) &&
                 Objects.equal(dateJoinedStaff, person.dateJoinedStaff) &&
                 Objects.equal(firstName, person.firstName) &&
-                Objects.equal(deptCode, person.deptCode) &&
                 Objects.equal(fundingSource, person.fundingSource) &&
                 Objects.equal(gender, person.gender) &&
                 Objects.equal(hrStatusCode, person.hrStatusCode) &&
                 Objects.equal(isStaff, person.isStaff) &&
-                Objects.equal(jobCode, person.jobCode) &&
-                Objects.equal(jobDescr, person.jobDescr) &&
                 Objects.equal(lakeHartMailCode, person.lakeHartMailCode) &&
                 Objects.equal(lastName, person.lastName) &&
                 Objects.equal(locationCode, person.locationCode) &&
                 Objects.equal(locationWork, person.locationWork) &&
                 Objects.equal(maritalStatus, person.maritalStatus) &&
                 Objects.equal(middleName, person.middleName) &&
-                Objects.equal(ministryCode, person.ministryCode) &&
-                Objects.equal(ministryDescr, person.ministryDescr) &&
                 Objects.equal(nameAddressEditFlag, person.nameAddressEditFlag) &&
                 Objects.equal(originalHireDate, person.originalHireDate) &&
                 Objects.equal(paygroup, person.paygroup) &&
                 Objects.equal(preferredName, person.preferredName) &&
+                Objects.equal(ministryCode, person.ministryCode) &&
+                Objects.equal(ministryDescr, person.ministryDescr) &&
+                Objects.equal(suffix, person.suffix) &&
+                Objects.equal(title, person.title) &&
                 Objects.equal(subMinistryCode, person.subMinistryCode) &&
                 Objects.equal(subMinistryDescr, person.subMinistryDescr) &&
-                Objects.equal(suffix, person.suffix) &&
-                Objects.equal(supervisorEmplid, person.supervisorEmplid) &&
-                Objects.equal(title, person.title) &&
-                Objects.equal(address, person.address) &&
                 Objects.equal(emailAddress, person.emailAddress) &&
                 Objects.equal(phoneNumber, person.phoneNumber) &&
+                Objects.equal(authentication, person.authentication) &&
+                Objects.equal(address, person.address) &&
+                Objects.equal(birthYear, person.birthYear) &&
+                Objects.equal(birthDate, person.birthDate) &&
+                Objects.equal(countryOfResidence, person.countryOfResidence) &&
+                Objects.equal(employmentCountry, person.employmentCountry) &&
+                Objects.equal(language, person.language) &&
+                Objects.equal(jobStatus, person.jobStatus) &&
+                Objects.equal(deptCode, person.deptCode) &&
                 Objects.equal(deptDescr, person.deptDescr) &&
+                Objects.equal(jobCode, person.jobCode) &&
+                Objects.equal(jobDescr, person.jobDescr) &&
+                Objects.equal(supervisorEmplid, person.supervisorEmplid) &&
+                Objects.equal(clientUpdatedAt, person.clientUpdatedAt) &&
                 Objects.equal(clientIntegrationId, person.clientIntegrationId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, accountNumber, activeStatus, birthDay, birthMonth, cruEmployee, dateJoinedStaff,
-                firstName, deptCode, fundingSource, gender, hrStatusCode, isStaff, jobCode, jobDescr,
-                lakeHartMailCode, lastName, locationCode, locationWork, maritalStatus, middleName, ministryCode,
-                ministryDescr, nameAddressEditFlag, originalHireDate, paygroup, preferredName, subMinistryCode,
-                subMinistryDescr, suffix, supervisorEmplid, title, address, emailAddress, phoneNumber, deptDescr,
-                clientIntegrationId);
+        return Objects.hashCode(id, accountNumber, activeStatus, birthDay, birthMonth, cruEmployee, dateJoinedStaff, firstName, fundingSource, gender, hrStatusCode, isStaff, lakeHartMailCode, lastName, locationCode, locationWork, maritalStatus, middleName, nameAddressEditFlag, originalHireDate, paygroup, preferredName, ministryCode, ministryDescr, suffix, title, subMinistryCode, subMinistryDescr, emailAddress, phoneNumber, authentication, address, birthYear, birthDate, countryOfResidence, employmentCountry, language, jobStatus, deptCode, deptDescr, jobCode, jobDescr, supervisorEmplid, clientUpdatedAt, clientIntegrationId);
     }
 }

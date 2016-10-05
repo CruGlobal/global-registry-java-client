@@ -12,21 +12,21 @@ import com.google.common.base.Objects;
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
     "id",
-    "email",
+    "relay_guid",
+    "key_guid",
     "parent_id",
-    "client_integration_id",
     "client_updated_at"
 })
-public class EmailAddress {
+public class Authentication {
 
     @JsonProperty("id")
     private String id;
-    @JsonProperty("email")
-    private String email;
+    @JsonProperty("relay_guid")
+    private String relayGuid;
+    @JsonProperty("key_guid")
+    private String keyGuid;
     @JsonProperty("parent_id")
     private String parentId;
-    @JsonProperty("client_integration_id")
-    private String clientIntegrationId;
     @JsonProperty("client_updated_at")
     private String clientUpdatedAt;
 
@@ -34,22 +34,22 @@ public class EmailAddress {
      * No args constructor for use in serialization
      * 
      */
-    public EmailAddress() {
+    public Authentication() {
     }
 
     /**
      * 
-     * @param clientIntegrationId
+     * @param keyGuid
+     * @param relayGuid
      * @param id
      * @param clientUpdatedAt
-     * @param email
      * @param parentId
      */
-    public EmailAddress(String id, String email, String parentId, String clientIntegrationId, String clientUpdatedAt) {
+    public Authentication(String id, String relayGuid, String keyGuid, String parentId, String clientUpdatedAt) {
         this.id = id;
-        this.email = email;
+        this.relayGuid = relayGuid;
+        this.keyGuid = keyGuid;
         this.parentId = parentId;
-        this.clientIntegrationId = clientIntegrationId;
         this.clientUpdatedAt = clientUpdatedAt;
     }
 
@@ -76,21 +76,41 @@ public class EmailAddress {
     /**
      * 
      * @return
-     *     The email
+     *     The relayGuid
      */
-    @JsonProperty("email")
-    public String getEmail() {
-        return email;
+    @JsonProperty("relay_guid")
+    public String getRelayGuid() {
+        return relayGuid;
     }
 
     /**
      * 
-     * @param email
-     *     The email
+     * @param relayGuid
+     *     The relay_guid
      */
-    @JsonProperty("email")
-    public void setEmail(String email) {
-        this.email = email;
+    @JsonProperty("relay_guid")
+    public void setRelayGuid(String relayGuid) {
+        this.relayGuid = relayGuid;
+    }
+
+    /**
+     * 
+     * @return
+     *     The keyGuid
+     */
+    @JsonProperty("key_guid")
+    public String getKeyGuid() {
+        return keyGuid;
+    }
+
+    /**
+     * 
+     * @param keyGuid
+     *     The key_guid
+     */
+    @JsonProperty("key_guid")
+    public void setKeyGuid(String keyGuid) {
+        this.keyGuid = keyGuid;
     }
 
     /**
@@ -111,26 +131,6 @@ public class EmailAddress {
     @JsonProperty("parent_id")
     public void setParentId(String parentId) {
         this.parentId = parentId;
-    }
-
-    /**
-     * 
-     * @return
-     *     The clientIntegrationId
-     */
-    @JsonProperty("client_integration_id")
-    public String getClientIntegrationId() {
-        return clientIntegrationId;
-    }
-
-    /**
-     * 
-     * @param clientIntegrationId
-     *     The client_integration_id
-     */
-    @JsonProperty("client_integration_id")
-    public void setClientIntegrationId(String clientIntegrationId) {
-        this.clientIntegrationId = clientIntegrationId;
     }
 
     /**
@@ -157,9 +157,9 @@ public class EmailAddress {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
-                .add("email", email)
+                .add("relayGuid", relayGuid)
+                .add("keyGuid", keyGuid)
                 .add("parentId", parentId)
-                .add("clientIntegrationId", clientIntegrationId)
                 .add("clientUpdatedAt", clientUpdatedAt)
                 .toString();
     }
@@ -167,17 +167,17 @@ public class EmailAddress {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof EmailAddress)) return false;
-        EmailAddress that = (EmailAddress) o;
+        if (!(o instanceof Authentication)) return false;
+        Authentication that = (Authentication) o;
         return Objects.equal(id, that.id) &&
-                Objects.equal(email, that.email) &&
+                Objects.equal(relayGuid, that.relayGuid) &&
+                Objects.equal(keyGuid, that.keyGuid) &&
                 Objects.equal(parentId, that.parentId) &&
-                Objects.equal(clientIntegrationId, that.clientIntegrationId) &&
                 Objects.equal(clientUpdatedAt, that.clientUpdatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, email, parentId, clientIntegrationId, clientUpdatedAt);
+        return Objects.hashCode(id, relayGuid, keyGuid, parentId, clientUpdatedAt);
     }
 }
