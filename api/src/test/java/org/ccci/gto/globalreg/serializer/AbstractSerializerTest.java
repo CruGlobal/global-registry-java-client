@@ -10,12 +10,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
 import com.google.common.io.Closer;
 import com.jayway.restassured.path.json.JsonPath;
-import org.ccci.gto.globalreg.EntityType;
-import org.ccci.gto.globalreg.Measurement;
-import org.ccci.gto.globalreg.MeasurementType;
-import org.ccci.gto.globalreg.RegisteredSystem;
-import org.ccci.gto.globalreg.ResponseList;
-import org.ccci.gto.globalreg.Type;
+import org.ccci.gto.globalreg.*;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Test;
@@ -368,5 +363,18 @@ public abstract class AbstractSerializerTest {
             assertEquals("people", type.getUnit());
             assertEquals("a5499c9a-1234-11e3-af5a-12725f8f377c", type.getRelatedEntityType());
         }
+    }
+
+    @Test
+    public void testDeserializeNotificationMessage() throws Exception {
+        final NotificationMessage notificationMessage =
+                serializer.deserializeNotificationMessage(loadResource("notification.json"));
+
+        assertEquals("updated", notificationMessage.getAction());
+        assertTrue(NotificationMessage.isUpsertMessage(notificationMessage));
+        assertEquals("e867e56c-edbc-11e3-8fac-12725f8f377c", notificationMessage.getId());
+        assertEquals("123456", notificationMessage.getClientIntegrationId());
+        assertEquals("ararat", notificationMessage.getTriggeredBy());
+        assertEquals("person", notificationMessage.getEntityType());
     }
 }
