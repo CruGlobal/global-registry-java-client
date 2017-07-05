@@ -1,10 +1,6 @@
 package org.ccci.gto.globalreg.serializer;
 
-import org.ccci.gto.globalreg.EntityType;
-import org.ccci.gto.globalreg.MeasurementType;
-import org.ccci.gto.globalreg.RegisteredSystem;
-import org.ccci.gto.globalreg.ResponseList;
-import org.ccci.gto.globalreg.Type;
+import org.ccci.gto.globalreg.*;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -49,4 +45,7 @@ public interface Serializer {
     MeasurementType deserializeMeasurementType(final String raw) throws SerializerException;
 
     ResponseList<MeasurementType> deserializeMeasurementTypes(final String raw) throws SerializerException;
+
+    @Nonnull
+    NotificationMessage deserializeNotificationMessage(@Nonnull final String raw) throws UnparsableJsonException;
 }

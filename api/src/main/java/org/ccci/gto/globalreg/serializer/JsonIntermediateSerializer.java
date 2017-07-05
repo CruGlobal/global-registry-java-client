@@ -1,12 +1,7 @@
 package org.ccci.gto.globalreg.serializer;
 
 import com.google.common.primitives.Ints;
-import org.ccci.gto.globalreg.EntityType;
-import org.ccci.gto.globalreg.Measurement;
-import org.ccci.gto.globalreg.MeasurementType;
-import org.ccci.gto.globalreg.RegisteredSystem;
-import org.ccci.gto.globalreg.ResponseList;
-import org.ccci.gto.globalreg.Type;
+import org.ccci.gto.globalreg.*;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
@@ -124,6 +119,12 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         populateResponseListMeta(list, json);
 
         return list;
+    }
+
+    @Nonnull
+    @Override
+    public NotificationMessage deserializeNotificationMessage(@Nonnull final String raw) throws UnparsableJsonException {
+        return parseNotificationMessage(stringToJsonObj(raw));
     }
 
     @Nonnull
@@ -262,6 +263,17 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         measurement.setValue(json.getDouble("value"));
         measurement.setRelatedEntityId(json.getString("related_entity_id"));
         return measurement;
+    }
+
+    @Nonnull
+    private NotificationMessage parseNotificationMessage(final JsonObj<O, A> json) {
+        final NotificationMessage notificationMessage = new NotificationMessage();
+        notificationMessage.setAction(json.getString("action"));
+        notificationMessage.setId(json.getString("id"));
+        notificationMessage.setTriggeredBy(json.getString("triggered_by"));
+        notificationMessage.setClientIntegrationId(json.getString("client_integration_id"));
+        notificationMessage.setEntityType(json.getString("entity_type"));
+        return notificationMessage;
     }
 
     @Nonnull
