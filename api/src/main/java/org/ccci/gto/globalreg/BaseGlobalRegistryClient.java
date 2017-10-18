@@ -20,6 +20,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     protected String apiUrl;
     protected String accessToken;
     protected Serializer serializer;
+    protected boolean fullResponsesFromUpdates;
 
     protected int connectTimeout = 3000;
     protected int readTimeout = 20000;
@@ -34,6 +35,10 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
     public void setSerializer(final Serializer serializer) {
         this.serializer = serializer;
+    }
+
+    public void setFullResponsesFromUpdates(final boolean fullResponsesFromUpdates) {
+        this.fullResponsesFromUpdates = fullResponsesFromUpdates;
     }
 
     public void setConnectTimeout(final int timeout) {
@@ -109,6 +114,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         request.path = new String[]{PATH_ENTITIES};
         request.contentType = APPLICATION_JSON.toString();
         request.content = this.serializer.serializeEntity(type, entity);
+        addFullResponseParameterIfNecessary(request);
 
         // execute request
         final Response response = this.processRequest(request);
@@ -127,6 +133,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         request.path = new String[]{PATH_ENTITIES, id};
         request.contentType = APPLICATION_JSON.toString();
         request.content = this.serializer.serializeEntity(type, entity);
+        addFullResponseParameterIfNecessary(request);
 
         // execute request
         final Response response = this.processRequest(request);
@@ -134,6 +141,12 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         checkResponseForError(response);
 
         return this.serializer.deserializeEntity(type, response.content);
+    }
+
+    private void addFullResponseParameterIfNecessary(final Request request) {
+        if (fullResponsesFromUpdates) {
+            request.queryParams.put("full_response", "true");
+        }
     }
 
     @Override
