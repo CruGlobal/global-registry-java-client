@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ResponseList<T> extends ForwardingList<T> {
     private Meta meta = new Meta();
-    private final List<T> results = new ArrayList<T>();
+    private final List<T> results = new ArrayList<>();
 
     public void setMeta(final Meta meta) {
         this.meta = meta;

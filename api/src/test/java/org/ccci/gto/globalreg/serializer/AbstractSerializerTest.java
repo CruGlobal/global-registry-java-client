@@ -17,6 +17,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public abstract class AbstractSerializerTest {
@@ -27,15 +28,9 @@ public abstract class AbstractSerializerTest {
     }
 
     private String loadResource(final String name) throws IOException {
-        final Closer closer = Closer.create();
-        try {
-            final InputStreamReader in = closer.register(new InputStreamReader(AbstractSerializerTest.class
-                    .getResourceAsStream(name), Charsets.UTF_8));
+        try (final InputStreamReader in = new InputStreamReader(AbstractSerializerTest.class.getResourceAsStream
+                (name), StandardCharsets.UTF_8)) {
             return CharStreams.toString(in);
-        } catch (final Throwable e) {
-            throw closer.rethrow(e);
-        } finally {
-            closer.close();
         }
     }
 

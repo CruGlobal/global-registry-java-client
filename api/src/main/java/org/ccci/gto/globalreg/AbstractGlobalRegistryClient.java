@@ -76,7 +76,7 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     @Override
     public List<Measurement> getMeasurements(final String type, final ReadableInstant from, final ReadableInstant to,
                                              final Filter... filters) throws GlobalRegistryException {
-        final ArrayList<Filter> tmp = new ArrayList<Filter>(Arrays.asList(filters));
+        final ArrayList<Filter> tmp = new ArrayList<>(Arrays.asList(filters));
         if (from != null) {
             tmp.add(Filter.PERIOD_FROM.values(MeasurementType.Frequency.MONTHLY.getFormatter().print(from)));
         }

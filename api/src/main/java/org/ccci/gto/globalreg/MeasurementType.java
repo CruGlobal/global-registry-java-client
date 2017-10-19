@@ -24,16 +24,19 @@ public class MeasurementType {
         }
 
         public static Category fromString(final String category) {
-            if ("Finance".equals(category)) {
-                return FINANCE;
-            } else if ("LMI".equals(category)) {
-                return LMI;
-            } else if ("MPD".equals(category)) {
-                return MPD;
-            } else if ("HR".equals(category)) {
-                return HR;
-            } else {
-                LOG.error("Unrecognized category: {}", category);
+            if (category != null) {
+                switch (category) {
+                    case "Finance":
+                        return FINANCE;
+                    case "LMI":
+                        return LMI;
+                    case "MPD":
+                        return MPD;
+                    case "HR":
+                        return HR;
+                    default:
+                        LOG.error("Unrecognized category: {}", category);
+                }
             }
 
             return UNKNOWN;
@@ -54,10 +57,13 @@ public class MeasurementType {
         private final Period period;
 
         public static Frequency fromString(final String frequency) {
-            if ("monthly".equals(frequency)) {
-                return MONTHLY;
-            } else {
-                LOG.error("Unrecognized frequency: {}", frequency);
+            if (frequency != null) {
+                switch (frequency) {
+                    case "monthly":
+                        return MONTHLY;
+                    default:
+                        LOG.error("Unrecognized frequency: {}", frequency);
+                }
             }
 
             return UNKNOWN;
@@ -91,7 +97,7 @@ public class MeasurementType {
     private String unit;
     private String relatedEntityType;
 
-    private final List<Measurement> measurements = new ArrayList<Measurement>();
+    private final List<Measurement> measurements = new ArrayList<>();
 
     public String getId() {
         return this.id;

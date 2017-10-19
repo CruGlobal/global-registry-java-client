@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 public class JacksonSerializerTest extends AbstractSerializerTest {
-    private static final Collection<Class<? extends Person>> CLASSES = new HashSet<Class<? extends Person>>();
+    private static final Collection<Class<? extends Person>> CLASSES = new HashSet<>();
 
     static {
         CLASSES.add(PersonField.class);
@@ -26,7 +26,7 @@ public class JacksonSerializerTest extends AbstractSerializerTest {
     @Test
     public void testDeserializeEntity() throws Exception {
         for (final Class<? extends Person> clazz : CLASSES) {
-            final Person person = this.testDeserializeEntity(new Type<Person>(clazz, "person"));
+            final Person person = this.testDeserializeEntity(new Type<>(clazz, "person"));
             assertEquals("882ce1da-d556-11e3-bb64-12725f8f377c", person.getId());
             assertEquals("John", person.getFirstName());
             assertEquals("Doe", person.getLastName());
@@ -37,7 +37,7 @@ public class JacksonSerializerTest extends AbstractSerializerTest {
     @Test
     public void testDeserializeEntities() throws Exception {
         for (final Class<? extends Person> clazz : CLASSES) {
-            final ResponseList<Person> entities = this.testDeserializeEntities(new Type<Person>(clazz, "person"));
+            final ResponseList<Person> entities = this.testDeserializeEntities(new Type<>(clazz, "person"));
 
             // all records should have a last_name of Vellacott
             for (final Person entity : entities) {
@@ -52,7 +52,7 @@ public class JacksonSerializerTest extends AbstractSerializerTest {
             final Person person = clazz.newInstance();
             person.setFirstName("Bobby");
             person.setLastName("Tables");
-            this.testSerializeEntity(new Type<Person>(clazz, "person"), person);
+            this.testSerializeEntity(new Type<>(clazz, "person"), person);
         }
     }
 
