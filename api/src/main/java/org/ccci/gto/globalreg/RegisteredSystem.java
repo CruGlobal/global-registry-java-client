@@ -1,7 +1,6 @@
 package org.ccci.gto.globalreg;
 
-
-import com.google.common.base.Objects;
+import java.util.Objects;
 
 public final class RegisteredSystem {
     private String id;
@@ -82,13 +81,13 @@ public final class RegisteredSystem {
         if (o == null || getClass() != o.getClass()) return false;
 
         RegisteredSystem that = (RegisteredSystem) o;
-        return Objects.equal(this.id, that.id) && Objects.equal(this.name, that.name) && Objects.equal(this.root,
-                that.root) && Objects.equal(this.trusted, that.trusted) && Objects.equal(this.accessToken,
+        return Objects.equals(this.id, that.id) && Objects.equals(this.name, that.name) && Objects.equals(this.root,
+                that.root) && Objects.equals(this.trusted, that.trusted) && Objects.equals(this.accessToken,
                 that.accessToken);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(this.id, this.name, this.root, this.trusted, this.accessToken);
+        return Objects.hash(this.id, this.name, this.root, this.trusted, this.accessToken);
     }
 }
