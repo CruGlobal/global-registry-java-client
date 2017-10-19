@@ -6,6 +6,7 @@ import org.joda.time.ReadableInstant;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Set;
 
 public interface GlobalRegistryClient {
     String PATH_ENTITIES = "entities";
@@ -16,6 +17,7 @@ public interface GlobalRegistryClient {
     String PARAM_PAGE = "page";
     String PARAM_PER_PAGE = "per_page";
     String PARAM_FILTER = "filters";
+    String PARAM_FIELDS = "fields";
 
     /* Entity Endpoints */
 
@@ -32,6 +34,7 @@ public interface GlobalRegistryClient {
      * @throws SerializerException     Thrown when there was an exception with entity deserialization.
      */
     <T> T getEntity(Type<T> type, String id, String ownedBy, Filter... filters) throws GlobalRegistryException;
+    <T> T getEntity(Type<T> type, String id, String ownedBy, Set<String> fields, Filter... filters) throws GlobalRegistryException;
 
     /**
      * Retrieve an entity from the Global Registry
@@ -45,8 +48,10 @@ public interface GlobalRegistryClient {
      * @throws SerializerException     Thrown when there was an exception with entity deserialization.
      */
     <T> T getEntity(Type<T> type, String id, Filter... filters) throws GlobalRegistryException;
+    <T> T getEntity(Type<T> type, String id, Set<String> fields, Filter... filters) throws GlobalRegistryException;
 
     <T> ResponseList<T> getEntities(Type<T> type, String ownedBy, Filter... filters) throws GlobalRegistryException;
+    <T> ResponseList<T> getEntities(Type<T> type, String ownedBy, Set<String> fields, Filter... filters) throws GlobalRegistryException;
 
     <T> ResponseList<T> getEntities(Type<T> type, String ownedBy, int page,
                                     Filter... filters) throws GlobalRegistryException;
@@ -61,6 +66,9 @@ public interface GlobalRegistryClient {
     <T> ResponseList<T> getEntities(Type<T> type, int page, int perPage,
                                     Filter... filters) throws GlobalRegistryException;
 
+    <T> ResponseList<T> getEntities(Type<T> type, int page, int perPage, Set<String> fields,
+                                    Filter... filters) throws GlobalRegistryException;
+
     /**
      * Store an entity in the Global Registry
      *
@@ -71,8 +79,10 @@ public interface GlobalRegistryClient {
      * @throws UnauthorizedException   Thrown when the request is unauthorized.
      */
     <T> T addEntity(@Nonnull Type<T> type, @Nonnull T entity) throws GlobalRegistryException;
+    <T> T addEntity(@Nonnull Type<T> type, @Nonnull T entity, Set<String> fields) throws GlobalRegistryException;
 
     <T> T updateEntity(@Nonnull Type<T> type, @Nonnull String id, @Nonnull T entity) throws GlobalRegistryException;
+    <T> T updateEntity(@Nonnull Type<T> type, @Nonnull String id, @Nonnull T entity, Set<String> fields) throws GlobalRegistryException;
 
     void deleteEntity(@Nonnull String id) throws GlobalRegistryException;
 

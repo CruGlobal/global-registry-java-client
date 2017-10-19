@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClient {
     public static final int DEFAULT_PAGE = 1;
@@ -19,9 +20,29 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     }
 
     @Override
+    public final <T> T getEntity(final Type<T> type, final String id, final String ownedBy, final Set<String> fields,
+                                 final Filter... filters) throws GlobalRegistryException {
+        return this.getEntity(type, id, fields, ArrayUtil.merge(filters, Filter.OWNED_BY.values(ownedBy)));
+    }
+
+    @Override
+    public final <T> T getEntity(final Type<T> type, final String id, final Filter... filters) throws GlobalRegistryException
+    {
+        return this.getEntity(type, id, (Set<String>) null, filters);
+    }
+
+
+    @Override
     public final <T> ResponseList<T> getEntities(final Type<T> type, final String ownedBy,
                                                  final Filter... filters) throws GlobalRegistryException {
         return this.getEntities(type, ownedBy, DEFAULT_PAGE, filters);
+    }
+
+    @Override
+    public final <T> ResponseList<T> getEntities(final Type<T> type, final String ownedBy, final Set<String> fields,
+                                                 final Filter... filters) throws GlobalRegistryException {
+        return this.getEntities(type, DEFAULT_PAGE, DEFAULT_PER_PAGE_ENTITIES, fields, ArrayUtil
+                .merge(filters, Filter.OWNED_BY.values(ownedBy)));
     }
 
     @Override
@@ -50,9 +71,27 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     }
 
     @Override
+    public final <T> ResponseList<T> getEntities(final Type<T> type, final int page, final int perPage,
+                                                 final Filter... filters) throws GlobalRegistryException
+    {
+        return this.getEntities(type, page, DEFAULT_PER_PAGE_ENTITIES, null, filters);
+    }
+
+    @Override
     @Deprecated
     public final <T> void deleteEntity(final Type<T> type, @Nonnull final String id) throws GlobalRegistryException {
         this.deleteEntity(id);
+    }
+
+    @Override
+    public final <T> T addEntity(@Nonnull final Type<T> type, @Nonnull final T entity) throws GlobalRegistryException {
+        return this.addEntity(type, entity, null);
+    }
+
+    @Override
+    public final <T> T updateEntity(@Nonnull final Type<T> type, @Nonnull final String id, @Nonnull final T entity)
+            throws GlobalRegistryException {
+        return this.updateEntity(type, id, entity, null);
     }
 
     @Override
