@@ -1,5 +1,7 @@
 package org.ccci.gto.globalreg;
 
+import com.google.common.base.Ascii;
+
 /**
  * Created by ryancarlson on 8/29/14.
  */
@@ -8,6 +10,7 @@ public class ClientErrorException extends GlobalRegistryException {
 	final String responseContent;
 
 	public ClientErrorException(int statusCode, String responseContent) {
+		super(String.format("status code %s: %s", statusCode, Ascii.truncate(responseContent, 200, "...")));
 		this.statusCode = statusCode;
 		this.responseContent = responseContent;
 	}
