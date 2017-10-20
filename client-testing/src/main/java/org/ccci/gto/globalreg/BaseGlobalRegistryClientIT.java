@@ -2,16 +2,19 @@ package org.ccci.gto.globalreg;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
 
+import com.google.common.collect.ImmutableSet;
 import org.ccci.gto.globalreg.serializer.json.JSONObjectType;
 import org.ccci.gto.globalreg.serializer.json.JsonSerializer;
 import org.json.JSONObject;
 import org.junit.Test;
 
 import java.security.SecureRandom;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -34,6 +37,7 @@ public abstract class BaseGlobalRegistryClientIT {
         client.setApiUrl("https://stage-api.global-registry.org");
         client.setAccessToken(ACCESS_TOKEN);
         client.setSerializer(new JsonSerializer());
+        client.setFullResponsesFromUpdates(true);
         return client;
     }
 
@@ -43,11 +47,12 @@ public abstract class BaseGlobalRegistryClientIT {
         assumeNotNull(client);
 
         final JSONObject entity = client.getEntity(TYPE_PERSON, "ed4442da-00ca-11e4-9830-12725f8f377c",
-                "4e9541b8-e02a-11e3-a00d-12725f8f377c");
+                "4e9541b8-e02a-11e3-a00d-12725f8f377c", Collections.singleton("last_name"));
 
         assertNotNull(entity);
         assertEquals("ed4442da-00ca-11e4-9830-12725f8f377c", entity.getString("id"));
         assertEquals("Vellacott", entity.getString("last_name"));
+        assertNull(entity.optString("first_name", null));
     }
 
     @Test
@@ -56,7 +61,8 @@ public abstract class BaseGlobalRegistryClientIT {
         assumeNotNull(client);
 
         final ResponseList<JSONObject> entities = client.getEntities(TYPE_PERSON,
-                "4e9541b8-e02a-11e3-a00d-12725f8f377c", new Filter().path("last_name").values("Vellacott"));
+                "4e9541b8-e02a-11e3-a00d-12725f8f377c", Collections.singleton("last_name"),
+                new Filter().path("last_name").values("Vellacott"));
 
         assertEquals(1, entities.getMeta().getPage());
         assertTrue(entities.size() > 0);
@@ -75,7 +81,8 @@ public abstract class BaseGlobalRegistryClientIT {
         baseEntity.put("client_integration_id", RAND.nextLong());
         baseEntity.put("first_name", "Test User");
         final String newId = client.addEntity(TYPE_PERSON, baseEntity).getString("id");
-        final JSONObject newEntity = client.getEntity(TYPE_PERSON, newId, "4e9541b8-e02a-11e3-a00d-12725f8f377c");
+        final JSONObject newEntity = client.getEntity(TYPE_PERSON, newId, "4e9541b8-e02a-11e3-a00d-12725f8f377c",
+                Collections.singleton("*"));
 
         assertNotNull(newEntity);
         assertEquals("Test User", newEntity.getString("first_name"));
@@ -84,15 +91,15 @@ public abstract class BaseGlobalRegistryClientIT {
         final JSONObject tmp = new JSONObject(newEntity.toString());
         tmp.put("first_name", "Updated Name");
         tmp.put("last_name", "Last");
-        final String updatedId = client.updateEntity(TYPE_PERSON, newEntity.getString("id"), tmp).getString("id");
-        final JSONObject updatedEntity = client.getEntity(TYPE_PERSON, updatedId, "4e9541b8-e02a-11e3-a00d-12725f8f377c");
+        final JSONObject updatedEntity = client.updateEntity(TYPE_PERSON, newEntity.getString("id"), tmp,  ImmutableSet.of("first_name","last_name"));
 
         assertNotNull(updatedEntity);
         assertEquals("Updated Name", updatedEntity.getString("first_name"));
         assertEquals("Last", updatedEntity.getString("last_name"));
-        assertEquals(newId, updatedId);
+        assertEquals(newId, updatedEntity.getString("id"));
+        assertEquals(newId, newEntity.getString("id"));
 
-        client.deleteEntity(newEntity.getString("id"));
+        client.deleteEntity(newId);
     }
 
     @Test

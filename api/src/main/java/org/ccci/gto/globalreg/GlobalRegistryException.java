@@ -10,4 +10,8 @@ public class GlobalRegistryException extends Exception {
     public GlobalRegistryException(final Throwable cause) {
         super(cause);
     }
+
+    public GlobalRegistryException(final String message) {
+        super(message);
+    }
 }
