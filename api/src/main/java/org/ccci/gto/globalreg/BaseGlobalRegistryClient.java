@@ -159,7 +159,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
     private void addFullResponseParameterIfNecessary(final Request request) {
         if (fullResponsesFromUpdates) {
-            request.queryParams.put("full_response", "true");
+            request.queryParams.put(PARAM_FULL_RESPONSE, "true");
         }
     }
 

@@ -18,6 +18,7 @@ public interface GlobalRegistryClient {
     String PARAM_PER_PAGE = "per_page";
     String PARAM_FILTER = "filters";
     String PARAM_FIELDS = "fields";
+    String PARAM_FULL_RESPONSE = "full_response";
 
     /* Entity Endpoints */
 
