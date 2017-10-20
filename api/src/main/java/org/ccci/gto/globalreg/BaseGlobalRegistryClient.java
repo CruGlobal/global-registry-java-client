@@ -19,6 +19,7 @@ import java.util.Set;
 public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryClient {
     private static final MediaType APPLICATION_JSON = MediaType.create("application", "json");
     private static final Joiner COMMA_JOINER = Joiner.on(",");
+    private static final String TRUE = "true";
 
     protected String apiUrl;
     protected String accessToken;
@@ -112,7 +113,8 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public final <T> T addEntity(@Nonnull final Type<T> type, @Nonnull final T entity, final Set<String> fields) throws GlobalRegistryException {
+    public final <T> T addEntity(@Nonnull final Type<T> type, @Nonnull final T entity, final Set<String> fields,
+                                 boolean requireMdm) throws GlobalRegistryException {
         // build request
         final Request request = new Request();
         request.method = "POST";
@@ -121,6 +123,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         request.content = this.serializer.serializeEntity(type, entity);
         addFullResponseParameterIfNecessary(request);
         addFieldsParameterIfNecessary(request, fields);
+        addRequireMdmParameterIfNecessary(request, requireMdm);
 
 
         // execute request
@@ -132,8 +135,8 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public final <T> T updateEntity(@Nonnull final Type<T> type, @Nonnull final String id, @Nonnull final T entity, final Set<String> fields)
-            throws GlobalRegistryException {
+    public final <T> T updateEntity(@Nonnull final Type<T> type, @Nonnull final String id, @Nonnull final T entity,
+                                    final Set<String> fields, boolean requireMdm) throws GlobalRegistryException {
         // build the request
         final Request request = new Request();
         request.method = "PUT";
@@ -142,6 +145,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         request.content = this.serializer.serializeEntity(type, entity);
         addFullResponseParameterIfNecessary(request);
         addFieldsParameterIfNecessary(request, fields);
+        addRequireMdmParameterIfNecessary(request, requireMdm);
 
         // execute request
         final Response response = this.processRequest(request);
@@ -159,7 +163,13 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
     private void addFullResponseParameterIfNecessary(final Request request) {
         if (fullResponsesFromUpdates) {
-            request.queryParams.put(PARAM_FULL_RESPONSE, "true");
+            request.queryParams.put(PARAM_FULL_RESPONSE, TRUE);
+        }
+    }
+
+    private void addRequireMdmParameterIfNecessary(final Request request, final boolean requireMdm) {
+        if (requireMdm) {
+            request.queryParams.put(PARAM_REQUIRE_MDM, TRUE);
         }
     }
 

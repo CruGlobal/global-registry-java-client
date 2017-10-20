@@ -19,6 +19,7 @@ public interface GlobalRegistryClient {
     String PARAM_FILTER = "filters";
     String PARAM_FIELDS = "fields";
     String PARAM_FULL_RESPONSE = "full_response";
+    String PARAM_REQUIRE_MDM = "require_mdm";
 
     /* Entity Endpoints */
 
@@ -80,10 +81,19 @@ public interface GlobalRegistryClient {
      * @throws UnauthorizedException   Thrown when the request is unauthorized.
      */
     <T> T addEntity(@Nonnull Type<T> type, @Nonnull T entity) throws GlobalRegistryException;
+
     <T> T addEntity(@Nonnull Type<T> type, @Nonnull T entity, Set<String> fields) throws GlobalRegistryException;
 
+    <T> T addEntity(@Nonnull Type<T> type, @Nonnull T entity, Set<String> fields, boolean requireMdm)
+            throws GlobalRegistryException;
+
     <T> T updateEntity(@Nonnull Type<T> type, @Nonnull String id, @Nonnull T entity) throws GlobalRegistryException;
-    <T> T updateEntity(@Nonnull Type<T> type, @Nonnull String id, @Nonnull T entity, Set<String> fields) throws GlobalRegistryException;
+
+    <T> T updateEntity(@Nonnull Type<T> type, @Nonnull String id, @Nonnull T entity, Set<String> fields)
+            throws GlobalRegistryException;
+
+    <T> T updateEntity(@Nonnull Type<T> type, @Nonnull String id, @Nonnull T entity, Set<String> fields,
+                       boolean requireMdm) throws GlobalRegistryException;
 
     void deleteEntity(@Nonnull String id) throws GlobalRegistryException;
 
