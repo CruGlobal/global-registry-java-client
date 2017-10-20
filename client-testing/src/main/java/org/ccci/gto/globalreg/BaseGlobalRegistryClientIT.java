@@ -91,7 +91,8 @@ public abstract class BaseGlobalRegistryClientIT {
         final JSONObject tmp = new JSONObject(newEntity.toString());
         tmp.put("first_name", "Updated Name");
         tmp.put("last_name", "Last");
-        final JSONObject updatedEntity = client.updateEntity(TYPE_PERSON, newEntity.getString("id"), tmp,  ImmutableSet.of("first_name","last_name"));
+        final JSONObject updatedEntity = client.updateEntity(TYPE_PERSON, newEntity.getString("id"), tmp,
+                ImmutableSet.of("first_name", "last_name"), true);
 
         assertNotNull(updatedEntity);
         assertEquals("Updated Name", updatedEntity.getString("first_name"));

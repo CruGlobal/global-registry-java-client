@@ -89,9 +89,21 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     }
 
     @Override
+    public final <T> T addEntity(@Nonnull final Type<T> type, @Nonnull final T entity, final Set<String> fields)
+            throws GlobalRegistryException {
+        return this.addEntity(type, entity, fields, false);
+    }
+
+    @Override
     public final <T> T updateEntity(@Nonnull final Type<T> type, @Nonnull final String id, @Nonnull final T entity)
             throws GlobalRegistryException {
         return this.updateEntity(type, id, entity, null);
+    }
+
+    @Override
+    public final <T> T updateEntity(@Nonnull final Type<T> type, @Nonnull final String id, @Nonnull final T entity,
+                                    final Set<String> fields) throws GlobalRegistryException {
+        return this.updateEntity(type, id, entity, fields, false);
     }
 
     @Override
