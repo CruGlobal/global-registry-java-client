@@ -12,6 +12,8 @@ import org.ccci.gto.globalreg.serializer.json.JSONObjectType;
 import org.ccci.gto.globalreg.serializer.json.JsonSerializer;
 import org.json.JSONObject;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.security.SecureRandom;
 import java.util.Collections;
@@ -19,7 +21,17 @@ import java.util.List;
 import java.util.Random;
 
 public abstract class BaseGlobalRegistryClientIT {
-    private static final String ACCESS_TOKEN = "";
+
+    private static final Logger LOG = LoggerFactory.getLogger(BaseGlobalRegistryClientIT.class);
+
+    private static final String ACCESS_TOKEN;
+    static {
+        String key = "accessToken";
+        ACCESS_TOKEN = System.getProperty(key);
+        if (ACCESS_TOKEN == null) {
+            LOG.warn( "{} is not available as a system property", key);
+        }
+    }
 
     private static final Random RAND = new SecureRandom();
 
