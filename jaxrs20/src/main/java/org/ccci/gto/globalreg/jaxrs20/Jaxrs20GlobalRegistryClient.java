@@ -38,11 +38,14 @@ public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
 		webTarget = addPath(request, webTarget);
 		webTarget = addQueryParameters(request, webTarget);
 
-		Invocation.Builder requestBuilder = webTarget
-				.request()
+		Invocation.Builder invocation = webTarget.request()
 				.header("Authorization", "Bearer " + accessToken);
 
-		return buildResponse(execute(requestBuilder, request));
+		javax.ws.rs.core.Response response = request.content == null ?
+				invocation.method(request.method) :
+				invocation.method(request.method, Entity.json(request.content));
+
+		return buildResponse(response);
 	}
 
 	/**
@@ -74,41 +77,6 @@ public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
 			webTarget = webTarget.queryParam(entry.getKey(), entry.getValue());
 		}
 		return webTarget;
-	}
-
-	/**
-	 * Call the appropriate method on the target resource.  The method passed in the Request object is
-	 * mapped to one of "GET", "POST", "PUT", "DELETE", or "OPTIONS".  Any other method results in an
-	 * UnsupportedOperationException.
-	 *
-	 * @param requestBuilder
-	 * @param request
-	 * @return
-	 */
-	private javax.ws.rs.core.Response execute(Invocation.Builder requestBuilder, Request request)
-	{
-		if("GET".equalsIgnoreCase(request.method))
-		{
-			return requestBuilder.get();
-		}
-		if("POST".equalsIgnoreCase(request.method))
-		{
-			return requestBuilder.post(Entity.json(request.content));
-		}
-		if("PUT".equalsIgnoreCase(request.method))
-		{
-			return requestBuilder.put(Entity.json(request.content));
-		}
-		if("DELETE".equalsIgnoreCase(request.method))
-		{
-			return requestBuilder.delete();
-		}
-		if("OPTIONS".equalsIgnoreCase(request.method))
-		{
-			return requestBuilder.options();
-		}
-
-		throw new UnsupportedOperationException();
 	}
 
 	/**
