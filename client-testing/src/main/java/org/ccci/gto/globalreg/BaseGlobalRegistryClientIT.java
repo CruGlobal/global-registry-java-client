@@ -11,6 +11,8 @@ import com.google.common.collect.ImmutableSet;
 import org.ccci.gto.globalreg.serializer.json.JSONObjectType;
 import org.ccci.gto.globalreg.serializer.json.JsonSerializer;
 import org.json.JSONObject;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,25 +39,34 @@ public abstract class BaseGlobalRegistryClientIT {
 
     protected static final JSONObjectType TYPE_PERSON = new JSONObjectType("person");
 
+    private BaseGlobalRegistryClient client;
+
     protected abstract BaseGlobalRegistryClient newClient();
 
-    protected BaseGlobalRegistryClient getClient() {
+    @Before
+    public void initClient() {
         // dont create client if we don't have an access token
         if (ACCESS_TOKEN == null || "".equals(ACCESS_TOKEN)) {
-            return null;
+            client = null;
+            return;
         }
 
-        final BaseGlobalRegistryClient client = this.newClient();
+        client = this.newClient();
         client.setApiUrl("https://stage-api.global-registry.org");
         client.setAccessToken(ACCESS_TOKEN);
         client.setSerializer(new JsonSerializer());
         client.setFullResponsesFromUpdates(true);
-        return client;
+    }
+
+    @After
+    public void closeClient() throws Exception {
+        if (client != null) {
+            client.close();
+        }
     }
 
     @Test
     public void testGetEntity() throws Exception {
-        final GlobalRegistryClient client = this.getClient();
         assumeNotNull(client);
 
         final JSONObject entity = client.getEntity(TYPE_PERSON, "ed4442da-00ca-11e4-9830-12725f8f377c",
@@ -69,7 +80,6 @@ public abstract class BaseGlobalRegistryClientIT {
 
     @Test
     public void testGetEntities() throws Exception {
-        final GlobalRegistryClient client = this.getClient();
         assumeNotNull(client);
 
         final ResponseList<JSONObject> entities = client.getEntities(TYPE_PERSON,
@@ -86,7 +96,6 @@ public abstract class BaseGlobalRegistryClientIT {
 
     @Test
     public void testCreateUpdateDeleteEntity() throws Exception {
-        final GlobalRegistryClient client = this.getClient();
         assumeNotNull(client);
 
         final JSONObject baseEntity = new JSONObject();
@@ -117,7 +126,6 @@ public abstract class BaseGlobalRegistryClientIT {
 
     @Test
     public void testGetEntityTypes() throws Exception {
-        final GlobalRegistryClient client = this.getClient();
         assumeNotNull(client);
 
         final ResponseList<EntityType> types = client.getEntityTypes(new Filter().path("name").value("person"));
@@ -137,7 +145,6 @@ public abstract class BaseGlobalRegistryClientIT {
 
     @Test
     public void testGetSystems() throws Exception {
-        final GlobalRegistryClient client = this.getClient();
         assumeNotNull(client);
 
         final List<RegisteredSystem> systems = client.getSystems();
@@ -161,7 +168,6 @@ public abstract class BaseGlobalRegistryClientIT {
 
     @Test
     public void testInvalidAccessToken() throws Exception {
-        final BaseGlobalRegistryClient client = this.getClient();
         assumeNotNull(client);
         client.setAccessToken(client.accessToken + "_invalid");
 

@@ -8,6 +8,6 @@ public class CxfGlobalRegistryClientIT extends BaseGlobalRegistryClientIT {
 
     @Override
     protected BaseGlobalRegistryClient newClient() {
-        return new Jaxrs20GlobalRegistryClient(new ClientBuilderImpl().build());
+        return new Jaxrs20GlobalRegistryClient(new ClientBuilderImpl());
     }
 }

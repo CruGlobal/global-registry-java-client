@@ -8,6 +8,6 @@ public class ResteasyGlobalRegistryClientIT extends BaseGlobalRegistryClientIT {
 
     @Override
     protected BaseGlobalRegistryClient newClient() {
-        return new Jaxrs20GlobalRegistryClient(new ResteasyClientBuilder().build());
+        return new Jaxrs20GlobalRegistryClient(new ResteasyClientBuilder());
     }
 }

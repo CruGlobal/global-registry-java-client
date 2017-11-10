@@ -8,6 +8,6 @@ public class JerseyGlobalRegistryClientIT extends BaseGlobalRegistryClientIT {
 
     @Override
     protected BaseGlobalRegistryClient newClient() {
-        return new Jaxrs20GlobalRegistryClient(new JerseyClientBuilder().build());
+        return new Jaxrs20GlobalRegistryClient(new JerseyClientBuilder());
     }
 }

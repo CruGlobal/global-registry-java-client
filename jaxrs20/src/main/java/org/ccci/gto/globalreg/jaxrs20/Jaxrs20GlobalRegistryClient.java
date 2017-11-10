@@ -14,20 +14,42 @@ import java.util.Map;
 /**
  * This class uses the JAX-RS 2 API to interact with the Global Registry.
  *
- * The caller may choose the jax-rs implementation by using the {@code Client} constructor.
+ * The caller may choose the jax-rs implementation by using the {@code Client} or {@code ClientBuilder} constructors.
  *
  */
 public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
 {
 
 	private final Client client;
+	private final boolean responsibleForClosingClient;
 
+	/**
+	 * Constructs a GR client using {@link ClientBuilder#newBuilder()}.
+	 */
 	public Jaxrs20GlobalRegistryClient() {
-		this(ClientBuilder.newBuilder().build());
+		this(ClientBuilder.newBuilder());
 	}
 
-	public Jaxrs20GlobalRegistryClient(Client client) {
+	/**
+	 * Constructs a GR client that uses the given jax-rs client builder.
+	 * The jax-rs client will be closed when {@link #close()} is invoked.
+	 */
+	public Jaxrs20GlobalRegistryClient(final ClientBuilder clientBuilder) {
+		this(clientBuilder.build(), true);
+	}
+
+	/**
+	 * Constructs a GR client that uses the given jax-rs client.
+	 * The given client will not be closed when {@link #close()} is invoked;
+	 * it is the caller's responsibility.
+	 */
+	public Jaxrs20GlobalRegistryClient(final Client client) {
+		this(client, false);
+	}
+
+	private Jaxrs20GlobalRegistryClient(final Client client, final boolean responsibleForClosingClient) {
 		this.client = client;
+		this.responsibleForClosingClient = false;
 	}
 
 	@Nonnull
@@ -73,4 +95,11 @@ public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
 	private Response buildResponse(javax.ws.rs.core.Response response) throws UnauthorizedException {
         return new Response(response.getStatus(), response.readEntity(String.class));
     }
+
+	@Override
+	public void close()  {
+		if (responsibleForClosingClient) {
+			client.close();
+		}
+	}
 }
