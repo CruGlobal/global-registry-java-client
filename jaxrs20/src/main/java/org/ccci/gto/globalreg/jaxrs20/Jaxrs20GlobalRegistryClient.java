@@ -14,7 +14,7 @@ import java.util.Collection;
 /**
  * This class uses the JAX-RS 2 API to interact with the Global Registry.
  *
- * The caller is may choose the jax-rs implementation by using the {@code Client} constructor.
+ * The caller may choose the jax-rs implementation by using the {@code Client} constructor.
  *
  */
 public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
@@ -23,7 +23,11 @@ public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
 	private final Client client;
 
 	public Jaxrs20GlobalRegistryClient() {
-		this.client = ClientBuilder.newBuilder().build();
+		this(ClientBuilder.newBuilder().build());
+	}
+
+	public Jaxrs20GlobalRegistryClient(Client client) {
+		this.client = client;
 	}
 
 	@Nonnull
