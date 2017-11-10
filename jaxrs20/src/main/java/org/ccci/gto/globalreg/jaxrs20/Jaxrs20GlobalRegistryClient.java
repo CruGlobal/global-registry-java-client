@@ -9,7 +9,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
-import java.util.Collection;
+import java.util.Map;
 
 /**
  * This class uses the JAX-RS 2 API to interact with the Global Registry.
@@ -67,26 +67,12 @@ public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
 		return webTarget;
 	}
 
-	/**
-	 * Add query parameters on to the WebTarget based on the query parameters provided in the Request object.
-	 *
-	 * Note that WebTarget is immutable, so in order to preserve data a new copy of the object must be returned,
-	 * pass by reference is not suitable here.
-	 *
-	 * @param request
-	 * @param webTarget
-	 * @return
-	 */
 	private WebTarget addQueryParameters(Request request, WebTarget webTarget)
 	{
-		// add query parameters
-		for(String paramName : request.queryParams.keySet())
+		for(Map.Entry<String, String> entry : request.queryParams.entries())
 		{
-			Collection<String> values = request.queryParams.get(paramName);
-
-			webTarget = webTarget.queryParam(paramName, values.toArray(new String[values.size()]));
+			webTarget = webTarget.queryParam(entry.getKey(), entry.getValue());
 		}
-
 		return webTarget;
 	}
 
