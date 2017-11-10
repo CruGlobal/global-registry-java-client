@@ -5,27 +5,10 @@ import com.google.common.base.Ascii;
 /**
  * Created by ryancarlson on 8/29/14.
  */
-public class ClientErrorException extends GlobalRegistryException {
-	final int statusCode;
-	final String responseContent;
+public class ClientErrorException extends HttpErrorException {
 
 	public ClientErrorException(int statusCode, String responseContent) {
-		super(String.format("status code %s: %s", statusCode, Ascii.truncate(responseContent, 200, "...")));
-		this.statusCode = statusCode;
-		this.responseContent = responseContent;
+		super(statusCode, responseContent);
 	}
 
-	public ClientErrorException(Throwable cause, int statusCode, String responseContent) {
-		super(cause);
-		this.statusCode = statusCode;
-		this.responseContent = responseContent;
-	}
-
-	public int getStatusCode() {
-		return statusCode;
-	}
-
-	public String getResponseContent() {
-		return responseContent;
-	}
 }
