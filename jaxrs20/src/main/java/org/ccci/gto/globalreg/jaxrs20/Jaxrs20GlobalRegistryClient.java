@@ -34,9 +34,8 @@ public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
 	@Override
 	protected Response processRequest(Request request) throws UnauthorizedException
 	{
-		WebTarget webTarget = webTarget()
-				.path(buildPath(request));
-
+		WebTarget webTarget = webTarget();
+		webTarget = addPath(request, webTarget);
 		webTarget = addQueryParameters(request, webTarget);
 
 		Invocation.Builder requestBuilder = webTarget
@@ -60,25 +59,12 @@ public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
 		return client.target(apiUrl);
 	}
 
-	/**
-	 * Build a String representation of the resource path based on the path elements provided in the Request object.
-	 *
-	 * @param request
-	 * @return
-	 */
-	private String buildPath(Request request)
+	private WebTarget addPath(final Request request, WebTarget webTarget)
 	{
-		StringBuilder pathBuilder = new StringBuilder();
-
-		boolean first = true;
-		for(String pathElement : request.path)
-		{
-			if(!first) pathBuilder.append("/");
-			pathBuilder.append(pathElement);
-			first = false;
+		for (String pathSegment : request.path) {
+			webTarget = webTarget.path(pathSegment);
 		}
-
-		return pathBuilder.toString();
+		return webTarget;
 	}
 
 	/**
