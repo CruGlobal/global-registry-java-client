@@ -34,7 +34,7 @@ public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
 	@Override
 	protected Response processRequest(Request request) throws UnauthorizedException
 	{
-		WebTarget webTarget = webTarget();
+		WebTarget webTarget = client.target(apiUrl);
 		webTarget = addPath(request, webTarget);
 		webTarget = addQueryParameters(request, webTarget);
 
@@ -46,20 +46,6 @@ public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
 				invocation.method(request.method, Entity.json(request.content));
 
 		return buildResponse(response);
-	}
-
-	/**
-	 * Create a WebTarget based on the api URL.
-	 *
-	 * This WebTarget represents a resource target identified by the resource URI.
-	 *
-	 * @see javax.ws.rs.client.WebTarget
-	 *
-	 * @return
-	 */
-	private WebTarget webTarget()
-	{
-		return client.target(apiUrl);
 	}
 
 	private WebTarget addPath(final Request request, WebTarget webTarget)
