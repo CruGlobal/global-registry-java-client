@@ -291,7 +291,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
             throws ClientErrorException, ServerErrorException {
         switch(response.code) {
             case 401:
-                throw new UnauthorizedException();
+                throw new UnauthorizedException(response.content);
         }
         if (response.code / 100 == 4) {
             throw new ClientErrorException(response.code, response.content);
