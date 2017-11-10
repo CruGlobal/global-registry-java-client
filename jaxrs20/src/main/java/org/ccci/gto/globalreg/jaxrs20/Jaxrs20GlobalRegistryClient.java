@@ -20,6 +20,12 @@ import java.util.Collection;
 public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
 {
 
+	private final Client client;
+
+	public Jaxrs20GlobalRegistryClient() {
+		this.client = ClientBuilder.newBuilder().build();
+	}
+
 	@Nonnull
 	@Override
 	protected Response processRequest(Request request) throws UnauthorizedException
@@ -47,7 +53,6 @@ public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
 	 */
 	private WebTarget webTarget()
 	{
-		Client client = ClientBuilder.newBuilder().build();
 		return client.target(apiUrl);
 	}
 
