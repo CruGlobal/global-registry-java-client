@@ -128,7 +128,7 @@ public abstract class BaseGlobalRegistryClientIT {
     public void testGetEntityTypes() throws Exception {
         assumeNotNull(client);
 
-        final ResponseList<EntityType> types = client.getEntityTypes(new Filter().path("name").value("person"));
+        final ResponseList<EntityType> types = client.getEntityTypes(new Filter().path("name").values("person"));
 
         assertNotNull(types);
         assertEquals(1, types.size());
