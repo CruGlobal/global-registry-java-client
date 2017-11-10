@@ -1,4 +1,4 @@
-package org.ccci.gto.globalreg.resteasy;
+package org.ccci.gto.globalreg.jaxrs20;
 
 import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
 import org.ccci.gto.globalreg.UnauthorizedException;
@@ -12,13 +12,12 @@ import javax.ws.rs.client.WebTarget;
 import java.util.Collection;
 
 /**
- * This class uses JAXRS implementation RestEasy to interact with the Global Registry.
+ * This class uses the JAX-RS 2 API to interact with the Global Registry.
  *
- * For more information on RestEasy, @see <a href="http://resteasy.jboss.org/">http://resteasy.jboss.org/</a>
+ * The caller is may choose the jax-rs implementation by using the {@code Client} constructor.
  *
- * Created by ryancarlson on 6/30/14.
  */
-public class ResteasyGlobalRegistryClient extends BaseGlobalRegistryClient
+public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
 {
 
 	@Nonnull
@@ -34,9 +33,7 @@ public class ResteasyGlobalRegistryClient extends BaseGlobalRegistryClient
 				.request()
 				.header("Authorization", "Bearer " + accessToken);
 
-		javax.ws.rs.core.Response resteasyResponse = execute(requestBuilder, request);
-
-		return buildResponse(resteasyResponse);
+		return buildResponse(execute(requestBuilder, request));
 	}
 
 	/**
@@ -134,15 +131,11 @@ public class ResteasyGlobalRegistryClient extends BaseGlobalRegistryClient
 	}
 
 	/**
-	 * Take the status code and returned entity from the RestEasy response and convert it into a
-	 * Global Registry client response.  The response entity is converted into a String for
-	 * convenience.
-	 *
-	 * @param resteasyResponse
-	 * @return
+	 * Takes the status code and returned entity from the jax-rs response and converts it into a
+	 * Global Registry client response.
 	 */
 	@Nonnull
-	private Response buildResponse(javax.ws.rs.core.Response resteasyResponse) throws UnauthorizedException {
-        return new Response(resteasyResponse.getStatus(), resteasyResponse.readEntity(String.class));
+	private Response buildResponse(javax.ws.rs.core.Response response) throws UnauthorizedException {
+        return new Response(response.getStatus(), response.readEntity(String.class));
     }
 }

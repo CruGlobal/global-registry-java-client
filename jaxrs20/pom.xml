@@ -8,8 +8,14 @@
         <version>0.2.4-SNAPSHOT</version>
     </parent>
 
-    <artifactId>global-registry-client-resteasy</artifactId>
+    <artifactId>global-registry-client-jaxrs20</artifactId>
     <packaging>jar</packaging>
+
+    <properties>
+      <!-- avoid resteasy warnings by using recent apache http dependencies -->
+      <httpclient.version>4.5.3</httpclient.version>
+      <httpcore.version>4.4.8</httpcore.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -17,16 +23,23 @@
             <artifactId>global-registry-client-api</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-client</artifactId>
-            <version>3.0.8.Final</version>
-        </dependency>
+      <dependency>
+        <groupId>javax.ws.rs</groupId>
+        <artifactId>javax.ws.rs-api</artifactId>
+        <scope>provided</scope>
+      </dependency>
 
       <!-- Test dependencies -->
       <dependency>
         <groupId>org.ccci.gto</groupId>
         <artifactId>global-registry-client-testing</artifactId>
       </dependency>
+
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-rs-client</artifactId>
+        <scope>test</scope>
+      </dependency>
+
     </dependencies>
 </project>
