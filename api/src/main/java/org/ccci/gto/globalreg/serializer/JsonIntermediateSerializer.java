@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerializer {
+
+    private static final String APPLICATION_JSON = "application/json";
+
     @Override
     public <T> String serializeEntity(final Type<T> type, final T entity) {
         return this.jsonObjToString(this.entityToJsonObj(type, entity).wrap(type.getEntityType()).wrap("entity"));
@@ -275,6 +278,11 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
         notificationMessage.setEntityType(json.getString("entity_type"));
         return notificationMessage;
     }
+
+    public String getAcceptableMediaType() {
+        return APPLICATION_JSON;
+    }
+
 
     @Nonnull
     protected abstract JsonObj<O, A> stringToJsonObj(@Nonnull String raw) throws UnparsableJsonException;

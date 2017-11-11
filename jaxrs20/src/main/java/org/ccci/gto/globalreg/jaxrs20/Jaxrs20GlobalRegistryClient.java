@@ -1,6 +1,7 @@
 package org.ccci.gto.globalreg.jaxrs20;
 
 import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
+import org.ccci.gto.globalreg.GlobalRegistryException;
 
 import javax.annotation.Nonnull;
 import javax.ws.rs.client.Client;
@@ -8,6 +9,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import java.util.Map;
 
 /**
@@ -60,6 +62,7 @@ public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
 		webTarget = addQueryParameters(request, webTarget);
 
 		Invocation.Builder invocation = webTarget.request()
+				.accept(serializer.getAcceptableMediaType())
 				.header("Authorization", "Bearer " + accessToken);
 
 		javax.ws.rs.core.Response response = request.content == null ?
@@ -92,8 +95,23 @@ public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
 	 */
 	@Nonnull
 	private Response buildResponse(javax.ws.rs.core.Response response) {
-        return new Response(response.getStatus(), response.readEntity(String.class));
+		checkMediaType(response);
+		return new Response(response.getStatus(), response.readEntity(String.class));
     }
+
+	private void checkMediaType(final javax.ws.rs.core.Response response) {
+		if (response.getStatus() / 100 < 4) {
+			MediaType requestedType = MediaType.valueOf(serializer.getAcceptableMediaType());
+			MediaType responseType = response.getMediaType();
+			if (responseType != null && !requestedType.isCompatible(responseType)) {
+				throw new GlobalRegistryException(String.format(
+						"incompatible media returned: %s; status code: %s; response body:%n%s",
+						responseType,
+						response.getStatus(),
+						response.readEntity(String.class)));
+			}
+		}
+	}
 
 	@Override
 	public void close()  {
