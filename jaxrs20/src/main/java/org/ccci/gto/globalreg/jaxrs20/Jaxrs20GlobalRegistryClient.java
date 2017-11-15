@@ -49,7 +49,7 @@ public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
 
 	private Jaxrs20GlobalRegistryClient(final Client client, final boolean responsibleForClosingClient) {
 		this.client = client;
-		this.responsibleForClosingClient = false;
+		this.responsibleForClosingClient = responsibleForClosingClient;
 	}
 
 	@Nonnull
