@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Set;
 
-public interface GlobalRegistryClient {
+public interface GlobalRegistryClient extends AutoCloseable {
     String PATH_ENTITIES = "entities";
     String PATH_ENTITY_TYPES = "entity_types";
     String PATH_MEASUREMENT_TYPES = "measurement_types";

@@ -323,4 +323,6 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
             this.content = Strings.nullToEmpty(content);
         }
     }
+
+    public void close() { }
 }
