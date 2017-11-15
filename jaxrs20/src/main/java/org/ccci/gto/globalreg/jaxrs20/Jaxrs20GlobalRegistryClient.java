@@ -1,7 +1,6 @@
 package org.ccci.gto.globalreg.jaxrs20;
 
 import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
-import org.ccci.gto.globalreg.UnauthorizedException;
 
 import javax.annotation.Nonnull;
 import javax.ws.rs.client.Client;
@@ -54,7 +53,7 @@ public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
 
 	@Nonnull
 	@Override
-	protected Response processRequest(Request request) throws UnauthorizedException
+	protected Response processRequest(Request request)
 	{
 		WebTarget webTarget = client.target(apiUrl);
 		webTarget = addPath(request, webTarget);
@@ -92,7 +91,7 @@ public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
 	 * Global Registry client response.
 	 */
 	@Nonnull
-	private Response buildResponse(javax.ws.rs.core.Response response) throws UnauthorizedException {
+	private Response buildResponse(javax.ws.rs.core.Response response) {
         return new Response(response.getStatus(), response.readEntity(String.class));
     }
 
