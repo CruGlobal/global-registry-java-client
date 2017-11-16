@@ -76,7 +76,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
     @Override
     public <T> T getEntity(final Type<T> type, final String id, final Set<String> fields, final Filter... filters) throws GlobalRegistryException
-	{
+    {
         // build the request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITIES, id};

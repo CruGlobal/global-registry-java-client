@@ -5,7 +5,7 @@ package org.ccci.gto.globalreg;
  */
 public class ServerErrorException extends HttpErrorException {
 
-	public ServerErrorException(int statusCode, String responseContent) {
-		super(statusCode, responseContent);
-	}
+    public ServerErrorException(int statusCode, String responseContent) {
+        super(statusCode, responseContent);
+    }
 }

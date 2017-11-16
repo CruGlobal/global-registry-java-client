@@ -7,8 +7,8 @@ import com.google.common.base.Ascii;
  */
 public class ClientErrorException extends HttpErrorException {
 
-	public ClientErrorException(int statusCode, String responseContent) {
-		super(statusCode, responseContent);
-	}
+    public ClientErrorException(int statusCode, String responseContent) {
+        super(statusCode, responseContent);
+    }
 
 }
