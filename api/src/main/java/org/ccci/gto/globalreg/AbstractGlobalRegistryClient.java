@@ -26,8 +26,7 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     }
 
     @Override
-    public final <T> T getEntity(final Type<T> type, final String id, final Filter... filters) throws GlobalRegistryException
-    {
+    public final <T> T getEntity(final Type<T> type, final String id, final Filter... filters) throws GlobalRegistryException {
         return this.getEntity(type, id, (Set<String>) null, filters);
     }
 
@@ -72,8 +71,7 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
 
     @Override
     public final <T> ResponseList<T> getEntities(final Type<T> type, final int page, final int perPage,
-                                                 final Filter... filters) throws GlobalRegistryException
-    {
+                                                 final Filter... filters) throws GlobalRegistryException {
         return this.getEntities(type, page, DEFAULT_PER_PAGE_ENTITIES, null, filters);
     }
 
