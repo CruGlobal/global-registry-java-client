@@ -47,12 +47,6 @@ public class HttpErrorException extends GlobalRegistryException {
         return matcher.matches() ? matcher.group("errorMessage") : null;
     }
 
-    public HttpErrorException(Throwable cause, int statusCode, String responseContent) {
-        super(cause);
-        this.statusCode = statusCode;
-        this.responseContent = responseContent;
-    }
-
     public int getStatusCode() {
         return statusCode;
     }
