@@ -3,7 +3,11 @@ package org.ccci.gto.globalreg;
 import com.google.common.base.Ascii;
 
 /**
- * Created by ryancarlson on 8/29/14.
+ * A {@code HttpErrorException} that indicates a client-side global registry error.
+ * The response status code is in the 4xx range.
+ *
+ * @author Ryan Carlson
+ * @author Matt Drees
  */
 public class ClientErrorException extends HttpErrorException {
 

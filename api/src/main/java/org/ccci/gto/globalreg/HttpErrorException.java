@@ -5,6 +5,11 @@ import com.google.common.base.Ascii;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * A {@code GlobalRegistryException} that indicates Global Registry responded with
+ * a non-successful http status code.
+ * The response status code is not in the 2xx range.
+ */
 public class HttpErrorException extends GlobalRegistryException {
 
     private static final Pattern JSON_ERROR_PATTERN;

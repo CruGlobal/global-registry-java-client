@@ -1,5 +1,8 @@
 package org.ccci.gto.globalreg;
 
+/**
+ * A base global registry client runtime exception.
+ */
 public class GlobalRegistryException extends RuntimeException {
     private static final long serialVersionUID = 1747755230724452819L;
 

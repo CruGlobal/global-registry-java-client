@@ -8,6 +8,12 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * A client for using Global Registry.
+ *
+ * All methods may throw appropriate {@link GlobalRegistryException}.
+ * For example, {@link UnauthorizedException} is thrown when the request is unauthorized.
+ */
 public interface GlobalRegistryClient extends AutoCloseable {
     String PATH_ENTITIES = "entities";
     String PATH_ENTITY_TYPES = "entity_types";
@@ -31,9 +37,6 @@ public interface GlobalRegistryClient extends AutoCloseable {
      * @param ownedBy the system id the entity is being retrieved for
      * @param filters any filters for the data being returned
      * @return The entity that is stored in the Global Registry, or null if it doesn't exist
-     * @throws GlobalRegistryException Thrown when there is an error retrieving the entity.
-     * @throws UnauthorizedException   Thrown when the request is unauthorized.
-     * @throws SerializerException     Thrown when there was an exception with entity deserialization.
      */
     <T> T getEntity(Type<T> type, String id, String ownedBy, Filter... filters);
     <T> T getEntity(Type<T> type, String id, String ownedBy, Set<String> fields, Filter... filters);
@@ -45,9 +48,6 @@ public interface GlobalRegistryClient extends AutoCloseable {
      * @param id      the id of the entity being retrieved
      * @param filters any filters for the data being returned
      * @return The entity that is stored in the Global Registry, or null if it doesn't exist
-     * @throws GlobalRegistryException Thrown when there is an error retrieving the entity.
-     * @throws UnauthorizedException   Thrown when the request is unauthorized.
-     * @throws SerializerException     Thrown when there was an exception with entity deserialization.
      */
     <T> T getEntity(Type<T> type, String id, Filter... filters);
     <T> T getEntity(Type<T> type, String id, Set<String> fields, Filter... filters);
@@ -77,8 +77,6 @@ public interface GlobalRegistryClient extends AutoCloseable {
      * @param type   The type of entity to add
      * @param entity The actual entity to store in the Global Registry
      * @return the entity stored in the Global Registry
-     * @throws GlobalRegistryException Thrown when there is an error adding the entity.
-     * @throws UnauthorizedException   Thrown when the request is unauthorized.
      */
     <T> T addEntity(@Nonnull Type<T> type, @Nonnull T entity);
 
