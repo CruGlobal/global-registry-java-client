@@ -35,8 +35,8 @@ public interface GlobalRegistryClient extends AutoCloseable {
      * @throws UnauthorizedException   Thrown when the request is unauthorized.
      * @throws SerializerException     Thrown when there was an exception with entity deserialization.
      */
-    <T> T getEntity(Type<T> type, String id, String ownedBy, Filter... filters) throws GlobalRegistryException;
-    <T> T getEntity(Type<T> type, String id, String ownedBy, Set<String> fields, Filter... filters) throws GlobalRegistryException;
+    <T> T getEntity(Type<T> type, String id, String ownedBy, Filter... filters);
+    <T> T getEntity(Type<T> type, String id, String ownedBy, Set<String> fields, Filter... filters);
 
     /**
      * Retrieve an entity from the Global Registry
@@ -49,27 +49,27 @@ public interface GlobalRegistryClient extends AutoCloseable {
      * @throws UnauthorizedException   Thrown when the request is unauthorized.
      * @throws SerializerException     Thrown when there was an exception with entity deserialization.
      */
-    <T> T getEntity(Type<T> type, String id, Filter... filters) throws GlobalRegistryException;
-    <T> T getEntity(Type<T> type, String id, Set<String> fields, Filter... filters) throws GlobalRegistryException;
+    <T> T getEntity(Type<T> type, String id, Filter... filters);
+    <T> T getEntity(Type<T> type, String id, Set<String> fields, Filter... filters);
 
-    <T> ResponseList<T> getEntities(Type<T> type, String ownedBy, Filter... filters) throws GlobalRegistryException;
-    <T> ResponseList<T> getEntities(Type<T> type, String ownedBy, Set<String> fields, Filter... filters) throws GlobalRegistryException;
+    <T> ResponseList<T> getEntities(Type<T> type, String ownedBy, Filter... filters);
+    <T> ResponseList<T> getEntities(Type<T> type, String ownedBy, Set<String> fields, Filter... filters);
 
     <T> ResponseList<T> getEntities(Type<T> type, String ownedBy, int page,
-                                    Filter... filters) throws GlobalRegistryException;
+                                    Filter... filters);
 
     <T> ResponseList<T> getEntities(Type<T> type, String ownedBy, int page, int perPage,
-                                    Filter... filters) throws GlobalRegistryException;
+                                    Filter... filters);
 
-    <T> ResponseList<T> getEntities(Type<T> type, Filter... filters) throws GlobalRegistryException;
+    <T> ResponseList<T> getEntities(Type<T> type, Filter... filters);
 
-    <T> ResponseList<T> getEntities(Type<T> type, int page, Filter... filters) throws GlobalRegistryException;
+    <T> ResponseList<T> getEntities(Type<T> type, int page, Filter... filters);
 
     <T> ResponseList<T> getEntities(Type<T> type, int page, int perPage,
-                                    Filter... filters) throws GlobalRegistryException;
+                                    Filter... filters);
 
     <T> ResponseList<T> getEntities(Type<T> type, int page, int perPage, Set<String> fields,
-                                    Filter... filters) throws GlobalRegistryException;
+                                    Filter... filters);
 
     /**
      * Store an entity in the Global Registry
@@ -80,57 +80,55 @@ public interface GlobalRegistryClient extends AutoCloseable {
      * @throws GlobalRegistryException Thrown when there is an error adding the entity.
      * @throws UnauthorizedException   Thrown when the request is unauthorized.
      */
-    <T> T addEntity(@Nonnull Type<T> type, @Nonnull T entity) throws GlobalRegistryException;
+    <T> T addEntity(@Nonnull Type<T> type, @Nonnull T entity);
 
-    <T> T addEntity(@Nonnull Type<T> type, @Nonnull T entity, Set<String> fields) throws GlobalRegistryException;
+    <T> T addEntity(@Nonnull Type<T> type, @Nonnull T entity, Set<String> fields);
 
-    <T> T addEntity(@Nonnull Type<T> type, @Nonnull T entity, Set<String> fields, boolean requireMdm)
-            throws GlobalRegistryException;
+    <T> T addEntity(@Nonnull Type<T> type, @Nonnull T entity, Set<String> fields, boolean requireMdm);
 
-    <T> T updateEntity(@Nonnull Type<T> type, @Nonnull String id, @Nonnull T entity) throws GlobalRegistryException;
+    <T> T updateEntity(@Nonnull Type<T> type, @Nonnull String id, @Nonnull T entity);
 
-    <T> T updateEntity(@Nonnull Type<T> type, @Nonnull String id, @Nonnull T entity, Set<String> fields)
-            throws GlobalRegistryException;
+    <T> T updateEntity(@Nonnull Type<T> type, @Nonnull String id, @Nonnull T entity, Set<String> fields);
 
     <T> T updateEntity(@Nonnull Type<T> type, @Nonnull String id, @Nonnull T entity, Set<String> fields,
-                       boolean requireMdm) throws GlobalRegistryException;
+                       boolean requireMdm);
 
-    void deleteEntity(@Nonnull String id) throws GlobalRegistryException;
+    void deleteEntity(@Nonnull String id);
 
     @Deprecated
-    <T> void deleteEntity(@Nullable Type<T> type, @Nonnull String id) throws GlobalRegistryException;
+    <T> void deleteEntity(@Nullable Type<T> type, @Nonnull String id);
 
     /* Entity Type Endpoints */
 
-    ResponseList<EntityType> getEntityTypes(Filter... filters) throws GlobalRegistryException;
+    ResponseList<EntityType> getEntityTypes(Filter... filters);
 
-    ResponseList<EntityType> getEntityTypes(int page, Filter... filters) throws GlobalRegistryException;
+    ResponseList<EntityType> getEntityTypes(int page, Filter... filters);
 
-    EntityType addEntityType(EntityType type) throws GlobalRegistryException;
+    EntityType addEntityType(EntityType type);
 
     /* System Endpoints */
 
     @Nonnull
-    RegisteredSystem getSystem(String id) throws GlobalRegistryException;
+    RegisteredSystem getSystem(String id);
 
     @Nonnull
-    List<RegisteredSystem> getSystems() throws GlobalRegistryException;
+    List<RegisteredSystem> getSystems();
 
     /* Measurement Endpoints */
 
-    ResponseList<MeasurementType> getMeasurementTypes(Filter... filters) throws GlobalRegistryException;
+    ResponseList<MeasurementType> getMeasurementTypes(Filter... filters);
 
-    ResponseList<MeasurementType> getMeasurementTypes(int page, Filter... filters) throws GlobalRegistryException;
+    ResponseList<MeasurementType> getMeasurementTypes(int page, Filter... filters);
 
-    MeasurementType getMeasurementType(String id, Filter... filters) throws GlobalRegistryException;
+    MeasurementType getMeasurementType(String id, Filter... filters);
 
     List<Measurement> getMeasurements(MeasurementType type, ReadableInstant from, ReadableInstant to,
-                                      Filter... filters) throws GlobalRegistryException;
+                                      Filter... filters);
 
     List<Measurement> getMeasurements(String type, ReadableInstant from, ReadableInstant to,
-                                      Filter... filters) throws GlobalRegistryException;
+                                      Filter... filters);
 
-    List<Measurement> getMeasurements(MeasurementType type, Filter... filters) throws GlobalRegistryException;
+    List<Measurement> getMeasurements(MeasurementType type, Filter... filters);
 
-    List<Measurement> getMeasurements(String type, Filter... filters) throws GlobalRegistryException;
+    List<Measurement> getMeasurements(String type, Filter... filters);
 }

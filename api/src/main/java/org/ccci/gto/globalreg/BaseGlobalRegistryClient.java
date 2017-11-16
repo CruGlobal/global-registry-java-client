@@ -72,10 +72,10 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Nonnull
-    protected abstract Response processRequest(Request request) throws GlobalRegistryException;
+    protected abstract Response processRequest(Request request);
 
     @Override
-    public <T> T getEntity(final Type<T> type, final String id, final Set<String> fields, final Filter... filters) throws GlobalRegistryException {
+    public <T> T getEntity(final Type<T> type, final String id, final Set<String> fields, final Filter... filters) {
         // build the request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITIES, id};
@@ -92,7 +92,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
     @Override
     public <T> ResponseList<T> getEntities(final Type<T> type, final int page, final int perPage, final Set<String> fields,
-                                           final Filter... filters) throws GlobalRegistryException {
+                                           final Filter... filters) {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITIES};
@@ -112,7 +112,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
     @Override
     public final <T> T addEntity(@Nonnull final Type<T> type, @Nonnull final T entity, final Set<String> fields,
-                                 boolean requireMdm) throws GlobalRegistryException {
+                                 boolean requireMdm) {
         // build request
         final Request request = new Request();
         request.method = "POST";
@@ -134,7 +134,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
     @Override
     public final <T> T updateEntity(@Nonnull final Type<T> type, @Nonnull final String id, @Nonnull final T entity,
-                                    final Set<String> fields, boolean requireMdm) throws GlobalRegistryException {
+                                    final Set<String> fields, boolean requireMdm) {
         // build the request
         final Request request = new Request();
         request.method = "PUT";
@@ -172,7 +172,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public final void deleteEntity(@Nonnull final String id) throws GlobalRegistryException {
+    public final void deleteEntity(@Nonnull final String id) {
         // build the request
         final Request request = new Request();
         request.method = "DELETE";
@@ -185,7 +185,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public ResponseList<EntityType> getEntityTypes(final int page, final Filter... filters) throws GlobalRegistryException {
+    public ResponseList<EntityType> getEntityTypes(final int page, final Filter... filters) {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITY_TYPES};
@@ -202,7 +202,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
     // XXX: this is currently untested
     @Override
-    public final EntityType addEntityType(final EntityType type) throws GlobalRegistryException {
+    public final EntityType addEntityType(final EntityType type) {
         // build request
         final Request request = new Request();
         request.method = "POST";
@@ -220,7 +220,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
     @Nonnull
     @Override
-    public final RegisteredSystem getSystem(final String id) throws GlobalRegistryException {
+    public final RegisteredSystem getSystem(final String id) {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_SYSTEMS, id};
@@ -236,7 +236,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
     @Nonnull
     @Override
-    public final List<RegisteredSystem> getSystems() throws GlobalRegistryException {
+    public final List<RegisteredSystem> getSystems() {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_SYSTEMS};
@@ -250,7 +250,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public ResponseList<MeasurementType> getMeasurementTypes(final int page, final Filter... filters) throws GlobalRegistryException {
+    public ResponseList<MeasurementType> getMeasurementTypes(final int page, final Filter... filters) {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_MEASUREMENT_TYPES};
@@ -266,7 +266,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
     }
 
     @Override
-    public MeasurementType getMeasurementType(final String id, final Filter... filters) throws GlobalRegistryException {
+    public MeasurementType getMeasurementType(final String id, final Filter... filters) {
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_MEASUREMENT_TYPES, id};
