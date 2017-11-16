@@ -23,8 +23,8 @@ public class HttpErrorException extends GlobalRegistryException {
         );
     }
 
-    final int statusCode;
-    final String responseContent;
+    private final int statusCode;
+    private final String responseContent;
 
     public HttpErrorException(int statusCode, String responseContent) {
         super(determineMessage(statusCode, responseContent));
