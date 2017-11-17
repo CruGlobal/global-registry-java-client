@@ -1,6 +1,7 @@
 package org.ccci.gto.globalreg;
 
 import com.google.common.base.Ascii;
+import com.google.common.base.Preconditions;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,9 +33,14 @@ public class HttpErrorException extends GlobalRegistryException {
     private final String responseContent;
 
     public HttpErrorException(int statusCode, String responseContent) {
-        super(determineMessage(statusCode, responseContent));
+        super(determineMessage(checkStatus(statusCode), responseContent));
         this.statusCode = statusCode;
         this.responseContent = responseContent;
+    }
+
+    private static int checkStatus(final int statusCode) {
+        Preconditions.checkArgument(statusCode / 100 != 2);
+        return statusCode;
     }
 
     private static String determineMessage(final int statusCode, final String responseContent) {
