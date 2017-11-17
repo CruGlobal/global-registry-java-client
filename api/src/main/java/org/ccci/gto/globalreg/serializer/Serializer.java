@@ -48,4 +48,6 @@ public interface Serializer {
 
     @Nonnull
     NotificationMessage deserializeNotificationMessage(@Nonnull final String raw) throws UnparsableJsonException;
+
+    String getAcceptableMediaType();
 }

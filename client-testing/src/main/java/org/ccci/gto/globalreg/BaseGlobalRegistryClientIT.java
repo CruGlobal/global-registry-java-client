@@ -175,6 +175,7 @@ public abstract class BaseGlobalRegistryClientIT {
             client.getEntities(TYPE_PERSON);
             fail("Expected UnauthorizedException not thrown");
         } catch (final UnauthorizedException expected) {
+            assertTrue(expected.getMessage().startsWith("status code 401: You need to"));
         }
     }
 }

@@ -1,31 +1,24 @@
 package org.ccci.gto.globalreg;
 
 import com.google.common.base.Ascii;
+import com.google.common.base.Preconditions;
 
 /**
- * Created by ryancarlson on 8/29/14.
+ * A {@code HttpErrorException} that indicates a client-side global registry error.
+ * The response status code is in the 4xx range.
+ *
+ * @author Ryan Carlson
+ * @author Matt Drees
  */
-public class ClientErrorException extends GlobalRegistryException {
-	final int statusCode;
-	final String responseContent;
+public class ClientErrorException extends HttpErrorException {
 
-	public ClientErrorException(int statusCode, String responseContent) {
-		super(String.format("status code %s: %s", statusCode, Ascii.truncate(responseContent, 200, "...")));
-		this.statusCode = statusCode;
-		this.responseContent = responseContent;
-	}
+    public ClientErrorException(int statusCode, String responseContent) {
+        super(checkStatus(statusCode), responseContent);
+    }
 
-	public ClientErrorException(Throwable cause, int statusCode, String responseContent) {
-		super(cause);
-		this.statusCode = statusCode;
-		this.responseContent = responseContent;
-	}
+    private static int checkStatus(final int statusCode) {
+        Preconditions.checkArgument(statusCode / 100 == 4);
+        return statusCode;
+    }
 
-	public int getStatusCode() {
-		return statusCode;
-	}
-
-	public String getResponseContent() {
-		return responseContent;
-	}
 }
