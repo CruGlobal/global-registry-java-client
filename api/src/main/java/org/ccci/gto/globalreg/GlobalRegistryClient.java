@@ -129,4 +129,7 @@ public interface GlobalRegistryClient extends AutoCloseable {
     List<Measurement> getMeasurements(MeasurementType type, Filter... filters);
 
     List<Measurement> getMeasurements(String type, Filter... filters);
+
+    /** Closes this client, releasing any resources it has acquired. */
+    void close();
 }
