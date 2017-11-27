@@ -9,7 +9,7 @@
   </parent>
 
   <artifactId>global-registry-client</artifactId>
-  <version>0.2.4-SNAPSHOT</version>
+  <version>0.3.0</version>
   <packaging>pom</packaging>
 
   <modules>
@@ -27,7 +27,7 @@
   <scm>
     <connection>scm:git:git@github.com:GlobalTechnology/global-registry-java-client.git</connection>
     <developerConnection>scm:git:git@github.com:GlobalTechnology/global-registry-java-client.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>v0.3.0</tag>
   </scm>
 
   <dependencyManagement>
