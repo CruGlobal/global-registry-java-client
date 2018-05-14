@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * Entity representing a Date value when querying with multiple owned_by systems.
- * Specifically, this is using yyy-MM-dd as the date format.
+ * Specifically, this is using yyyy-MM-dd as the date format.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
