@@ -2,12 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.ccci.gto</groupId>
-    <artifactId>java-parent</artifactId>
-    <version>23</version>
-  </parent>
-
+  <groupId>org.ccci.gto</groupId>
   <artifactId>global-registry-client</artifactId>
   <version>0.3.1-SNAPSHOT</version>
   <packaging>pom</packaging>
@@ -30,6 +25,17 @@
     <tag>HEAD</tag>
   </scm>
 
+  <distributionManagement>
+    <repository>
+      <id>maven.gcx.org</id>
+      <url>https://maven.gcx.org/artifactory/gto-release</url>
+    </repository>
+    <snapshotRepository>
+      <id>maven.gcx.org</id>
+      <url>https://maven.gcx.org/artifactory/gto-snapshot</url>
+    </snapshotRepository>
+  </distributionManagement>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -43,7 +49,89 @@
         <version>${project.version}</version>
       </dependency>
 
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.code.findbugs</groupId>
+        <artifactId>jsr305</artifactId>
+        <version>3.0.0</version>
+        <optional>true</optional><!-- Only used for annotations -->
+      </dependency>
+
+      <!-- jax-rs 1 -->
+      <dependency>
+        <groupId>javax.ws.rs</groupId>
+        <artifactId>jsr311-api</artifactId>
+        <version>1.1.1</version>
+      </dependency>
+
+      <!-- jax-rs 2 -->
+      <dependency>
+        <groupId>javax.ws.rs</groupId>
+        <artifactId>javax.ws.rs-api</artifactId>
+        <version>2.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>18.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>joda-time</groupId>
+        <artifactId>joda-time</artifactId>
+        <version>2.4</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-annotations</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
+
+      <!-- Apache Http Components -->
+
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpcore</artifactId>
+        <version>${httpcore.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>${httpclient.version}</version>
+      </dependency>
+
+
       <!-- Testing dependencies -->
+
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.11</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-simple</artifactId>
+        <version>${slf4j.version}</version>
+        <scope>test</scope>
+      </dependency>
+
       <dependency>
         <groupId>org.ccci.gto</groupId>
         <artifactId>global-registry-client-api</artifactId>
@@ -57,8 +145,51 @@
         <version>${project.version}</version>
         <scope>test</scope>
       </dependency>
+
+      <dependency>
+        <groupId>com.jayway.restassured</groupId>
+        <artifactId>json-path</artifactId>
+        <version>2.3.1</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sun.jersey</groupId>
+        <artifactId>jersey-client</artifactId>
+        <version>1.18.1</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.glassfish.jersey.core</groupId>
+        <artifactId>jersey-client</artifactId>
+        <version>2.10.3</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jboss.resteasy</groupId>
+        <artifactId>resteasy-client</artifactId>
+        <version>3.0.14.Final</version>
+        <exclusions>
+          <!-- fortunately resteasy works well enough with javax.ws.rs:javax.ws.rs-api -->
+          <exclusion>
+            <groupId>org.jboss.spec.javax.ws.rs</groupId>
+            <artifactId>jboss-jaxrs-api_2.0_spec</artifactId>
+          </exclusion>
+        </exclusions>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-rs-client</artifactId>
+        <version>3.0.2</version>
+        <scope>test</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
+
   <dependencies>
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -87,9 +218,44 @@
   <build>
     <pluginManagement>
       <plugins>
+        <!-- We target the verify phase for the source and javadoc plugins to ensure the artifacts are generated before the
+          install & deploy phase, but are not generated for the package phase. The install:install goal is always at the beginning
+          of the install phase, so we cannot attach to the install phase and still get the generated artifacts installed. -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>2.4</version>
+          <executions>
+            <execution>
+              <id>source-jar</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>jar-no-fork</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.10.1</version>
+          <configuration>
+            <quiet>true</quiet>
+          </configuration>
+          <executions>
+            <execution>
+              <id>javadoc-jar</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
+          <version>2.5</version>
           <configuration>
             <archive>
               <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
@@ -98,18 +264,50 @@
         </plugin>
       </plugins>
     </pluginManagement>
+
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
+        <version>2.4.0</version>
+        <executions>
+          <execution>
+            <id>bundle-manifest</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>manifest</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
+        <version>2.18</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.2</version>
         <executions>
           <execution>
             <id>default-deploy</id>
@@ -118,9 +316,40 @@
           <execution>
             <id>public-deploy</id>
             <phase>deploy</phase>
+            <goals>
+              <goal>deploy</goal>
+            </goals>
+            <configuration>
+              <altReleaseDeploymentRepository>maven.gcx.org::default::https://maven.gcx.org/artifactory/public-release</altReleaseDeploymentRepository>
+              <altSnapshotDeploymentRepository>maven.gcx.org::default::https://maven.gcx.org/artifactory/public-snapshot</altSnapshotDeploymentRepository>
+            </configuration>
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <localCheckout>true</localCheckout>
+          <pushChanges>false</pushChanges>
+          <tagNameFormat>v@{project.version}</tagNameFormat>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
+
+  <properties>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <slf4j.version>1.7.7</slf4j.version>
+    <httpclient.version>4.3.5</httpclient.version>
+    <httpcore.version>4.3.2</httpcore.version>
+    <jackson.version>2.4.3</jackson.version>
+  </properties>
 </project>

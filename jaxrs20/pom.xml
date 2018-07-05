@@ -38,34 +38,21 @@
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-client</artifactId>
-      <version>3.0.14.Final</version>
-      <exclusions>
-        <!-- fortunately resteasy works well enough with javax.ws.rs:javax.ws.rs-api -->
-        <exclusion>
-          <groupId>org.jboss.spec.javax.ws.rs</groupId>
-          <artifactId>jboss-jaxrs-api_2.0_spec</artifactId>
-        </exclusion>
-      </exclusions>
-      <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-rs-client</artifactId>
-      <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-client</artifactId>
-      <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>${slf4j.version}</version>
-      <scope>test</scope>
     </dependency>
 
   </dependencies>
