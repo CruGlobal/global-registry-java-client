@@ -66,8 +66,14 @@ public class JaxrsGlobalRegistryClient extends BaseGlobalRegistryClient {
             try (InputStream raw = conn.getInputStream(); InputStreamReader in = new InputStreamReader(raw)) {
                 return new Response(conn.getResponseCode(), CharStreams.toString(in));
             } catch (final IOException e) {
-                // XXX: this probably isn't right for 200 & 201 responses
-                return new Response(code, "");
+                try (
+                    InputStream rawError = conn.getErrorStream();
+                    InputStreamReader errorReader = new InputStreamReader(rawError)
+                ) {
+                    return new Response(conn.getResponseCode(), CharStreams.toString(errorReader));
+                } catch (final IOException e2) {
+                    return new Response(code, "<error content not available>");
+                }
             }
         } catch (final IOException e) {
             LOG.debug("error processing request: {}", uri, e);
