@@ -27,12 +27,12 @@
 
   <distributionManagement>
     <repository>
-      <id>maven.gcx.org</id>
-      <url>https://maven.gcx.org/artifactory/gto-release</url>
+      <id>cruglobal.jfrog.io</id>
+      <url>https://cruglobal.jfrog.io/cruglobal/list/maven-cru-public-releases-local/</url>
     </repository>
     <snapshotRepository>
-      <id>maven.gcx.org</id>
-      <url>https://maven.gcx.org/artifactory/gto-snapshot</url>
+      <id>cruglobal.jfrog.io</id>
+      <url>https://cruglobal.jfrog.io/cruglobal/list/maven-cru-public-snapshots-local/</url>
     </snapshotRepository>
   </distributionManagement>
 
@@ -228,6 +228,7 @@
             </execution>
           </executions>
         </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
@@ -245,6 +246,7 @@
             </execution>
           </executions>
         </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
@@ -254,6 +256,12 @@
               <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
             </archive>
           </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -293,29 +301,6 @@
               <goal>integration-test</goal>
               <goal>verify</goal>
             </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <version>2.8.2</version>
-        <executions>
-          <execution>
-            <id>default-deploy</id>
-            <phase>none</phase>
-          </execution>
-          <execution>
-            <id>public-deploy</id>
-            <phase>deploy</phase>
-            <goals>
-              <goal>deploy</goal>
-            </goals>
-            <configuration>
-              <altReleaseDeploymentRepository>maven.gcx.org::default::https://maven.gcx.org/artifactory/public-release</altReleaseDeploymentRepository>
-              <altSnapshotDeploymentRepository>maven.gcx.org::default::https://maven.gcx.org/artifactory/public-snapshot</altSnapshotDeploymentRepository>
-            </configuration>
           </execution>
         </executions>
       </plugin>
