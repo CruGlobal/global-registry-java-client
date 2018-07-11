@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -38,34 +38,21 @@
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-client</artifactId>
-      <version>3.0.14.Final</version>
-      <exclusions>
-        <!-- fortunately resteasy works well enough with javax.ws.rs:javax.ws.rs-api -->
-        <exclusion>
-          <groupId>org.jboss.spec.javax.ws.rs</groupId>
-          <artifactId>jboss-jaxrs-api_2.0_spec</artifactId>
-        </exclusion>
-      </exclusions>
-      <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-rs-client</artifactId>
-      <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-client</artifactId>
-      <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>${slf4j.version}</version>
-      <scope>test</scope>
     </dependency>
 
   </dependencies>
