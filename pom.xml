@@ -182,7 +182,7 @@
       <dependency>
         <groupId>org.jboss.resteasy</groupId>
         <artifactId>resteasy-client</artifactId>
-        <version>3.0.14.Final</version>
+        <version>3.14.0.Final</version>
         <scope>test</scope>
         <exclusions>
           <!-- fortunately resteasy works well enough with javax.ws.rs:javax.ws.rs-api -->
