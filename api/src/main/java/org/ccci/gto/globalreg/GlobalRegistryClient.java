@@ -1,6 +1,5 @@
 package org.ccci.gto.globalreg;
 
-import org.ccci.gto.globalreg.serializer.SerializerException;
 import org.joda.time.ReadableInstant;
 
 import javax.annotation.Nonnull;
