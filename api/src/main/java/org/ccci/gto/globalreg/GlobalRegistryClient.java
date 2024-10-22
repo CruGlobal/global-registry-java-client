@@ -1,6 +1,5 @@
 package org.ccci.gto.globalreg;
 
-import org.ccci.gto.globalreg.serializer.SerializerException;
 import org.joda.time.ReadableInstant;
 
 import javax.annotation.Nonnull;
@@ -70,6 +69,9 @@ public interface GlobalRegistryClient extends AutoCloseable {
 
     <T> ResponseList<T> getEntities(Type<T> type, int page, int perPage, Set<String> fields,
                                     Filter... filters);
+
+    <T> ResponseList<T> getEntities(Type<T> type, int page, int perPage, String ownedBy,
+                                    Set<String> fields, Filter... filters);
 
     /**
      * Store an entity in the Global Registry

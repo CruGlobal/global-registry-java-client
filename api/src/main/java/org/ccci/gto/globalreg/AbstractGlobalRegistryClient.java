@@ -70,7 +70,14 @@ public abstract class AbstractGlobalRegistryClient implements GlobalRegistryClie
     @Override
     public final <T> ResponseList<T> getEntities(final Type<T> type, final int page, final int perPage,
                                                  final Filter... filters) {
-        return this.getEntities(type, page, DEFAULT_PER_PAGE_ENTITIES, null, filters);
+        return this.getEntities(type, page, perPage, null, filters);
+    }
+
+    @Override
+    public final <T> ResponseList<T> getEntities(final Type<T> type, final int page,
+                                                 final int perPage, final String ownedBy,
+                                                 final Set<String> fields, final Filter... filters) {
+        return this.getEntities(type, page, perPage, fields, ArrayUtil.merge(filters, Filter.OWNED_BY.values(ownedBy)));
     }
 
     @Override
