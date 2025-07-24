@@ -2,7 +2,6 @@ package org.ccci.gto.globalreg.jaxrs;
 
 import com.google.common.base.Throwables;
 import com.google.common.io.CharStreams;
-import com.google.common.net.HttpHeaders;
 import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
 import org.ccci.gto.globalreg.UnauthorizedException;
 import org.slf4j.Logger;
@@ -44,14 +43,14 @@ public class JaxrsGlobalRegistryClient extends BaseGlobalRegistryClient {
             conn.setConnectTimeout(connectTimeout);
             conn.setReadTimeout(readTimeout);
             conn.setRequestMethod(request.method);
-            conn.setRequestProperty(HttpHeaders.AUTHORIZATION, "Bearer " + this.accessToken);
+            conn.setRequestProperty("Authorization", "Bearer " + this.accessToken);
             for (final Map.Entry<String, String> header : request.headers.entrySet()) {
                 conn.setRequestProperty(header.getKey(), header.getValue());
             }
 
             // send content when necessary
             if (request.content != null) {
-                conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, request.contentType);
+                conn.setRequestProperty("Content-Type", request.contentType);
                 conn.setDoOutput(true);
                 try (OutputStream raw = conn.getOutputStream(); OutputStreamWriter out = new OutputStreamWriter(raw)) {
                     out.write(request.content);

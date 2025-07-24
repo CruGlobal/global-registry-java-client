@@ -1,7 +1,6 @@
 package org.ccci.gto.globalreg.httpclient;
 
 import com.google.common.base.Throwables;
-import com.google.common.net.HttpHeaders;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpResponse;
@@ -72,7 +71,7 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
             if (req == null) {
                 throw new IllegalArgumentException("Request specifies unsupported method: " + request.method);
             }
-            req.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + this.accessToken);
+            req.addHeader("Authorization", "Bearer " + this.accessToken);
             for (final Map.Entry<String, String> header : request.headers.entrySet()) {
                 req.addHeader(header.getKey(), header.getValue());
             }

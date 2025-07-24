@@ -1,7 +1,5 @@
 package org.ccci.gto.globalreg;
 
-import com.google.common.net.HttpHeaders;
-import com.google.common.net.MediaType;
 import org.ccci.gto.globalreg.serializer.Serializer;
 
 import javax.annotation.Nonnull;
@@ -14,7 +12,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryClient {
-    private static final MediaType APPLICATION_JSON = MediaType.create("application", "json");
+    private static final String APPLICATION_JSON = "application/json";
     private static final String TRUE = "true";
 
     protected String apiUrl;
@@ -114,7 +112,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         final Request request = new Request();
         request.method = "POST";
         request.path = new String[]{PATH_ENTITIES};
-        request.contentType = APPLICATION_JSON.toString();
+        request.contentType = APPLICATION_JSON;
         request.content = this.serializer.serializeEntity(type, entity);
         addFullResponseParameterIfNecessary(request);
         addFieldsParameterIfNecessary(request, fields);
@@ -136,7 +134,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         final Request request = new Request();
         request.method = "PUT";
         request.path = new String[]{PATH_ENTITIES, id};
-        request.contentType = APPLICATION_JSON.toString();
+        request.contentType = APPLICATION_JSON;
         request.content = this.serializer.serializeEntity(type, entity);
         addFullResponseParameterIfNecessary(request);
         addFieldsParameterIfNecessary(request, fields);
@@ -204,7 +202,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         final Request request = new Request();
         request.method = "POST";
         request.path = new String[]{PATH_ENTITY_TYPES};
-        request.contentType = APPLICATION_JSON.toString();
+        request.contentType = APPLICATION_JSON;
         request.content = this.serializer.serializeEntityType(type);
 
         // execute request
@@ -304,7 +302,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         public String content = null;
 
         Request() {
-            this.headers.put(HttpHeaders.ACCEPT, APPLICATION_JSON.toString());
+            this.headers.put("Accept", APPLICATION_JSON);
         }
     }
 
