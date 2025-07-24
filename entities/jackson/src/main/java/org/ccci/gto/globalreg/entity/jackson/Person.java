@@ -5,8 +5,7 @@ import javax.annotation.processing.Generated;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
+import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
@@ -1155,109 +1154,109 @@ public class Person {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("id", id)
-                .add("accountNumber", accountNumber)
-                .add("activeStatus", activeStatus)
-                .add("birthDay", birthDay)
-                .add("birthMonth", birthMonth)
-                .add("cruEmployee", cruEmployee)
-                .add("dateJoinedStaff", dateJoinedStaff)
-                .add("firstName", firstName)
-                .add("fundingSource", fundingSource)
-                .add("gender", gender)
-                .add("hrStatusCode", hrStatusCode)
-                .add("isStaff", isStaff)
-                .add("lakeHartMailCode", lakeHartMailCode)
-                .add("lastName", lastName)
-                .add("locationCode", locationCode)
-                .add("locationWork", locationWork)
-                .add("maritalStatus", maritalStatus)
-                .add("middleName", middleName)
-                .add("nameAddressEditFlag", nameAddressEditFlag)
-                .add("originalHireDate", originalHireDate)
-                .add("paygroup", paygroup)
-                .add("preferredName", preferredName)
-                .add("ministryCode", ministryCode)
-                .add("ministryDescr", ministryDescr)
-                .add("suffix", suffix)
-                .add("title", title)
-                .add("subMinistryCode", subMinistryCode)
-                .add("subMinistryDescr", subMinistryDescr)
-                .add("emailAddress", emailAddress)
-                .add("phoneNumber", phoneNumber)
-                .add("authentication", authentication)
-                .add("address", address)
-                .add("birthYear", birthYear)
-                .add("birthDate", birthDate)
-                .add("countryOfResidence", countryOfResidence)
-                .add("employmentCountry", employmentCountry)
-                .add("language", language)
-                .add("jobStatus", jobStatus)
-                .add("deptCode", deptCode)
-                .add("deptDescr", deptDescr)
-                .add("jobCode", jobCode)
-                .add("jobDescr", jobDescr)
-                .add("supervisorEmplid", supervisorEmplid)
-                .add("clientUpdatedAt", clientUpdatedAt)
-                .add("clientIntegrationId", clientIntegrationId)
-                .toString();
+        return new StringBuilder("Person{")
+            .append("id='").append(id).append('\'')
+            .append(", accountNumber='").append(accountNumber).append('\'')
+            .append(", activeStatus='").append(activeStatus).append('\'')
+            .append(", birthDay=").append(birthDay)
+            .append(", birthMonth=").append(birthMonth)
+            .append(", cruEmployee=").append(cruEmployee)
+            .append(", dateJoinedStaff='").append(dateJoinedStaff).append('\'')
+            .append(", firstName='").append(firstName).append('\'')
+            .append(", fundingSource='").append(fundingSource).append('\'')
+            .append(", gender='").append(gender).append('\'')
+            .append(", hrStatusCode='").append(hrStatusCode).append('\'')
+            .append(", isStaff=").append(isStaff)
+            .append(", lakeHartMailCode='").append(lakeHartMailCode).append('\'')
+            .append(", lastName='").append(lastName).append('\'')
+            .append(", locationCode='").append(locationCode).append('\'')
+            .append(", locationWork='").append(locationWork).append('\'')
+            .append(", maritalStatus='").append(maritalStatus).append('\'')
+            .append(", middleName='").append(middleName).append('\'')
+            .append(", nameAddressEditFlag='").append(nameAddressEditFlag).append('\'')
+            .append(", originalHireDate='").append(originalHireDate).append('\'')
+            .append(", paygroup='").append(paygroup).append('\'')
+            .append(", preferredName='").append(preferredName).append('\'')
+            .append(", ministryCode='").append(ministryCode).append('\'')
+            .append(", ministryDescr='").append(ministryDescr).append('\'')
+            .append(", suffix='").append(suffix).append('\'')
+            .append(", title='").append(title).append('\'')
+            .append(", subMinistryCode='").append(subMinistryCode).append('\'')
+            .append(", subMinistryDescr='").append(subMinistryDescr).append('\'')
+            .append(", emailAddress=").append(emailAddress)
+            .append(", phoneNumber=").append(phoneNumber)
+            .append(", authentication=").append(authentication)
+            .append(", address=").append(address)
+            .append(", birthYear=").append(birthYear)
+            .append(", birthDate='").append(birthDate).append('\'')
+            .append(", countryOfResidence='").append(countryOfResidence).append('\'')
+            .append(", employmentCountry='").append(employmentCountry).append('\'')
+            .append(", language='").append(language).append('\'')
+            .append(", jobStatus='").append(jobStatus).append('\'')
+            .append(", deptCode='").append(deptCode).append('\'')
+            .append(", deptDescr='").append(deptDescr).append('\'')
+            .append(", jobCode='").append(jobCode).append('\'')
+            .append(", jobDescr='").append(jobDescr).append('\'')
+            .append(", supervisorEmplid='").append(supervisorEmplid).append('\'')
+            .append(", clientUpdatedAt='").append(clientUpdatedAt).append('\'')
+            .append(", clientIntegrationId='").append(clientIntegrationId).append('\'')
+            .append('}').toString();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Person)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return Objects.equal(id, person.id) &&
-                Objects.equal(accountNumber, person.accountNumber) &&
-                Objects.equal(activeStatus, person.activeStatus) &&
-                Objects.equal(birthDay, person.birthDay) &&
-                Objects.equal(birthMonth, person.birthMonth) &&
-                Objects.equal(cruEmployee, person.cruEmployee) &&
-                Objects.equal(dateJoinedStaff, person.dateJoinedStaff) &&
-                Objects.equal(firstName, person.firstName) &&
-                Objects.equal(fundingSource, person.fundingSource) &&
-                Objects.equal(gender, person.gender) &&
-                Objects.equal(hrStatusCode, person.hrStatusCode) &&
-                Objects.equal(isStaff, person.isStaff) &&
-                Objects.equal(lakeHartMailCode, person.lakeHartMailCode) &&
-                Objects.equal(lastName, person.lastName) &&
-                Objects.equal(locationCode, person.locationCode) &&
-                Objects.equal(locationWork, person.locationWork) &&
-                Objects.equal(maritalStatus, person.maritalStatus) &&
-                Objects.equal(middleName, person.middleName) &&
-                Objects.equal(nameAddressEditFlag, person.nameAddressEditFlag) &&
-                Objects.equal(originalHireDate, person.originalHireDate) &&
-                Objects.equal(paygroup, person.paygroup) &&
-                Objects.equal(preferredName, person.preferredName) &&
-                Objects.equal(ministryCode, person.ministryCode) &&
-                Objects.equal(ministryDescr, person.ministryDescr) &&
-                Objects.equal(suffix, person.suffix) &&
-                Objects.equal(title, person.title) &&
-                Objects.equal(subMinistryCode, person.subMinistryCode) &&
-                Objects.equal(subMinistryDescr, person.subMinistryDescr) &&
-                Objects.equal(emailAddress, person.emailAddress) &&
-                Objects.equal(phoneNumber, person.phoneNumber) &&
-                Objects.equal(authentication, person.authentication) &&
-                Objects.equal(address, person.address) &&
-                Objects.equal(birthYear, person.birthYear) &&
-                Objects.equal(birthDate, person.birthDate) &&
-                Objects.equal(countryOfResidence, person.countryOfResidence) &&
-                Objects.equal(employmentCountry, person.employmentCountry) &&
-                Objects.equal(language, person.language) &&
-                Objects.equal(jobStatus, person.jobStatus) &&
-                Objects.equal(deptCode, person.deptCode) &&
-                Objects.equal(deptDescr, person.deptDescr) &&
-                Objects.equal(jobCode, person.jobCode) &&
-                Objects.equal(jobDescr, person.jobDescr) &&
-                Objects.equal(supervisorEmplid, person.supervisorEmplid) &&
-                Objects.equal(clientUpdatedAt, person.clientUpdatedAt) &&
-                Objects.equal(clientIntegrationId, person.clientIntegrationId);
+        return Objects.equals(id, person.id) &&
+                Objects.equals(accountNumber, person.accountNumber) &&
+                Objects.equals(activeStatus, person.activeStatus) &&
+                Objects.equals(birthDay, person.birthDay) &&
+                Objects.equals(birthMonth, person.birthMonth) &&
+                Objects.equals(cruEmployee, person.cruEmployee) &&
+                Objects.equals(dateJoinedStaff, person.dateJoinedStaff) &&
+                Objects.equals(firstName, person.firstName) &&
+                Objects.equals(fundingSource, person.fundingSource) &&
+                Objects.equals(gender, person.gender) &&
+                Objects.equals(hrStatusCode, person.hrStatusCode) &&
+                Objects.equals(isStaff, person.isStaff) &&
+                Objects.equals(lakeHartMailCode, person.lakeHartMailCode) &&
+                Objects.equals(lastName, person.lastName) &&
+                Objects.equals(locationCode, person.locationCode) &&
+                Objects.equals(locationWork, person.locationWork) &&
+                Objects.equals(maritalStatus, person.maritalStatus) &&
+                Objects.equals(middleName, person.middleName) &&
+                Objects.equals(nameAddressEditFlag, person.nameAddressEditFlag) &&
+                Objects.equals(originalHireDate, person.originalHireDate) &&
+                Objects.equals(paygroup, person.paygroup) &&
+                Objects.equals(preferredName, person.preferredName) &&
+                Objects.equals(ministryCode, person.ministryCode) &&
+                Objects.equals(ministryDescr, person.ministryDescr) &&
+                Objects.equals(suffix, person.suffix) &&
+                Objects.equals(title, person.title) &&
+                Objects.equals(subMinistryCode, person.subMinistryCode) &&
+                Objects.equals(subMinistryDescr, person.subMinistryDescr) &&
+                Objects.equals(emailAddress, person.emailAddress) &&
+                Objects.equals(phoneNumber, person.phoneNumber) &&
+                Objects.equals(authentication, person.authentication) &&
+                Objects.equals(address, person.address) &&
+                Objects.equals(birthYear, person.birthYear) &&
+                Objects.equals(birthDate, person.birthDate) &&
+                Objects.equals(countryOfResidence, person.countryOfResidence) &&
+                Objects.equals(employmentCountry, person.employmentCountry) &&
+                Objects.equals(language, person.language) &&
+                Objects.equals(jobStatus, person.jobStatus) &&
+                Objects.equals(deptCode, person.deptCode) &&
+                Objects.equals(deptDescr, person.deptDescr) &&
+                Objects.equals(jobCode, person.jobCode) &&
+                Objects.equals(jobDescr, person.jobDescr) &&
+                Objects.equals(supervisorEmplid, person.supervisorEmplid) &&
+                Objects.equals(clientUpdatedAt, person.clientUpdatedAt) &&
+                Objects.equals(clientIntegrationId, person.clientIntegrationId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, accountNumber, activeStatus, birthDay, birthMonth, cruEmployee, dateJoinedStaff, firstName, fundingSource, gender, hrStatusCode, isStaff, lakeHartMailCode, lastName, locationCode, locationWork, maritalStatus, middleName, nameAddressEditFlag, originalHireDate, paygroup, preferredName, ministryCode, ministryDescr, suffix, title, subMinistryCode, subMinistryDescr, emailAddress, phoneNumber, authentication, address, birthYear, birthDate, countryOfResidence, employmentCountry, language, jobStatus, deptCode, deptDescr, jobCode, jobDescr, supervisorEmplid, clientUpdatedAt, clientIntegrationId);
+        return Objects.hash(id, accountNumber, activeStatus, birthDay, birthMonth, cruEmployee, dateJoinedStaff, firstName, fundingSource, gender, hrStatusCode, isStaff, lakeHartMailCode, lastName, locationCode, locationWork, maritalStatus, middleName, nameAddressEditFlag, originalHireDate, paygroup, preferredName, ministryCode, ministryDescr, suffix, title, subMinistryCode, subMinistryDescr, emailAddress, phoneNumber, authentication, address, birthYear, birthDate, countryOfResidence, employmentCountry, language, jobStatus, deptCode, deptDescr, jobCode, jobDescr, supervisorEmplid, clientUpdatedAt, clientIntegrationId);
     }
 }

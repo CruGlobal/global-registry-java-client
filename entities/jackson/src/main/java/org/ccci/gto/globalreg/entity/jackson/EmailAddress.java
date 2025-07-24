@@ -5,8 +5,7 @@ import javax.annotation.processing.Generated;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
+import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
@@ -155,29 +154,29 @@ public class EmailAddress {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("id", id)
-                .add("email", email)
-                .add("parentId", parentId)
-                .add("clientIntegrationId", clientIntegrationId)
-                .add("clientUpdatedAt", clientUpdatedAt)
-                .toString();
+        return new StringBuilder("EmailAddress{")
+            .append("id='").append(id).append('\'')
+            .append(", email='").append(email).append('\'')
+            .append(", parentId='").append(parentId).append('\'')
+            .append(", clientIntegrationId='").append(clientIntegrationId).append('\'')
+            .append(", clientUpdatedAt='").append(clientUpdatedAt).append('\'')
+            .append('}').toString();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof EmailAddress)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         EmailAddress that = (EmailAddress) o;
-        return Objects.equal(id, that.id) &&
-                Objects.equal(email, that.email) &&
-                Objects.equal(parentId, that.parentId) &&
-                Objects.equal(clientIntegrationId, that.clientIntegrationId) &&
-                Objects.equal(clientUpdatedAt, that.clientUpdatedAt);
+        return Objects.equals(id, that.id) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(parentId, that.parentId) &&
+                Objects.equals(clientIntegrationId, that.clientIntegrationId) &&
+                Objects.equals(clientUpdatedAt, that.clientUpdatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, email, parentId, clientIntegrationId, clientUpdatedAt);
+        return Objects.hash(id, email, parentId, clientIntegrationId, clientUpdatedAt);
     }
 }

@@ -5,8 +5,7 @@ import javax.annotation.processing.Generated;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
+import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
@@ -180,31 +179,31 @@ public class PhoneNumber {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("id", id)
-                .add("primary", primary)
-                .add("location", location)
-                .add("number", number)
-                .add("parentId", parentId)
-                .add("clientIntegrationId", clientIntegrationId)
-                .toString();
+        return new StringBuilder("PhoneNumber{")
+            .append("id='").append(id).append('\'')
+            .append(", primary=").append(primary)
+            .append(", location='").append(location).append('\'')
+            .append(", number='").append(number).append('\'')
+            .append(", parentId='").append(parentId).append('\'')
+            .append(", clientIntegrationId='").append(clientIntegrationId).append('\'')
+            .append('}').toString();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PhoneNumber)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         PhoneNumber that = (PhoneNumber) o;
-        return Objects.equal(id, that.id) &&
-                Objects.equal(primary, that.primary) &&
-                Objects.equal(location, that.location) &&
-                Objects.equal(number, that.number) &&
-                Objects.equal(parentId, that.parentId) &&
-                Objects.equal(clientIntegrationId, that.clientIntegrationId);
+        return Objects.equals(id, that.id) &&
+                Objects.equals(primary, that.primary) &&
+                Objects.equals(location, that.location) &&
+                Objects.equals(number, that.number) &&
+                Objects.equals(parentId, that.parentId) &&
+                Objects.equals(clientIntegrationId, that.clientIntegrationId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, primary, location, number, parentId, clientIntegrationId);
+        return Objects.hash(id, primary, location, number, parentId, clientIntegrationId);
     }
 }

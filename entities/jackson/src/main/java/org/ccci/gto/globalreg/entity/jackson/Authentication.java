@@ -5,8 +5,7 @@ import javax.annotation.processing.Generated;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
+import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
@@ -155,29 +154,29 @@ public class Authentication {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("id", id)
-                .add("relayGuid", relayGuid)
-                .add("keyGuid", keyGuid)
-                .add("parentId", parentId)
-                .add("clientUpdatedAt", clientUpdatedAt)
-                .toString();
+        return new StringBuilder("Authentication{")
+            .append("id='").append(id).append('\'')
+            .append(", relayGuid='").append(relayGuid).append('\'')
+            .append(", keyGuid='").append(keyGuid).append('\'')
+            .append(", parentId='").append(parentId).append('\'')
+            .append(", clientUpdatedAt='").append(clientUpdatedAt).append('\'')
+            .append('}').toString();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Authentication)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Authentication that = (Authentication) o;
-        return Objects.equal(id, that.id) &&
-                Objects.equal(relayGuid, that.relayGuid) &&
-                Objects.equal(keyGuid, that.keyGuid) &&
-                Objects.equal(parentId, that.parentId) &&
-                Objects.equal(clientUpdatedAt, that.clientUpdatedAt);
+        return Objects.equals(id, that.id) &&
+                Objects.equals(relayGuid, that.relayGuid) &&
+                Objects.equals(keyGuid, that.keyGuid) &&
+                Objects.equals(parentId, that.parentId) &&
+                Objects.equals(clientUpdatedAt, that.clientUpdatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, relayGuid, keyGuid, parentId, clientUpdatedAt);
+        return Objects.hash(id, relayGuid, keyGuid, parentId, clientUpdatedAt);
     }
 }
