@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
 
-import com.google.common.collect.ImmutableSet;
 import org.ccci.gto.globalreg.serializer.json.JSONObjectType;
 import org.ccci.gto.globalreg.serializer.json.JsonSerializer;
 import org.json.JSONObject;
@@ -21,6 +20,7 @@ import java.security.SecureRandom;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public abstract class BaseGlobalRegistryClientIT {
 
@@ -113,7 +113,7 @@ public abstract class BaseGlobalRegistryClientIT {
         tmp.put("first_name", "Updated Name");
         tmp.put("last_name", "Last");
         final JSONObject updatedEntity = client.updateEntity(TYPE_PERSON, newEntity.getString("id"), tmp,
-                ImmutableSet.of("first_name", "last_name"), true);
+                Set.of("first_name", "last_name"), true);
 
         assertNotNull(updatedEntity);
         assertEquals("Updated Name", updatedEntity.getString("first_name"));

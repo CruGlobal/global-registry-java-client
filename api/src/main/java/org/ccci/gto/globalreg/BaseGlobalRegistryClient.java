@@ -2,15 +2,13 @@ package org.ccci.gto.globalreg;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
 import com.google.common.net.HttpHeaders;
 import com.google.common.net.MediaType;
 import org.ccci.gto.globalreg.serializer.Serializer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +64,8 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
                 }
 
                 // append all values for this filter
-                request.queryParams.putAll(name.toString(), Lists.newArrayList(filter.getValues()));
+                request.queryParams.computeIfAbsent(name.toString(), k -> new ArrayList<>())
+                    .addAll(List.of(filter.getValues()));
             }
         }
     }
@@ -96,9 +95,9 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITIES};
-        request.queryParams.put(PARAM_ENTITY_TYPE, type.getEntityType());
-        request.queryParams.put(PARAM_PAGE, Integer.toString(page));
-        request.queryParams.put(PARAM_PER_PAGE, Integer.toString(perPage));
+        request.queryParams.put(PARAM_ENTITY_TYPE, List.of(type.getEntityType()));
+        request.queryParams.put(PARAM_PAGE, List.of(Integer.toString(page)));
+        request.queryParams.put(PARAM_PER_PAGE, List.of(Integer.toString(perPage)));
         this.attachFilters(request, filters);
         addFieldsParameterIfNecessary(request, fields);
 
@@ -155,19 +154,19 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
     private void addFieldsParameterIfNecessary(final Request request, final Set<String> fields) {
         if (fields != null) {
-            request.queryParams.put(PARAM_FIELDS, COMMA_JOINER.join(fields));
+            request.queryParams.put(PARAM_FIELDS, List.of(COMMA_JOINER.join(fields)));
         }
     }
 
     private void addFullResponseParameterIfNecessary(final Request request) {
         if (fullResponsesFromUpdates) {
-            request.queryParams.put(PARAM_FULL_RESPONSE, TRUE);
+            request.queryParams.put(PARAM_FULL_RESPONSE, List.of(TRUE));
         }
     }
 
     private void addRequireMdmParameterIfNecessary(final Request request, final boolean requireMdm) {
         if (requireMdm) {
-            request.queryParams.put(PARAM_REQUIRE_MDM, TRUE);
+            request.queryParams.put(PARAM_REQUIRE_MDM, List.of(TRUE));
         }
     }
 
@@ -189,7 +188,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITY_TYPES};
-        request.queryParams.put(PARAM_PAGE, Integer.toString(page));
+        request.queryParams.put(PARAM_PAGE, List.of(Integer.toString(page)));
         this.attachFilters(request, filters);
 
         // execute request
@@ -254,7 +253,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_MEASUREMENT_TYPES};
-        request.queryParams.put(PARAM_PAGE, Integer.toString(page));
+        request.queryParams.put(PARAM_PAGE, List.of(Integer.toString(page)));
         this.attachFilters(request, filters);
 
         // execute request
@@ -302,7 +301,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         public String method = "GET";
         public String[] path = new String[0];
         public final Map<String, String> headers = new HashMap<>();
-        public final Multimap<String, String> queryParams = HashMultimap.create();
+        public final Map<String, List<String>> queryParams = new HashMap<>();
         public String contentType = null;
         public String content = null;
 

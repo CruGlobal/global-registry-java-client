@@ -27,6 +27,7 @@ import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Map;
 
 public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
@@ -103,8 +104,10 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
         final URIBuilder builder = new URIBuilder(this.apiUrl);
         final String path = builder.getPath();
         builder.setPath(path + JOINER_PATH.join(request.path));
-        for (final Map.Entry<String, String> param : request.queryParams.entries()) {
-            builder.addParameter(param.getKey(), param.getValue());
+        for (final Map.Entry<String, List<String>> param : request.queryParams.entrySet()) {
+            for (String value : param.getValue()) {
+                builder.addParameter(param.getKey(), value);
+            }
         }
         return builder.build();
     }
