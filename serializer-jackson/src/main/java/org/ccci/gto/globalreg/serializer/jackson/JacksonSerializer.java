@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.common.base.Throwables;
 import org.ccci.gto.globalreg.Type;
 import org.ccci.gto.globalreg.serializer.JsonIntermediateSerializer;
 import org.ccci.gto.globalreg.serializer.SerializerException;
@@ -46,7 +45,7 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
             throw new UnparsableJsonException(e);
         } catch (final IOException e) {
             LOG.debug("Unexpected IOException", e);
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -60,7 +59,7 @@ public class JacksonSerializer extends JsonIntermediateSerializer<JsonNode, Json
         catch(IOException exception)
         {
             LOG.error("Error writing JsonNode to String", exception);
-            throw Throwables.propagate(exception);
+            throw new RuntimeException(exception);
         }
     }
 

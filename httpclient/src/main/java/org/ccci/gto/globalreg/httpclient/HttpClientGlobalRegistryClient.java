@@ -1,6 +1,5 @@
 package org.ccci.gto.globalreg.httpclient;
 
-import com.google.common.base.Throwables;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpResponse;
@@ -95,7 +94,7 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
                 return client.execute(req, RESPONSE_HANDLER);
             }
         } catch (final IOException | URISyntaxException e) {
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
     }
 

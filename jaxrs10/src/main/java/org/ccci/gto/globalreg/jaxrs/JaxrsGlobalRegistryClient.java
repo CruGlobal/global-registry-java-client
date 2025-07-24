@@ -1,6 +1,5 @@
 package org.ccci.gto.globalreg.jaxrs;
 
-import com.google.common.base.Throwables;
 import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
 import org.ccci.gto.globalreg.UnauthorizedException;
 import org.slf4j.Logger;
@@ -56,7 +55,7 @@ public class JaxrsGlobalRegistryClient extends BaseGlobalRegistryClient {
                     out.write(request.content);
                 } catch (final IOException e) {
                     LOG.debug("error writing data to connection", e);
-                    throw Throwables.propagate(e);
+                    throw new RuntimeException(e);
                 }
             }
 
@@ -80,7 +79,7 @@ public class JaxrsGlobalRegistryClient extends BaseGlobalRegistryClient {
             }
         } catch (final IOException e) {
             LOG.debug("error processing request: {}", uri, e);
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         } finally {
             if (conn != null) {
                 conn.disconnect();
