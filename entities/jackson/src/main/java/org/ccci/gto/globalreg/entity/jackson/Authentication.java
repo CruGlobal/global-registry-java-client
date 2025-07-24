@@ -31,13 +31,13 @@ public class Authentication {
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
     public Authentication() {
     }
 
     /**
-     * 
+     *
      * @param keyGuid
      * @param relayGuid
      * @param id
@@ -53,7 +53,7 @@ public class Authentication {
     }
 
     /**
-     * 
+     *
      * @return
      *     The id
      */
@@ -63,7 +63,7 @@ public class Authentication {
     }
 
     /**
-     * 
+     *
      * @param id
      *     The id
      */
@@ -73,7 +73,7 @@ public class Authentication {
     }
 
     /**
-     * 
+     *
      * @return
      *     The relayGuid
      */
@@ -83,7 +83,7 @@ public class Authentication {
     }
 
     /**
-     * 
+     *
      * @param relayGuid
      *     The relay_guid
      */
@@ -93,7 +93,7 @@ public class Authentication {
     }
 
     /**
-     * 
+     *
      * @return
      *     The keyGuid
      */
@@ -103,7 +103,7 @@ public class Authentication {
     }
 
     /**
-     * 
+     *
      * @param keyGuid
      *     The key_guid
      */
@@ -113,7 +113,7 @@ public class Authentication {
     }
 
     /**
-     * 
+     *
      * @return
      *     The parentId
      */
@@ -123,7 +123,7 @@ public class Authentication {
     }
 
     /**
-     * 
+     *
      * @param parentId
      *     The parent_id
      */
@@ -133,7 +133,7 @@ public class Authentication {
     }
 
     /**
-     * 
+     *
      * @return
      *     The clientUpdatedAt
      */
@@ -143,7 +143,7 @@ public class Authentication {
     }
 
     /**
-     * 
+     *
      * @param clientUpdatedAt
      *     The client_updated_at
      */

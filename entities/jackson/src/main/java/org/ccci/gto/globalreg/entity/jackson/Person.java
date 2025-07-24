@@ -151,13 +151,13 @@ public class Person {
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
     public Person() {
     }
 
     /**
-     * 
+     *
      * @param originalHireDate
      * @param supervisorEmplid
      * @param lastName
@@ -253,7 +253,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The id
      */
@@ -263,7 +263,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param id
      *     The id
      */
@@ -273,7 +273,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The accountNumber
      */
@@ -283,7 +283,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param accountNumber
      *     The account_number
      */
@@ -293,7 +293,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The activeStatus
      */
@@ -303,7 +303,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param activeStatus
      *     The active_status
      */
@@ -313,7 +313,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The birthDay
      */
@@ -323,7 +323,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param birthDay
      *     The birth_day
      */
@@ -333,7 +333,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The birthMonth
      */
@@ -343,7 +343,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param birthMonth
      *     The birth_month
      */
@@ -353,7 +353,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The cruEmployee
      */
@@ -363,7 +363,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param cruEmployee
      *     The cru_employee
      */
@@ -373,7 +373,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The dateJoinedStaff
      */
@@ -383,7 +383,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param dateJoinedStaff
      *     The date_joined_staff
      */
@@ -393,7 +393,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The firstName
      */
@@ -403,7 +403,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param firstName
      *     The first_name
      */
@@ -413,7 +413,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The fundingSource
      */
@@ -423,7 +423,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param fundingSource
      *     The funding_source
      */
@@ -433,7 +433,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The gender
      */
@@ -443,7 +443,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param gender
      *     The gender
      */
@@ -453,7 +453,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The hrStatusCode
      */
@@ -463,7 +463,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param hrStatusCode
      *     The hr_status_code
      */
@@ -473,7 +473,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The isStaff
      */
@@ -483,7 +483,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param isStaff
      *     The is_staff
      */
@@ -493,7 +493,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The lakeHartMailCode
      */
@@ -503,7 +503,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param lakeHartMailCode
      *     The lake_hart_mail_code
      */
@@ -513,7 +513,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The lastName
      */
@@ -523,7 +523,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param lastName
      *     The last_name
      */
@@ -533,7 +533,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The locationCode
      */
@@ -543,7 +543,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param locationCode
      *     The location_code
      */
@@ -553,7 +553,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The locationWork
      */
@@ -563,7 +563,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param locationWork
      *     The location_work
      */
@@ -573,7 +573,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The maritalStatus
      */
@@ -583,7 +583,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param maritalStatus
      *     The marital_status
      */
@@ -593,7 +593,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The middleName
      */
@@ -603,7 +603,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param middleName
      *     The middle_name
      */
@@ -613,7 +613,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The nameAddressEditFlag
      */
@@ -623,7 +623,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param nameAddressEditFlag
      *     The name_address_edit_flag
      */
@@ -633,7 +633,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The originalHireDate
      */
@@ -643,7 +643,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param originalHireDate
      *     The original_hire_date
      */
@@ -653,7 +653,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The paygroup
      */
@@ -663,7 +663,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param paygroup
      *     The paygroup
      */
@@ -673,7 +673,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The preferredName
      */
@@ -683,7 +683,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param preferredName
      *     The preferred_name
      */
@@ -693,7 +693,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The ministryCode
      */
@@ -703,7 +703,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param ministryCode
      *     The ministry_code
      */
@@ -713,7 +713,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The ministryDescr
      */
@@ -723,7 +723,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param ministryDescr
      *     The ministry_descr
      */
@@ -733,7 +733,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The suffix
      */
@@ -743,7 +743,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param suffix
      *     The suffix
      */
@@ -753,7 +753,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The title
      */
@@ -763,7 +763,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param title
      *     The title
      */
@@ -773,7 +773,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The subMinistryCode
      */
@@ -783,7 +783,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param subMinistryCode
      *     The sub_ministry_code
      */
@@ -793,7 +793,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The subMinistryDescr
      */
@@ -803,7 +803,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param subMinistryDescr
      *     The sub_ministry_descr
      */
@@ -813,7 +813,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The emailAddress
      */
@@ -823,7 +823,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param emailAddress
      *     The email_address
      */
@@ -833,7 +833,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The phoneNumber
      */
@@ -843,7 +843,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param phoneNumber
      *     The phone_number
      */
@@ -853,7 +853,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The authentication
      */
@@ -863,7 +863,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param authentication
      *     The authentication
      */
@@ -873,7 +873,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The address
      */
@@ -883,7 +883,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param address
      *     The address
      */
@@ -893,7 +893,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The birthYear
      */
@@ -903,7 +903,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param birthYear
      *     The birth_year
      */
@@ -913,7 +913,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The birthDate
      */
@@ -923,7 +923,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param birthDate
      *     The birth_date
      */
@@ -933,7 +933,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The countryOfResidence
      */
@@ -943,7 +943,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param countryOfResidence
      *     The country_of_residence
      */
@@ -953,7 +953,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The employmentCountry
      */
@@ -963,7 +963,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param employmentCountry
      *     The employment_country
      */
@@ -973,7 +973,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The language
      */
@@ -983,7 +983,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param language
      *     The language
      */
@@ -993,7 +993,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The jobStatus
      */
@@ -1003,7 +1003,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param jobStatus
      *     The job_status
      */
@@ -1013,7 +1013,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The deptCode
      */
@@ -1023,7 +1023,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param deptCode
      *     The dept_code
      */
@@ -1033,7 +1033,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The deptDescr
      */
@@ -1043,7 +1043,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param deptDescr
      *     The dept_descr
      */
@@ -1053,7 +1053,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The jobCode
      */
@@ -1063,7 +1063,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param jobCode
      *     The job_code
      */
@@ -1073,7 +1073,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The jobDescr
      */
@@ -1083,7 +1083,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param jobDescr
      *     The job_descr
      */
@@ -1093,7 +1093,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The supervisorEmplid
      */
@@ -1103,7 +1103,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param supervisorEmplid
      *     The supervisor_emplid
      */
@@ -1113,7 +1113,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The clientUpdatedAt
      */
@@ -1123,7 +1123,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param clientUpdatedAt
      *     The client_updated_at
      */
@@ -1133,7 +1133,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @return
      *     The clientIntegrationId
      */
@@ -1143,7 +1143,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param clientIntegrationId
      *     The client_integration_id
      */

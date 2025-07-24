@@ -31,13 +31,13 @@ public class EmailAddress {
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
     public EmailAddress() {
     }
 
     /**
-     * 
+     *
      * @param clientIntegrationId
      * @param id
      * @param clientUpdatedAt
@@ -53,7 +53,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @return
      *     The id
      */
@@ -63,7 +63,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @param id
      *     The id
      */
@@ -73,7 +73,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @return
      *     The email
      */
@@ -83,7 +83,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @param email
      *     The email
      */
@@ -93,7 +93,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @return
      *     The parentId
      */
@@ -103,7 +103,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @param parentId
      *     The parent_id
      */
@@ -113,7 +113,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @return
      *     The clientIntegrationId
      */
@@ -123,7 +123,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @param clientIntegrationId
      *     The client_integration_id
      */
@@ -133,7 +133,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @return
      *     The clientUpdatedAt
      */
@@ -143,7 +143,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @param clientUpdatedAt
      *     The client_updated_at
      */

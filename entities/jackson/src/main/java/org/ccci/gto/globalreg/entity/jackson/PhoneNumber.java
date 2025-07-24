@@ -34,13 +34,13 @@ public class PhoneNumber {
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
     public PhoneNumber() {
     }
 
     /**
-     * 
+     *
      * @param clientIntegrationId
      * @param number
      * @param location
@@ -58,7 +58,7 @@ public class PhoneNumber {
     }
 
     /**
-     * 
+     *
      * @return
      *     The id
      */
@@ -68,7 +68,7 @@ public class PhoneNumber {
     }
 
     /**
-     * 
+     *
      * @param id
      *     The id
      */
@@ -78,7 +78,7 @@ public class PhoneNumber {
     }
 
     /**
-     * 
+     *
      * @return
      *     The primary
      */
@@ -88,7 +88,7 @@ public class PhoneNumber {
     }
 
     /**
-     * 
+     *
      * @param primary
      *     The primary
      */
@@ -98,7 +98,7 @@ public class PhoneNumber {
     }
 
     /**
-     * 
+     *
      * @return
      *     The location
      */
@@ -108,7 +108,7 @@ public class PhoneNumber {
     }
 
     /**
-     * 
+     *
      * @param location
      *     The location
      */
@@ -118,7 +118,7 @@ public class PhoneNumber {
     }
 
     /**
-     * 
+     *
      * @return
      *     The number
      */
@@ -128,7 +128,7 @@ public class PhoneNumber {
     }
 
     /**
-     * 
+     *
      * @param number
      *     The number
      */
@@ -138,7 +138,7 @@ public class PhoneNumber {
     }
 
     /**
-     * 
+     *
      * @return
      *     The parentId
      */
@@ -148,7 +148,7 @@ public class PhoneNumber {
     }
 
     /**
-     * 
+     *
      * @param parentId
      *     The parent_id
      */
@@ -158,7 +158,7 @@ public class PhoneNumber {
     }
 
     /**
-     * 
+     *
      * @return
      *     The clientIntegrationId
      */
@@ -168,7 +168,7 @@ public class PhoneNumber {
     }
 
     /**
-     * 
+     *
      * @param clientIntegrationId
      *     The client_integration_id
      */

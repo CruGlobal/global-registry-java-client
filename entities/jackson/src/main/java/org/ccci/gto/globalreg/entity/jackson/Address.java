@@ -49,13 +49,13 @@ public class Address {
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
     public Address() {
     }
 
     /**
-     * 
+     *
      * @param clientIntegrationId
      * @param country
      * @param city
@@ -83,7 +83,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The id
      */
@@ -93,7 +93,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param id
      *     The id
      */
@@ -103,7 +103,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The active
      */
@@ -113,7 +113,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param active
      *     The active
      */
@@ -123,7 +123,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The addressType
      */
@@ -133,7 +133,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param addressType
      *     The address_type
      */
@@ -143,7 +143,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The startDate
      */
@@ -153,7 +153,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param startDate
      *     The start_date
      */
@@ -163,7 +163,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The line1
      */
@@ -173,7 +173,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param line1
      *     The line1
      */
@@ -183,7 +183,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The city
      */
@@ -193,7 +193,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param city
      *     The city
      */
@@ -203,7 +203,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The state
      */
@@ -213,7 +213,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param state
      *     The state
      */
@@ -223,7 +223,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The postalCode
      */
@@ -233,7 +233,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param postalCode
      *     The postal_code
      */
@@ -243,7 +243,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The country
      */
@@ -253,7 +253,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param country
      *     The country
      */
@@ -263,7 +263,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The parentId
      */
@@ -273,7 +273,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param parentId
      *     The parent_id
      */
@@ -283,7 +283,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The clientIntegrationId
      */
@@ -293,7 +293,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param clientIntegrationId
      *     The client_integration_id
      */
