@@ -1,6 +1,5 @@
 package org.ccci.gto.globalreg.httpclient;
 
-import com.google.common.base.Charsets;
 import com.google.common.base.Throwables;
 import com.google.common.net.HttpHeaders;
 import org.apache.http.HttpEntity;
@@ -26,6 +25,7 @@ import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -88,7 +88,7 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
             // send content when necessary
             if (request.content != null && req instanceof HttpEntityEnclosingRequest) {
                 ((HttpEntityEnclosingRequest) req).setEntity(new StringEntity(request.content,
-                        ContentType.create(request.contentType, Charsets.UTF_8)));
+                        ContentType.create(request.contentType, StandardCharsets.UTF_8)));
             }
 
             // execute request & return response
