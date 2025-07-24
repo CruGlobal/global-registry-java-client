@@ -1,7 +1,6 @@
 package org.ccci.gto.globalreg.httpclient;
 
 import com.google.common.base.Charsets;
-import com.google.common.base.Joiner;
 import com.google.common.base.Throwables;
 import com.google.common.net.HttpHeaders;
 import org.apache.http.HttpEntity;
@@ -27,11 +26,13 @@ import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
-    private final static Joiner JOINER_PATH = Joiner.on("/").skipNulls();
 
     private final static ResponseHandler<Response> RESPONSE_HANDLER = new ResponseHandler<Response>() {
         @Nonnull
@@ -103,7 +104,10 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
         // build the request uri
         final URIBuilder builder = new URIBuilder(this.apiUrl);
         final String path = builder.getPath();
-        builder.setPath(path + JOINER_PATH.join(request.path));
+        String pathSegments = Arrays.stream(request.path)
+            .filter(Objects::nonNull)
+            .collect(Collectors.joining("/"));
+        builder.setPath(path + pathSegments);
         for (final Map.Entry<String, List<String>> param : request.queryParams.entrySet()) {
             for (String value : param.getValue()) {
                 builder.addParameter(param.getKey(), value);

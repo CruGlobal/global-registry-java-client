@@ -1,6 +1,5 @@
 package org.ccci.gto.globalreg;
 
-import com.google.common.base.Joiner;
 import com.google.common.net.HttpHeaders;
 import com.google.common.net.MediaType;
 import org.ccci.gto.globalreg.serializer.Serializer;
@@ -16,7 +15,6 @@ import java.util.Set;
 
 public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryClient {
     private static final MediaType APPLICATION_JSON = MediaType.create("application", "json");
-    private static final Joiner COMMA_JOINER = Joiner.on(",");
     private static final String TRUE = "true";
 
     protected String apiUrl;
@@ -154,7 +152,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
     private void addFieldsParameterIfNecessary(final Request request, final Set<String> fields) {
         if (fields != null) {
-            request.queryParams.put(PARAM_FIELDS, List.of(COMMA_JOINER.join(fields)));
+            request.queryParams.put(PARAM_FIELDS, List.of(String.join(",", fields)));
         }
     }
 
