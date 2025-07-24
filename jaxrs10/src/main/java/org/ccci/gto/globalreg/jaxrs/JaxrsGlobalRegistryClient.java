@@ -1,7 +1,6 @@
 package org.ccci.gto.globalreg.jaxrs;
 
 import com.google.common.base.Throwables;
-import com.google.common.io.CharStreams;
 import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
 import org.ccci.gto.globalreg.UnauthorizedException;
 import org.slf4j.Logger;
@@ -14,6 +13,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.Collection;
@@ -63,13 +63,17 @@ public class JaxrsGlobalRegistryClient extends BaseGlobalRegistryClient {
             // read & return response
             final int code = conn.getResponseCode();
             try (InputStream raw = conn.getInputStream(); InputStreamReader in = new InputStreamReader(raw)) {
-                return new Response(conn.getResponseCode(), CharStreams.toString(in));
+                StringWriter writer = new StringWriter();
+                in.transferTo(writer);
+                return new Response(conn.getResponseCode(), writer.toString());
             } catch (final IOException e) {
                 try (
                     InputStream rawError = conn.getErrorStream();
                     InputStreamReader errorReader = new InputStreamReader(rawError)
                 ) {
-                    return new Response(conn.getResponseCode(), CharStreams.toString(errorReader));
+                    StringWriter writer = new StringWriter();
+                    errorReader.transferTo(writer);
+                    return new Response(conn.getResponseCode(), writer.toString());
                 } catch (final IOException e2) {
                     return new Response(code, "<error content not available>");
                 }
