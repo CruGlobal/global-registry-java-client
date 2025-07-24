@@ -1,8 +1,6 @@
 package org.ccci.gto.globalreg;
 
 import com.google.common.base.Ascii;
-import com.google.common.base.Preconditions;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,7 +37,9 @@ public class HttpErrorException extends GlobalRegistryException {
     }
 
     private static int checkStatus(final int statusCode) {
-        Preconditions.checkArgument(statusCode / 100 != 2);
+        if (statusCode / 100 == 2) {
+            throw new IllegalArgumentException("Status code must not be in the 2xx range");
+        }
         return statusCode;
     }
 
