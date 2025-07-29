@@ -1,12 +1,11 @@
 
 package org.ccci.gto.globalreg.entity.jackson;
 
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
+import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
@@ -50,13 +49,13 @@ public class Address {
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
     public Address() {
     }
 
     /**
-     * 
+     *
      * @param clientIntegrationId
      * @param country
      * @param city
@@ -84,7 +83,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The id
      */
@@ -94,7 +93,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param id
      *     The id
      */
@@ -104,7 +103,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The active
      */
@@ -114,7 +113,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param active
      *     The active
      */
@@ -124,7 +123,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The addressType
      */
@@ -134,7 +133,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param addressType
      *     The address_type
      */
@@ -144,7 +143,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The startDate
      */
@@ -154,7 +153,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param startDate
      *     The start_date
      */
@@ -164,7 +163,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The line1
      */
@@ -174,7 +173,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param line1
      *     The line1
      */
@@ -184,7 +183,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The city
      */
@@ -194,7 +193,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param city
      *     The city
      */
@@ -204,7 +203,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The state
      */
@@ -214,7 +213,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param state
      *     The state
      */
@@ -224,7 +223,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The postalCode
      */
@@ -234,7 +233,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param postalCode
      *     The postal_code
      */
@@ -244,7 +243,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The country
      */
@@ -254,7 +253,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param country
      *     The country
      */
@@ -264,7 +263,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The parentId
      */
@@ -274,7 +273,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param parentId
      *     The parent_id
      */
@@ -284,7 +283,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @return
      *     The clientIntegrationId
      */
@@ -294,7 +293,7 @@ public class Address {
     }
 
     /**
-     * 
+     *
      * @param clientIntegrationId
      *     The client_integration_id
      */
@@ -305,41 +304,41 @@ public class Address {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("id", id)
-                .add("active", active)
-                .add("addressType", addressType)
-                .add("startDate", startDate)
-                .add("line1", line1)
-                .add("city", city)
-                .add("state", state)
-                .add("postalCode", postalCode)
-                .add("country", country)
-                .add("parentId", parentId)
-                .add("clientIntegrationId", clientIntegrationId)
-                .toString();
+        return new StringBuilder("Address{")
+            .append("id='").append(id).append('\'')
+            .append(", active=").append(active)
+            .append(", addressType='").append(addressType).append('\'')
+            .append(", startDate='").append(startDate).append('\'')
+            .append(", line1='").append(line1).append('\'')
+            .append(", city='").append(city).append('\'')
+            .append(", state='").append(state).append('\'')
+            .append(", postalCode='").append(postalCode).append('\'')
+            .append(", country='").append(country).append('\'')
+            .append(", parentId='").append(parentId).append('\'')
+            .append(", clientIntegrationId='").append(clientIntegrationId).append('\'')
+            .append('}').toString();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Address)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return Objects.equal(id, address.id) &&
-                Objects.equal(active, address.active) &&
-                Objects.equal(addressType, address.addressType) &&
-                Objects.equal(startDate, address.startDate) &&
-                Objects.equal(line1, address.line1) &&
-                Objects.equal(city, address.city) &&
-                Objects.equal(state, address.state) &&
-                Objects.equal(postalCode, address.postalCode) &&
-                Objects.equal(country, address.country) &&
-                Objects.equal(parentId, address.parentId) &&
-                Objects.equal(clientIntegrationId, address.clientIntegrationId);
+        return Objects.equals(id, address.id) &&
+                Objects.equals(active, address.active) &&
+                Objects.equals(addressType, address.addressType) &&
+                Objects.equals(startDate, address.startDate) &&
+                Objects.equals(line1, address.line1) &&
+                Objects.equals(city, address.city) &&
+                Objects.equals(state, address.state) &&
+                Objects.equals(postalCode, address.postalCode) &&
+                Objects.equals(country, address.country) &&
+                Objects.equals(parentId, address.parentId) &&
+                Objects.equals(clientIntegrationId, address.clientIntegrationId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, active, addressType, startDate, line1, city, state, postalCode, country, parentId, clientIntegrationId);
+        return Objects.hash(id, active, addressType, startDate, line1, city, state, postalCode, country, parentId, clientIntegrationId);
     }
 }

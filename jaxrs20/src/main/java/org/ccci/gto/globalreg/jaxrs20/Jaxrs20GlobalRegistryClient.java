@@ -10,6 +10,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -82,9 +83,11 @@ public class Jaxrs20GlobalRegistryClient extends BaseGlobalRegistryClient
 
     private WebTarget addQueryParameters(Request request, WebTarget webTarget)
     {
-        for(Map.Entry<String, String> entry : request.queryParams.entries())
+        for(Map.Entry<String, List<String>> entry : request.queryParams.entrySet())
         {
-            webTarget = webTarget.queryParam(entry.getKey(), entry.getValue());
+            for (String value : entry.getValue()) {
+                webTarget = webTarget.queryParam(entry.getKey(), value);
+            }
         }
         return webTarget;
     }

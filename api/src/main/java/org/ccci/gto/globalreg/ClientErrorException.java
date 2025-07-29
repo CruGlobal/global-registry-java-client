@@ -1,8 +1,5 @@
 package org.ccci.gto.globalreg;
 
-import com.google.common.base.Ascii;
-import com.google.common.base.Preconditions;
-
 /**
  * A {@code HttpErrorException} that indicates a client-side global registry error.
  * The response status code is in the 4xx range.
@@ -17,7 +14,9 @@ public class ClientErrorException extends HttpErrorException {
     }
 
     private static int checkStatus(final int statusCode) {
-        Preconditions.checkArgument(statusCode / 100 == 4);
+        if (statusCode / 100 != 4) {
+            throw new IllegalArgumentException("Status code must be in 4xx range, got: " + statusCode);
+        }
         return statusCode;
     }
 

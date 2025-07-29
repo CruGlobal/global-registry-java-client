@@ -1,8 +1,5 @@
 package org.ccci.gto.globalreg.jaxrs;
 
-import com.google.common.base.Throwables;
-import com.google.common.io.CharStreams;
-import com.google.common.net.HttpHeaders;
 import org.ccci.gto.globalreg.BaseGlobalRegistryClient;
 import org.ccci.gto.globalreg.UnauthorizedException;
 import org.slf4j.Logger;
@@ -15,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.Collection;
@@ -44,40 +42,44 @@ public class JaxrsGlobalRegistryClient extends BaseGlobalRegistryClient {
             conn.setConnectTimeout(connectTimeout);
             conn.setReadTimeout(readTimeout);
             conn.setRequestMethod(request.method);
-            conn.setRequestProperty(HttpHeaders.AUTHORIZATION, "Bearer " + this.accessToken);
+            conn.setRequestProperty("Authorization", "Bearer " + this.accessToken);
             for (final Map.Entry<String, String> header : request.headers.entrySet()) {
                 conn.setRequestProperty(header.getKey(), header.getValue());
             }
 
             // send content when necessary
             if (request.content != null) {
-                conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, request.contentType);
+                conn.setRequestProperty("Content-Type", request.contentType);
                 conn.setDoOutput(true);
                 try (OutputStream raw = conn.getOutputStream(); OutputStreamWriter out = new OutputStreamWriter(raw)) {
                     out.write(request.content);
                 } catch (final IOException e) {
                     LOG.debug("error writing data to connection", e);
-                    throw Throwables.propagate(e);
+                    throw new RuntimeException(e);
                 }
             }
 
             // read & return response
             final int code = conn.getResponseCode();
             try (InputStream raw = conn.getInputStream(); InputStreamReader in = new InputStreamReader(raw)) {
-                return new Response(conn.getResponseCode(), CharStreams.toString(in));
+                StringWriter writer = new StringWriter();
+                in.transferTo(writer);
+                return new Response(conn.getResponseCode(), writer.toString());
             } catch (final IOException e) {
                 try (
                     InputStream rawError = conn.getErrorStream();
                     InputStreamReader errorReader = new InputStreamReader(rawError)
                 ) {
-                    return new Response(conn.getResponseCode(), CharStreams.toString(errorReader));
+                    StringWriter writer = new StringWriter();
+                    errorReader.transferTo(writer);
+                    return new Response(conn.getResponseCode(), writer.toString());
                 } catch (final IOException e2) {
                     return new Response(code, "<error content not available>");
                 }
             }
         } catch (final IOException e) {
             LOG.debug("error processing request: {}", uri, e);
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         } finally {
             if (conn != null) {
                 conn.disconnect();

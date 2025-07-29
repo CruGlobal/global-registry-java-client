@@ -1,6 +1,5 @@
 package org.ccci.gto.globalreg.serializer;
 
-import com.google.common.primitives.Ints;
 import org.ccci.gto.globalreg.*;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -321,7 +320,13 @@ public abstract class JsonIntermediateSerializer<O, A> extends AbstractSerialize
 
         protected Integer getInt(final String key, final Integer def) {
             final Long val = this.getLong(key, null);
-            return val != null ? Ints.checkedCast(val) : def;
+            if (val != null) {
+                if (val < Integer.MIN_VALUE || val > Integer.MAX_VALUE) {
+                    throw new IllegalArgumentException("Value " + val + " is out of range for int");
+                }
+                return val.intValue();
+            }
+            return def;
         }
 
         protected Long getLong(final String key) {

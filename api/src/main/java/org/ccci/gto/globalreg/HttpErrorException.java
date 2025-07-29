@@ -1,8 +1,5 @@
 package org.ccci.gto.globalreg;
 
-import com.google.common.base.Ascii;
-import com.google.common.base.Preconditions;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,7 +36,9 @@ public class HttpErrorException extends GlobalRegistryException {
     }
 
     private static int checkStatus(final int statusCode) {
-        Preconditions.checkArgument(statusCode / 100 != 2);
+        if (statusCode / 100 == 2) {
+            throw new IllegalArgumentException("Status code must not be in the 2xx range");
+        }
         return statusCode;
     }
 
@@ -49,8 +48,15 @@ public class HttpErrorException extends GlobalRegistryException {
             return String.format("status code %s: %s", statusCode, error);
         } else {
             // most likely an html response
-            return String.format("status code %s: %n%s", statusCode, Ascii.truncate(responseContent, 200, "…"));
+            return String.format("status code %s: %n%s", statusCode, truncate(responseContent, 200));
         }
+    }
+
+    private static String truncate(String str, int maxLength) {
+        if (str == null || str.length() <= maxLength) {
+            return str;
+        }
+        return str.substring(0, maxLength) + "…";
     }
 
     private static String getJsonErrorMessageIfPossible(final String responseContent) {

@@ -1,12 +1,11 @@
 
 package org.ccci.gto.globalreg.entity.jackson;
 
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
+import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
@@ -32,13 +31,13 @@ public class EmailAddress {
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
     public EmailAddress() {
     }
 
     /**
-     * 
+     *
      * @param clientIntegrationId
      * @param id
      * @param clientUpdatedAt
@@ -54,7 +53,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @return
      *     The id
      */
@@ -64,7 +63,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @param id
      *     The id
      */
@@ -74,7 +73,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @return
      *     The email
      */
@@ -84,7 +83,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @param email
      *     The email
      */
@@ -94,7 +93,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @return
      *     The parentId
      */
@@ -104,7 +103,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @param parentId
      *     The parent_id
      */
@@ -114,7 +113,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @return
      *     The clientIntegrationId
      */
@@ -124,7 +123,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @param clientIntegrationId
      *     The client_integration_id
      */
@@ -134,7 +133,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @return
      *     The clientUpdatedAt
      */
@@ -144,7 +143,7 @@ public class EmailAddress {
     }
 
     /**
-     * 
+     *
      * @param clientUpdatedAt
      *     The client_updated_at
      */
@@ -155,29 +154,29 @@ public class EmailAddress {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("id", id)
-                .add("email", email)
-                .add("parentId", parentId)
-                .add("clientIntegrationId", clientIntegrationId)
-                .add("clientUpdatedAt", clientUpdatedAt)
-                .toString();
+        return new StringBuilder("EmailAddress{")
+            .append("id='").append(id).append('\'')
+            .append(", email='").append(email).append('\'')
+            .append(", parentId='").append(parentId).append('\'')
+            .append(", clientIntegrationId='").append(clientIntegrationId).append('\'')
+            .append(", clientUpdatedAt='").append(clientUpdatedAt).append('\'')
+            .append('}').toString();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof EmailAddress)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         EmailAddress that = (EmailAddress) o;
-        return Objects.equal(id, that.id) &&
-                Objects.equal(email, that.email) &&
-                Objects.equal(parentId, that.parentId) &&
-                Objects.equal(clientIntegrationId, that.clientIntegrationId) &&
-                Objects.equal(clientUpdatedAt, that.clientUpdatedAt);
+        return Objects.equals(id, that.id) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(parentId, that.parentId) &&
+                Objects.equals(clientIntegrationId, that.clientIntegrationId) &&
+                Objects.equals(clientUpdatedAt, that.clientUpdatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, email, parentId, clientIntegrationId, clientUpdatedAt);
+        return Objects.hash(id, email, parentId, clientIntegrationId, clientUpdatedAt);
     }
 }

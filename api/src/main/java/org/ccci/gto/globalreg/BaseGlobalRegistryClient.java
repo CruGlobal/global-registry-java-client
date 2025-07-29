@@ -1,24 +1,18 @@
 package org.ccci.gto.globalreg;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Strings;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
-import com.google.common.net.HttpHeaders;
-import com.google.common.net.MediaType;
 import org.ccci.gto.globalreg.serializer.Serializer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryClient {
-    private static final MediaType APPLICATION_JSON = MediaType.create("application", "json");
-    private static final Joiner COMMA_JOINER = Joiner.on(",");
+    private static final String APPLICATION_JSON = "application/json";
     private static final String TRUE = "true";
 
     protected String apiUrl;
@@ -66,7 +60,8 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
                 }
 
                 // append all values for this filter
-                request.queryParams.putAll(name.toString(), Lists.newArrayList(filter.getValues()));
+                request.queryParams.computeIfAbsent(name.toString(), k -> new ArrayList<>())
+                    .addAll(List.of(filter.getValues()));
             }
         }
     }
@@ -96,9 +91,9 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITIES};
-        request.queryParams.put(PARAM_ENTITY_TYPE, type.getEntityType());
-        request.queryParams.put(PARAM_PAGE, Integer.toString(page));
-        request.queryParams.put(PARAM_PER_PAGE, Integer.toString(perPage));
+        request.queryParams.put(PARAM_ENTITY_TYPE, List.of(type.getEntityType()));
+        request.queryParams.put(PARAM_PAGE, List.of(Integer.toString(page)));
+        request.queryParams.put(PARAM_PER_PAGE, List.of(Integer.toString(perPage)));
         this.attachFilters(request, filters);
         addFieldsParameterIfNecessary(request, fields);
 
@@ -117,7 +112,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         final Request request = new Request();
         request.method = "POST";
         request.path = new String[]{PATH_ENTITIES};
-        request.contentType = APPLICATION_JSON.toString();
+        request.contentType = APPLICATION_JSON;
         request.content = this.serializer.serializeEntity(type, entity);
         addFullResponseParameterIfNecessary(request);
         addFieldsParameterIfNecessary(request, fields);
@@ -139,7 +134,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         final Request request = new Request();
         request.method = "PUT";
         request.path = new String[]{PATH_ENTITIES, id};
-        request.contentType = APPLICATION_JSON.toString();
+        request.contentType = APPLICATION_JSON;
         request.content = this.serializer.serializeEntity(type, entity);
         addFullResponseParameterIfNecessary(request);
         addFieldsParameterIfNecessary(request, fields);
@@ -155,19 +150,19 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
     private void addFieldsParameterIfNecessary(final Request request, final Set<String> fields) {
         if (fields != null) {
-            request.queryParams.put(PARAM_FIELDS, COMMA_JOINER.join(fields));
+            request.queryParams.put(PARAM_FIELDS, List.of(String.join(",", fields)));
         }
     }
 
     private void addFullResponseParameterIfNecessary(final Request request) {
         if (fullResponsesFromUpdates) {
-            request.queryParams.put(PARAM_FULL_RESPONSE, TRUE);
+            request.queryParams.put(PARAM_FULL_RESPONSE, List.of(TRUE));
         }
     }
 
     private void addRequireMdmParameterIfNecessary(final Request request, final boolean requireMdm) {
         if (requireMdm) {
-            request.queryParams.put(PARAM_REQUIRE_MDM, TRUE);
+            request.queryParams.put(PARAM_REQUIRE_MDM, List.of(TRUE));
         }
     }
 
@@ -189,7 +184,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_ENTITY_TYPES};
-        request.queryParams.put(PARAM_PAGE, Integer.toString(page));
+        request.queryParams.put(PARAM_PAGE, List.of(Integer.toString(page)));
         this.attachFilters(request, filters);
 
         // execute request
@@ -207,7 +202,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         final Request request = new Request();
         request.method = "POST";
         request.path = new String[]{PATH_ENTITY_TYPES};
-        request.contentType = APPLICATION_JSON.toString();
+        request.contentType = APPLICATION_JSON;
         request.content = this.serializer.serializeEntityType(type);
 
         // execute request
@@ -254,7 +249,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         // build request
         final Request request = new Request();
         request.path = new String[]{PATH_MEASUREMENT_TYPES};
-        request.queryParams.put(PARAM_PAGE, Integer.toString(page));
+        request.queryParams.put(PARAM_PAGE, List.of(Integer.toString(page)));
         this.attachFilters(request, filters);
 
         // execute request
@@ -302,12 +297,12 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
         public String method = "GET";
         public String[] path = new String[0];
         public final Map<String, String> headers = new HashMap<>();
-        public final Multimap<String, String> queryParams = HashMultimap.create();
+        public final Map<String, List<String>> queryParams = new HashMap<>();
         public String contentType = null;
         public String content = null;
 
         Request() {
-            this.headers.put(HttpHeaders.ACCEPT, APPLICATION_JSON.toString());
+            this.headers.put("Accept", APPLICATION_JSON);
         }
     }
 
@@ -318,7 +313,7 @@ public abstract class BaseGlobalRegistryClient extends AbstractGlobalRegistryCli
 
         public Response(final int code, @Nullable final String content) {
             this.code = code;
-            this.content = Strings.nullToEmpty(content);
+            this.content = Objects.toString(content, "");
         }
     }
 

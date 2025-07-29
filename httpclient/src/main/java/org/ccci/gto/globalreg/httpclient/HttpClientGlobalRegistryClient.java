@@ -1,9 +1,5 @@
 package org.ccci.gto.globalreg.httpclient;
 
-import com.google.common.base.Charsets;
-import com.google.common.base.Joiner;
-import com.google.common.base.Throwables;
-import com.google.common.net.HttpHeaders;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpResponse;
@@ -27,10 +23,14 @@ import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
-    private final static Joiner JOINER_PATH = Joiner.on("/").skipNulls();
 
     private final static ResponseHandler<Response> RESPONSE_HANDLER = new ResponseHandler<Response>() {
         @Nonnull
@@ -70,7 +70,7 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
             if (req == null) {
                 throw new IllegalArgumentException("Request specifies unsupported method: " + request.method);
             }
-            req.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + this.accessToken);
+            req.addHeader("Authorization", "Bearer " + this.accessToken);
             for (final Map.Entry<String, String> header : request.headers.entrySet()) {
                 req.addHeader(header.getKey(), header.getValue());
             }
@@ -86,7 +86,7 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
             // send content when necessary
             if (request.content != null && req instanceof HttpEntityEnclosingRequest) {
                 ((HttpEntityEnclosingRequest) req).setEntity(new StringEntity(request.content,
-                        ContentType.create(request.contentType, Charsets.UTF_8)));
+                        ContentType.create(request.contentType, StandardCharsets.UTF_8)));
             }
 
             // execute request & return response
@@ -94,7 +94,7 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
                 return client.execute(req, RESPONSE_HANDLER);
             }
         } catch (final IOException | URISyntaxException e) {
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -102,9 +102,14 @@ public class HttpClientGlobalRegistryClient extends BaseGlobalRegistryClient {
         // build the request uri
         final URIBuilder builder = new URIBuilder(this.apiUrl);
         final String path = builder.getPath();
-        builder.setPath(path + JOINER_PATH.join(request.path));
-        for (final Map.Entry<String, String> param : request.queryParams.entries()) {
-            builder.addParameter(param.getKey(), param.getValue());
+        String pathSegments = Arrays.stream(request.path)
+            .filter(Objects::nonNull)
+            .collect(Collectors.joining("/"));
+        builder.setPath(path + pathSegments);
+        for (final Map.Entry<String, List<String>> param : request.queryParams.entrySet()) {
+            for (String value : param.getValue()) {
+                builder.addParameter(param.getKey(), value);
+            }
         }
         return builder.build();
     }
